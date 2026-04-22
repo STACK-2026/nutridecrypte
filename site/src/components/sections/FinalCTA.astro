@@ -1,7 +1,11 @@
 ---
 import { tr, t, getLocale, localeUrl } from "../../i18n/t";
+import BlurText from "../BlurText.astro";
 
 const locale = getLocale(Astro.url);
+
+const finalTitleLine1 = locale === "fr" ? "Lis l'étiquette." : "Read the label.";
+const finalTitleLine2 = locale === "fr" ? "Pas le packaging." : "Not the packaging.";
 
 const stats = locale === "fr" ? [
   { num: "400+", label: "additifs décryptés" },
@@ -32,9 +36,9 @@ const stats = locale === "fr" ? [
       </div>
 
       <h2 id="nd-cta-title" class="nd-cta-title">
-        {locale === "fr" ? "Lis l'étiquette." : "Read the label."}<br />
+        <BlurText text={finalTitleLine1} stagger={28} blur={10} /><br />
         <span class="nd-cta-title-accent">
-          {locale === "fr" ? "Pas le packaging." : "Not the packaging."}
+          <BlurText text={finalTitleLine2} stagger={28} blur={10} />
         </span>
       </h2>
 

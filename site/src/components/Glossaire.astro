@@ -1,0 +1,271 @@
+---
+/**
+ * Glossaire tooltip inline, NutriDécrypte edition.
+ * Usage : <Glossaire term="NOVA" display="NOVA" />
+ * Affiche le label souligné en pointillé, hover/tap ouvre un tooltip riche
+ * avec définition, exemple nutri, lien interne, source officielle (EFSA, ANSES, NOVA).
+ */
+
+interface GlossaireEntry {
+  title: string;
+  definition: string;
+  example: string;
+  internalLink: { label: string; href: string };
+  externalSource: { label: string; url: string };
+}
+
+const entries: Record<string, GlossaireEntry> = {
+  "NOVA": {
+    title: "NOVA",
+    definition: "Classification brésilienne en 4 groupes selon le degré de transformation industrielle d'un aliment. Le groupe 4, ultra-transformé, concentre additifs, extraits purifiés et procédés agressifs.",
+    example: "Un yaourt sucré aromatisé aux morceaux, avec amidon modifié, arôme et édulcorant, sort en NOVA 4 même s'il affiche un Nutri-Score B.",
+    internalLink: { label: "Méthodologie NutriDécrypte", href: "/methodology" },
+    externalSource: { label: "Monteiro et al., BMJ 2019", url: "https://www.bmj.com/content/365/bmj.l1451" },
+  },
+  "ultra-transformation": {
+    title: "Ultra-transformation",
+    definition: "Procédé industriel qui dénature la matrice alimentaire : extrusion haute pression, fractionnement, recomposition, ajout d'additifs cosmétiques. Associée à +12% de risque de cancer selon la cohorte NutriNet-Santé.",
+    example: "Une barre céréalière « riche en fibres » avec sirop de glucose-fructose, huile de palme, émulsifiants et arômes est ultra-transformée.",
+    internalLink: { label: "Notre méthode", href: "/methodology" },
+    externalSource: { label: "NutriNet-Santé, BMJ 2018", url: "https://www.bmj.com/content/360/bmj.k322" },
+  },
+  "Nutri-Score": {
+    title: "Nutri-Score",
+    definition: "Étiquetage nutritionnel officiel de A à E, créé par Santé publique France en 2017. Pondère calories, gras saturés, sucres, sel, fibres, protéines, fruits et légumes. Ignore volontairement l'ultra-transformation et les additifs.",
+    example: "Un soda light peut obtenir un Nutri-Score B, alors qu'il combine édulcorants, acidifiants et arômes artificiels.",
+    internalLink: { label: "Lire la méthodologie complète", href: "/methodology" },
+    externalSource: { label: "Santé publique France", url: "https://www.santepubliquefrance.fr/determinants-de-sante/nutrition-et-activite-physique/articles/nutri-score" },
+  },
+  "E171": {
+    title: "E171 (dioxyde de titane)",
+    definition: "Colorant blanc qui donnait l'aspect « éclatant » de bonbons, chewing-gums et médicaments. Interdit dans l'alimentation dans l'UE depuis août 2022 suite à l'avis EFSA de 2021 : génotoxicité non exclue.",
+    example: "Il a disparu des Tic-Tac et Smarties en Europe, mais reste autorisé dans les cosmétiques et certains médicaments.",
+    internalLink: { label: "Additifs décryptés", href: "/encyclopedia" },
+    externalSource: { label: "EFSA 2021, Scientific Opinion", url: "https://www.efsa.europa.eu/en/efsajournal/pub/6585" },
+  },
+  "EFSA": {
+    title: "EFSA",
+    definition: "European Food Safety Authority, agence européenne basée à Parme qui évalue les risques des additifs, pesticides, contaminants et allégations santé pour l'UE. Ses avis conditionnent les autorisations Commission européenne.",
+    example: "C'est l'avis EFSA de mai 2023 qui a relancé le débat sur l'aspartame, classé « possiblement cancérogène » par l'OMS la même année.",
+    internalLink: { label: "Sources officielles", href: "/methodology" },
+    externalSource: { label: "EFSA.europa.eu", url: "https://www.efsa.europa.eu/" },
+  },
+  "ANSES": {
+    title: "ANSES",
+    definition: "Agence nationale française de sécurité sanitaire de l'alimentation, de l'environnement et du travail. Évalue additifs, contaminants, résidus de pesticides, et publie régulièrement alertes et avis indépendants.",
+    example: "L'ANSES a recommandé dès 2017 de limiter l'exposition au E171 chez l'enfant, 5 ans avant l'interdiction EFSA.",
+    internalLink: { label: "Sources utilisées", href: "/methodology" },
+    externalSource: { label: "anses.fr", url: "https://www.anses.fr/" },
+  },
+  "additif": {
+    title: "Additif alimentaire",
+    definition: "Substance ajoutée à un aliment pour colorer, conserver, émulsifier, édulcorer, texturer ou rehausser la saveur. Numérotés E suivi de 3 ou 4 chiffres dans l'UE. Environ 400 sont autorisés.",
+    example: "E330 (acide citrique) est neutre ; E951 (aspartame) fait débat ; E102 (tartrazine) est associé à l'hyperactivité chez l'enfant.",
+    internalLink: { label: "Encyclopédie des additifs", href: "/encyclopedia" },
+    externalSource: { label: "Règlement CE n°1333/2008", url: "https://eur-lex.europa.eu/eli/reg/2008/1333/oj" },
+  },
+};
+
+const aliases: Record<string, string> = {
+  "nova": "NOVA",
+  "ultra-transformé": "ultra-transformation",
+  "ultra-transformés": "ultra-transformation",
+  "ultra transformation": "ultra-transformation",
+  "nutri-score": "Nutri-Score",
+  "nutriscore": "Nutri-Score",
+  "e171": "E171",
+  "dioxyde de titane": "E171",
+  "efsa": "EFSA",
+  "anses": "ANSES",
+  "additifs": "additif",
+  "additif alimentaire": "additif",
+};
+
+interface Props {
+  term: string;
+  display?: string;
+}
+
+const { term, display } = Astro.props;
+const lookup = term.toLowerCase().trim();
+const key = entries[term] ? term : (aliases[lookup] || Object.keys(entries).find(k => k.toLowerCase() === lookup));
+const entry = key ? entries[key] : null;
+const label = display || term;
+---
+
+{entry ? (
+  <span class="glossaire-term" tabindex="0" role="button" aria-label={`Définition : ${label}`}>
+    <span class="glossaire-label">{label}</span>
+    <span class="glossaire-tooltip" role="tooltip">
+      <span class="glossaire-tooltip-title">{entry.title}</span>
+      <span class="glossaire-tooltip-def">{entry.definition}</span>
+      <span class="glossaire-tooltip-example"><strong>Ex.</strong> {entry.example}</span>
+      <span class="glossaire-tooltip-links">
+        <a href={entry.internalLink.href} class="glossaire-tooltip-internal">
+          → {entry.internalLink.label}
+        </a>
+        <a href={entry.externalSource.url} target="_blank" rel="noopener nofollow" class="glossaire-tooltip-external">
+          Source : {entry.externalSource.label} ↗
+        </a>
+      </span>
+    </span>
+  </span>
+) : (
+  <span>{label}</span>
+)}
+
+<style is:global>
+  .glossaire-term {
+    position: relative;
+    display: inline;
+    cursor: help;
+  }
+
+  .glossaire-label {
+    border-bottom: 1.5px dotted var(--color-primary);
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .glossaire-term:hover .glossaire-label,
+  .glossaire-term:focus .glossaire-label,
+  .glossaire-term[aria-expanded="true"] .glossaire-label {
+    border-bottom-style: solid;
+    border-color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 8%, transparent);
+  }
+
+  .glossaire-tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    width: max(280px, min(92vw, 360px));
+    padding: 16px 18px;
+    background: var(--color-primary-dark);
+    color: #ffffff;
+    border-radius: 14px;
+    font-size: 13px;
+    line-height: 1.55;
+    box-shadow: 0 16px 44px -8px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+    pointer-events: none;
+    z-index: 1000;
+    font-family: var(--font-body);
+    font-weight: 400;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    white-space: normal;
+  }
+
+  .glossaire-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 7px solid transparent;
+    border-top-color: var(--color-primary-dark);
+  }
+
+  .glossaire-term:hover .glossaire-tooltip,
+  .glossaire-term:focus .glossaire-tooltip,
+  .glossaire-term:focus-within .glossaire-tooltip,
+  .glossaire-term[aria-expanded="true"] .glossaire-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
+
+  .glossaire-tooltip-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .glossaire-tooltip-def {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .glossaire-tooltip-example {
+    display: block;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border-left: 2px solid var(--color-accent);
+    border-radius: 4px;
+  }
+
+  .glossaire-tooltip-example strong {
+    color: var(--color-accent);
+    margin-right: 4px;
+  }
+
+  .glossaire-tooltip-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 2px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 12px;
+  }
+
+  .glossaire-tooltip-internal {
+    color: var(--color-accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .glossaire-tooltip-internal:hover {
+    text-decoration: underline;
+  }
+
+  .glossaire-tooltip-external {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+  }
+
+  .glossaire-tooltip-external:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+
+  /* Mobile: bottom sheet full width */
+  @media (max-width: 640px) {
+    .glossaire-tooltip {
+      position: fixed;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      top: auto;
+      width: auto;
+      transform: translateY(8px);
+    }
+    .glossaire-tooltip::after {
+      display: none;
+    }
+    .glossaire-term:hover .glossaire-tooltip,
+    .glossaire-term:focus .glossaire-tooltip,
+    .glossaire-term:focus-within .glossaire-tooltip,
+    .glossaire-term[aria-expanded="true"] .glossaire-tooltip {
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glossaire-tooltip {
+      transition: none;
+    }
+  }
+</style>

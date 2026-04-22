@@ -1,0 +1,169 @@
+---
+/**
+ * TextMorph. Pure JS FLIP technique (no Framer Motion).
+ * Characters with matching keys slide to new positions (FLIP).
+ * Exiting characters clone + fade-out in position: absolute (popLayout).
+ * New characters fade-in.
+ */
+interface Props {
+  phrases: string[];
+  interval?: number;
+  class?: string;
+  tag?: string;
+}
+
+const { phrases, interval = 3000, class: className = "", tag = "span" } = Astro.props;
+---
+
+<div
+  class={`text-morph-container ${className}`}
+  data-morph-phrases={JSON.stringify(phrases)}
+  data-morph-interval={interval}
+  data-morph-tag={tag}
+>
+  <span class="text-morph-target" aria-label={phrases[0]}>
+    {phrases[0].split("").map((char) => (
+      <span class="morph-char inline-block">{char === " " ? " " : char}</span>
+    ))}
+  </span>
+</div>
+
+<style>
+  .text-morph-container {
+    display: inline-block;
+    position: relative;
+  }
+
+  .morph-char {
+    display: inline-block;
+    transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.15s ease;
+    will-change: transform, opacity;
+  }
+
+  .morph-char-exit {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    pointer-events: none;
+  }
+
+  .morph-char-enter {
+    opacity: 0;
+    animation: morph-fade-in 0.3s ease 0.1s forwards;
+  }
+
+  @keyframes morph-fade-in {
+    to { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .morph-char {
+      transition: none;
+    }
+    .morph-char-exit {
+      transition: none;
+    }
+    .morph-char-enter {
+      animation: none;
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  function initTextMorph() {
+    document.querySelectorAll(".text-morph-container").forEach((container) => {
+      const el = container as HTMLElement;
+      const phrases: string[] = JSON.parse(el.dataset.morphPhrases || "[]");
+      const interval = parseInt(el.dataset.morphInterval || "3000");
+      const target = el.querySelector(".text-morph-target") as HTMLElement;
+      if (!target || phrases.length < 2) return;
+
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let currentIndex = 0;
+
+      function tokenize(text: string): { key: string; char: string }[] {
+        const counts: Record<string, number> = {};
+        return text.split("").map((char) => {
+          const lower = char.toLowerCase();
+          counts[lower] = (counts[lower] || 0) + 1;
+          return { key: `${lower}${counts[lower]}`, char: char === " " ? " " : char };
+        });
+      }
+
+      function morph(newText: string) {
+        const oldTokens = tokenize(target.getAttribute("aria-label") || "");
+        const newTokens = tokenize(newText);
+        target.setAttribute("aria-label", newText);
+
+        const oldSpans = Array.from(target.querySelectorAll(".morph-char")) as HTMLElement[];
+        const oldPositions = new Map<string, DOMRect>();
+        oldSpans.forEach((span, i) => {
+          if (oldTokens[i]) {
+            oldPositions.set(oldTokens[i].key, span.getBoundingClientRect());
+          }
+        });
+
+        const newKeySet = new Set(newTokens.map((t) => t.key));
+        const oldKeySet = new Set(oldTokens.map((t) => t.key));
+
+        if (!reduced) {
+          oldSpans.forEach((span, i) => {
+            if (oldTokens[i] && !newKeySet.has(oldTokens[i].key)) {
+              const rect = span.getBoundingClientRect();
+              const clone = span.cloneNode(true) as HTMLElement;
+              clone.classList.add("morph-char-exit");
+              clone.style.left = `${rect.left}px`;
+              clone.style.top = `${rect.top}px`;
+              clone.style.fontSize = window.getComputedStyle(span).fontSize;
+              document.body.appendChild(clone);
+              setTimeout(() => clone.remove(), 200);
+            }
+          });
+        }
+
+        target.innerHTML = newTokens
+          .map((t) => {
+            const isNew = !oldKeySet.has(t.key);
+            return `<span class="morph-char inline-block ${isNew ? "morph-char-enter" : ""}" data-key="${t.key}">${t.char}</span>`;
+          })
+          .join("");
+
+        if (reduced) return;
+
+        const newSpans = Array.from(target.querySelectorAll(".morph-char")) as HTMLElement[];
+        newSpans.forEach((span, i) => {
+          const key = newTokens[i]?.key;
+          if (key && oldPositions.has(key)) {
+            const oldRect = oldPositions.get(key)!;
+            const newRect = span.getBoundingClientRect();
+            const dx = oldRect.left - newRect.left;
+            const dy = oldRect.top - newRect.top;
+
+            if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+              span.style.transform = `translate(${dx}px, ${dy}px)`;
+              span.style.transition = "none";
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  span.style.transition = "transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)";
+                  span.style.transform = "translate(0, 0)";
+                });
+              });
+            }
+          }
+        });
+      }
+
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % phrases.length;
+        morph(phrases[currentIndex]);
+      }, interval);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initTextMorph);
+  } else {
+    initTextMorph();
+  }
+</script>

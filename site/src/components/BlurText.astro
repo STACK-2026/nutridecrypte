@@ -1,0 +1,98 @@
+---
+/**
+ * BlurText. Per-letter blur-to-sharp reveal with stagger.
+ * Each letter goes from blur(12px)+opacity(0)+translateY(8px) to clear.
+ * Camera focus effect, premium feel.
+ */
+interface Props {
+  text: string;
+  class?: string;
+  stagger?: number;
+  blur?: number;
+}
+
+const {
+  text,
+  class: className = "",
+  stagger = 30,
+  blur = 12,
+} = Astro.props;
+---
+
+<span
+  class={`blur-text ${className}`}
+  data-blur-stagger={stagger}
+  data-blur-amount={blur}
+  aria-label={text}
+  style="display: inline-block;"
+>
+  {text.split(" ").map((word, wi, arr) => (
+    <span class="blur-word" style="display: inline-block; white-space: nowrap;">
+      {word.split("").map((ch) => (
+        <span
+          class="blur-char"
+          aria-hidden="true"
+          style={`display: inline-block; filter: blur(${blur}px); opacity: 0; transform: translateY(8px); will-change: filter, opacity, transform;`}
+        >
+          {ch}
+        </span>
+      ))}
+      {wi < arr.length - 1 && <span aria-hidden="true" style="display: inline-block; width: 0.25em;">&nbsp;</span>}
+    </span>
+  ))}
+</span>
+
+<script>
+  function initBlurText() {
+    document.querySelectorAll(".blur-text:not([data-blur-init])").forEach((el) => {
+      const elem = el as HTMLElement;
+      elem.setAttribute("data-blur-init", "1");
+      const stagger = parseInt(elem.dataset.blurStagger || "30");
+      const chars = elem.querySelectorAll(".blur-char") as NodeListOf<HTMLElement>;
+
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduced) {
+        chars.forEach((ch) => {
+          ch.style.filter = "none";
+          ch.style.opacity = "1";
+          ch.style.transform = "none";
+        });
+        return;
+      }
+
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            chars.forEach((ch, i) => {
+              setTimeout(() => {
+                ch.style.transition = "filter 0.6s ease, opacity 0.6s ease, transform 0.6s ease";
+                ch.style.filter = "blur(0px)";
+                ch.style.opacity = "1";
+                ch.style.transform = "translateY(0)";
+              }, i * stagger);
+            });
+            obs.unobserve(elem);
+          }
+        });
+      }, { threshold: 0.2 });
+      obs.observe(elem);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initBlurText);
+  } else {
+    initBlurText();
+  }
+</script>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    .blur-char {
+      filter: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+</style>

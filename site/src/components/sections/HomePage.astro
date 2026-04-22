@@ -2,6 +2,12 @@
 import { siteConfig } from "../../../site.config";
 import { tr, t, getLocale, localeUrl } from "../../i18n/t";
 import { getCollection } from "astro:content";
+import TextMorph from "../TextMorph.astro";
+import BlurText from "../BlurText.astro";
+import DecodeReveal from "../DecodeReveal.astro";
+import Glossaire from "../Glossaire.astro";
+import GradeReveal from "../GradeReveal.astro";
+import LabelScanLine from "../LabelScanLine.astro";
 
 const locale = getLocale(Astro.url);
 
@@ -58,6 +64,18 @@ const steps = locale === "fr" ? [
   { num: "03", title: "Choose better", body: "Each page shows better-graded alternatives from the same category. No brand can pay its way to the top." },
 ];
 
+const heroRotatingPhrases = locale === "fr" ? [
+  "Décrypte une étiquette.",
+  "Note A à E instantanée.",
+  "Additifs, NOVA, Nutri-Score.",
+  "On ne cède pas au marketing.",
+] : [
+  "Decode a food label.",
+  "Instant A to E grade.",
+  "Additives, NOVA, Nutri-Score.",
+  "Marketing does not pass here.",
+];
+
 const stats = locale === "fr" ? [
   { num: "3M", label: "produits dans le catalogue Open Food Facts" },
   { num: "400+", label: "additifs E décryptés base EFSA" },
@@ -79,7 +97,7 @@ const stats = locale === "fr" ? [
   </div>
 
   <div class="nd-hero-inner">
-    <span class="nd-hero-badge">
+    <span class="nd-hero-badge pulse-signal">
       <span class="nd-hero-dot" aria-hidden="true"></span>
       {t(tr.hero.badge, locale)}
     </span>
@@ -87,7 +105,12 @@ const stats = locale === "fr" ? [
       {t(tr.hero.title1, locale)}{" "}
       <span class="nd-hero-title-accent">{t(tr.hero.title2, locale)}</span>
     </h1>
-    <p class="nd-hero-lede" data-speakable>{t(tr.hero.lede, locale)}</p>
+    <p class="nd-hero-tagline" aria-hidden="true">
+      <TextMorph phrases={heroRotatingPhrases} interval={2800} />
+    </p>
+    <p class="nd-hero-lede" data-speakable>
+      <BlurText text={t(tr.hero.lede, locale)} stagger={18} blur={10} />
+    </p>
 
     <div class="nd-hero-ctas">
       <a href={localeUrl("/rankings", locale)} class="btn-primary">
@@ -147,11 +170,15 @@ const stats = locale === "fr" ? [
             ? "3 000 nouveaux ultra-transformés par an, et toi seul face à l'étiquette"
             : "3,000 new ultra-processed launches a year, and you alone facing the label"}
         </h2>
-        <p class="nd-problem-lede">
-          {locale === "fr"
-            ? "Le marketing agroalimentaire a perfectionné l'art du flou : « naturel », « riche en », « sans sucre ajouté ». Le Nutri-Score existe mais ignore l'ultra-transformation. Les additifs discutables multiplient les noms. Et 80% des produits vendus en Europe sont ultra-transformés selon la classification NOVA."
-            : "Food marketing has perfected the art of vagueness: \"natural\", \"rich in\", \"no added sugar\". The Nutri-Score exists but ignores ultra-processing. Disputed additives hide behind new names. And 80% of products sold in Europe are ultra-processed by NOVA standards."}
-        </p>
+        {locale === "fr" ? (
+          <p class="nd-problem-lede">
+            Le marketing agroalimentaire a perfectionné l'art du flou : « naturel », « riche en », « sans sucre ajouté ». Le <Glossaire term="Nutri-Score" /> existe mais ignore l'<Glossaire term="ultra-transformation" />. Les <Glossaire term="additif" display="additifs" /> discutables multiplient les noms. Et 80% des produits vendus en Europe sont ultra-transformés selon la classification <Glossaire term="NOVA" />.
+          </p>
+        ) : (
+          <p class="nd-problem-lede">
+            Food marketing has perfected the art of vagueness: "natural", "rich in", "no added sugar". The <Glossaire term="Nutri-Score" /> exists but ignores <Glossaire term="ultra-transformation" display="ultra-processing" />. Disputed <Glossaire term="additif" display="additives" /> hide behind new names. And 80% of products sold in Europe are ultra-processed by <Glossaire term="NOVA" /> standards.
+          </p>
+        )}
         <ul class="nd-problem-list">
           <li>
             <span class="nd-problem-num">+55%</span>
@@ -159,7 +186,11 @@ const stats = locale === "fr" ? [
           </li>
           <li>
             <span class="nd-problem-num">400+</span>
-            <span>{locale === "fr" ? "additifs E autorisés, dont 180 avec une alerte ANSES ou EFSA" : "authorized E-additives, 180 of them flagged by ANSES or EFSA"}</span>
+            {locale === "fr" ? (
+              <span>additifs E autorisés, dont 180 avec une alerte <Glossaire term="ANSES" /> ou <Glossaire term="EFSA" /></span>
+            ) : (
+              <span>authorized E-additives, 180 of them flagged by <Glossaire term="ANSES" /> or <Glossaire term="EFSA" /></span>
+            )}
           </li>
           <li>
             <span class="nd-problem-num">1/3</span>
@@ -193,7 +224,7 @@ const stats = locale === "fr" ? [
     <div class="nd-preview-card">
       <div class="nd-preview-header">
         <div class="nd-preview-grade">
-          <span class={`grade grade-xl grade-${sampleProduct.grade.toLowerCase()}`}>{sampleProduct.grade}</span>
+          <GradeReveal grade={sampleProduct.grade as "A" | "B" | "C" | "D" | "E"} size="xl" />
           <span class="nd-preview-score">{sampleProduct.score}/100</span>
         </div>
         <div class="nd-preview-title">
@@ -223,15 +254,17 @@ const stats = locale === "fr" ? [
             <span class="nd-dot nd-dot-accent" aria-hidden="true"></span>
             {locale === "fr" ? "Additifs détectés (base EFSA)" : "Additives detected (EFSA registry)"}
           </p>
-          <ul class="nd-preview-additives">
-            {sampleProduct.additives.map((add) => (
-              <li>
-                <span class="nd-add-code">{add.code}</span>
-                <span class="nd-add-name">{add.name}</span>
-                <span class="nd-add-risk">{add.risk}</span>
-              </li>
-            ))}
-          </ul>
+          <LabelScanLine class="nd-preview-scan" direction="vertical" duration={1400}>
+            <ul class="nd-preview-additives">
+              {sampleProduct.additives.map((add) => (
+                <li>
+                  <span class="nd-add-code">{add.code}</span>
+                  <span class="nd-add-name">{add.name}</span>
+                  <span class="nd-add-risk">{add.risk}</span>
+                </li>
+              ))}
+            </ul>
+          </LabelScanLine>
         </div>
       </div>
 
@@ -253,8 +286,8 @@ const stats = locale === "fr" ? [
       <h2>{locale === "fr" ? "Trois promesses, zéro blabla" : "Three promises, zero fluff"}</h2>
     </div>
     <div class="nd-features-grid">
-      {siteConfig.features.map((feature) => (
-        <a href={localeUrl("/methodology", locale)} class="nd-feature-card">
+      {siteConfig.features.map((feature, idx) => (
+        <a href={localeUrl("/methodology", locale)} class={`nd-feature-card scale-reveal`} style={`transition-delay:${idx * 90}ms`}>
           <div class="nd-feature-icon" aria-hidden="true">
             <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
               {feature.icon === "zap" && <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>}
@@ -299,8 +332,8 @@ const stats = locale === "fr" ? [
       <h2>{locale === "fr" ? "L'infrastructure derrière chaque note" : "The infrastructure behind each grade"}</h2>
     </div>
     <dl class="nd-stats-grid">
-      {stats.map((stat) => (
-        <div class="nd-stat">
+      {stats.map((stat, idx) => (
+        <div class={`nd-stat fade-up delay-${(idx % 4) + 1}`}>
           <dt class="nd-stat-num">{stat.num}</dt>
           <dd class="nd-stat-label">{stat.label}</dd>
         </div>
@@ -495,12 +528,24 @@ const stats = locale === "fr" ? [
     background-clip: text;
     color: transparent;
   }
+  .nd-hero-tagline {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    color: var(--color-primary-dark);
+    margin: -0.25rem auto 1.25rem;
+    min-height: 1.4em;
+    font-weight: 700;
+  }
   .nd-hero-lede {
     font-size: 1.08rem;
     color: var(--color-ink-soft);
     max-width: 38rem;
     margin: 0 auto 2rem;
     line-height: 1.65;
+  }
+  .nd-preview-scan {
+    border-radius: 0.4rem;
   }
   .nd-hero-ctas {
     display: flex;

@@ -1,0 +1,126 @@
+---
+/**
+ * DecodeReveal, brand signature NutriDécrypte.
+ * Le texte s'affiche d'abord comme une série de codes E-additifs aléatoires
+ * (E102, E150d, E407, E471…) puis se « décrypte » vers le texte final, caractère
+ * par caractère, de gauche à droite. Trigger scroll.
+ *
+ * Props :
+ *   text    : string final (obligatoire)
+ *   class   : classes CSS additionnelles
+ *   speed   : ms entre deux frames (default 60)
+ *   frames  : nombre de frames jusqu'à résolution complète (default 24)
+ *   chars   : charset custom (default = mix E-numbers + hex alphabet)
+ *   trigger : "scroll" (default), "load", "hover"
+ */
+interface Props {
+  text: string;
+  class?: string;
+  speed?: number;
+  frames?: number;
+  chars?: string;
+  trigger?: "scroll" | "load" | "hover";
+}
+
+const {
+  text,
+  class: className = "",
+  speed = 60,
+  frames = 24,
+  chars = "E0123456789ABCDEFabcdef",
+  trigger = "scroll",
+} = Astro.props;
+---
+
+<span
+  class={`decode-reveal ${className}`}
+  data-decode-text={text}
+  data-decode-speed={speed}
+  data-decode-frames={frames}
+  data-decode-chars={chars}
+  data-decode-trigger={trigger}
+  aria-label={text}
+  style="font-variant-numeric: tabular-nums; white-space: pre-wrap;"
+>{text}</span>
+
+<script>
+  function initDecodeReveal() {
+    // E-number pool mixed with hex characters for authentic "food code" feel
+    const ePool = ["E100","E102","E120","E150d","E160a","E171","E200","E211","E250","E300","E322","E330","E407","E412","E450","E471","E621","E901","E951"];
+
+    document.querySelectorAll(".decode-reveal:not([data-decode-init])").forEach((el) => {
+      const elem = el as HTMLElement;
+      elem.setAttribute("data-decode-init", "1");
+      const finalText = elem.dataset.decodeText || "";
+      const speed = parseInt(elem.dataset.decodeSpeed || "60");
+      const maxFrames = parseInt(elem.dataset.decodeFrames || "24");
+      const chars = elem.dataset.decodeChars || "E0123456789ABCDEF";
+      const trigger = elem.dataset.decodeTrigger || "scroll";
+
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduced) {
+        elem.textContent = finalText;
+        return;
+      }
+
+      function pickNoise(realChar: string): string {
+        if (realChar === " ") return " ";
+        if (realChar === "\n") return "\n";
+        // 25% chance of injecting a small E-number snippet (single digit)
+        if (Math.random() < 0.25) {
+          const e = ePool[Math.floor(Math.random() * ePool.length)];
+          return e[Math.floor(Math.random() * e.length)];
+        }
+        return chars[Math.floor(Math.random() * chars.length)];
+      }
+
+      function run() {
+        let frame = 0;
+        const interval = setInterval(() => {
+          frame++;
+          const progress = frame / maxFrames;
+          const resolved = Math.floor(progress * finalText.length);
+          let result = "";
+          for (let i = 0; i < finalText.length; i++) {
+            if (i < resolved) result += finalText[i];
+            else result += pickNoise(finalText[i]);
+          }
+          elem.textContent = result;
+          if (frame >= maxFrames) {
+            elem.textContent = finalText;
+            clearInterval(interval);
+          }
+        }, speed);
+      }
+
+      if (trigger === "load") {
+        run();
+      } else if (trigger === "hover") {
+        elem.addEventListener("mouseenter", run);
+      } else {
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              run();
+              obs.unobserve(elem);
+            }
+          });
+        }, { threshold: 0.25 });
+        obs.observe(elem);
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initDecodeReveal);
+  } else {
+    initDecodeReveal();
+  }
+</script>
+
+<style>
+  .decode-reveal {
+    display: inline-block;
+    font-variant-ligatures: none;
+  }
+</style>

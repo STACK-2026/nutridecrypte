@@ -1,0 +1,51 @@
+---
+/**
+ * Analytics, injects public/tracker.js gated by cookie consent.
+ * Consent key : nd-cookie-choice (values : "all" | "essential").
+ * Tracker loads only if choice === "all". Bot UAs are skipped client-side.
+ * Supabase creds exposed via window.NUTRIDECRYPTE_SUPABASE_URL / _ANON_KEY,
+ * read from import.meta.env at build time.
+ */
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || "";
+const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || "";
+---
+
+<script is:inline define:vars={{ supabaseUrl, supabaseKey }}>
+  (function () {
+    try {
+      var ua = (typeof navigator !== "undefined" && navigator.userAgent) || "";
+      var isBot = /bot|crawl|spider|slurp|bingpreview|duckduck|yandex|baiduspider|facebookexternalhit|twitterbot|linkedinbot|embedly|quora|pingdom|headlesschrome|lighthouse|gtmetrix|applebot|semrushbot|ahrefsbot|mj12bot|petalbot|sogou/i.test(ua);
+      if (isBot) return;
+
+      // Inject creds for public/tracker.js to pick up
+      window.NUTRIDECRYPTE_SUPABASE_URL = supabaseUrl || "";
+      window.NUTRIDECRYPTE_SUPABASE_ANON_KEY = supabaseKey || "";
+
+      function hasConsent() {
+        try {
+          var choice = localStorage.getItem("nd-cookie-choice");
+          return choice === "all";
+        } catch (e) { return false; }
+      }
+
+      function loadTracker() {
+        if (document.querySelector('script[data-nd-tracker]')) return;
+        var s = document.createElement("script");
+        s.src = "/tracker.js";
+        s.defer = true;
+        s.setAttribute("data-nd-tracker", "1");
+        document.head.appendChild(s);
+      }
+
+      if (hasConsent() && supabaseUrl && supabaseKey) {
+        loadTracker();
+      }
+
+      // If the cookie banner emits events (custom or storage), react to them
+      window.addEventListener("storage", function (ev) {
+        if (ev.key === "nd-cookie-choice" && ev.newValue === "all") loadTracker();
+      });
+      window.addEventListener("nd:consent-accepted", function () { loadTracker(); });
+    } catch (e) { /* silent */ }
+  })();
+</script>

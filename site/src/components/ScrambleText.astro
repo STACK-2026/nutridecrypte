@@ -1,0 +1,94 @@
+---
+/**
+ * ScrambleText. Glitch/resolve effect.
+ * Text scrambles in random chars then resolves left-to-right.
+ * Pure JS, no React/Framer needed.
+ */
+interface Props {
+  text: string;
+  speed?: number;
+  frames?: number;
+  class?: string;
+  chars?: string;
+  trigger?: "load" | "scroll" | "hover";
+}
+
+const {
+  text,
+  speed = 40,
+  frames = 20,
+  class: className = "",
+  chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*",
+  trigger = "scroll",
+} = Astro.props;
+---
+
+<span
+  class={`scramble-text ${className}`}
+  data-scramble-text={text}
+  data-scramble-speed={speed}
+  data-scramble-frames={frames}
+  data-scramble-chars={chars}
+  data-scramble-trigger={trigger}
+  aria-label={text}
+  style="font-variant-numeric: tabular-nums;"
+>{text}</span>
+
+<script>
+  function initScramble() {
+    document.querySelectorAll(".scramble-text:not([data-scramble-init])").forEach((el) => {
+      const elem = el as HTMLElement;
+      elem.setAttribute("data-scramble-init", "1");
+      const text = elem.dataset.scrambleText || "";
+      const speed = parseInt(elem.dataset.scrambleSpeed || "40");
+      const maxFrames = parseInt(elem.dataset.scrambleFrames || "20");
+      const chars = elem.dataset.scrambleChars || "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      const trigger = elem.dataset.scrambleTrigger || "scroll";
+
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduced) {
+        elem.textContent = text;
+        return;
+      }
+
+      function scramble() {
+        let frame = 0;
+        const interval = setInterval(() => {
+          frame++;
+          const progress = frame / maxFrames;
+          const resolved = Math.floor(progress * text.length);
+          let result = "";
+          for (let i = 0; i < text.length; i++) {
+            if (i < resolved) result += text[i];
+            else if (text[i] === " ") result += " ";
+            else result += chars[Math.floor(Math.random() * chars.length)];
+          }
+          elem.textContent = result;
+          if (frame >= maxFrames) clearInterval(interval);
+        }, speed);
+      }
+
+      if (trigger === "load") {
+        scramble();
+      } else if (trigger === "scroll") {
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              scramble();
+              obs.unobserve(elem);
+            }
+          });
+        }, { threshold: 0.3 });
+        obs.observe(elem);
+      } else if (trigger === "hover") {
+        elem.addEventListener("mouseenter", scramble);
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initScramble);
+  } else {
+    initScramble();
+  }
+</script>

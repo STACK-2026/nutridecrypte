@@ -1,0 +1,172 @@
+---
+/**
+ * GradeReveal, NutriDécrypte signature grade badge animation.
+ * Affiche une grande lettre de note A / B / C / D / E avec :
+ *  1) fade in depuis opacité 0 + scale-up 0.8 -> 1 (spring)
+ *  2) pulse amber qui se diffuse autour (1x)
+ *  3) halo permanent de la couleur du grade
+ * Respecte prefers-reduced-motion (state final direct).
+ *
+ * Props :
+ *   grade   : "A" | "B" | "C" | "D" | "E" (obligatoire)
+ *   size    : "sm" | "md" | "lg" (default) | "xl"
+ *   animate : boolean default true (si false, state final direct)
+ *   class   : classes additionnelles sur le wrapper
+ */
+
+type GradeValue = "A" | "B" | "C" | "D" | "E";
+type SizeValue = "sm" | "md" | "lg" | "xl";
+
+interface Props {
+  grade: GradeValue;
+  size?: SizeValue;
+  animate?: boolean;
+  class?: string;
+}
+
+const {
+  grade,
+  size = "lg",
+  animate = true,
+  class: className = "",
+} = Astro.props;
+
+const gradeLower = grade.toLowerCase();
+---
+
+<span
+  class={`grade-reveal grade-reveal-${size} grade-halo-${gradeLower} ${animate ? "grade-reveal-animate" : "grade-reveal-static"} ${className}`}
+  data-grade={grade}
+  aria-label={`Note ${grade}`}
+  role="img"
+>
+  <span class={`grade grade-${size} grade-${gradeLower}`}>{grade}</span>
+  <span class="grade-reveal-pulse" aria-hidden="true"></span>
+</span>
+
+<style>
+  .grade-reveal {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    isolation: isolate;
+  }
+
+  .grade-reveal-sm { width: 1.75rem; height: 1.75rem; }
+  .grade-reveal-md { width: 2.5rem; height: 2.5rem; }
+  .grade-reveal-lg { width: 4rem; height: 4rem; }
+  .grade-reveal-xl { width: 6rem; height: 6rem; }
+
+  .grade-reveal .grade {
+    position: relative;
+    z-index: 2;
+    transform: scale(0.8);
+    opacity: 0;
+    transition: transform 700ms var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1)),
+                opacity 500ms ease;
+  }
+
+  .grade-reveal-static .grade,
+  .grade-reveal.is-revealed .grade {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .grade-reveal-pulse {
+    position: absolute;
+    inset: -4px;
+    border-radius: 9999px;
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.55) 0%, rgba(245, 158, 11, 0) 65%);
+  }
+
+  .grade-reveal.is-revealed .grade-reveal-pulse {
+    animation: nd-grade-pulse 1100ms ease-out 200ms 1;
+  }
+
+  @keyframes nd-grade-pulse {
+    0%   { transform: scale(0.7); opacity: 0; }
+    30%  { opacity: 0.9; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+
+  /* Colored permanent halos, branded per grade */
+  .grade-halo-a::before,
+  .grade-halo-b::before,
+  .grade-halo-c::before,
+  .grade-halo-d::before,
+  .grade-halo-e::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 9999px;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 700ms ease 400ms;
+    pointer-events: none;
+  }
+
+  .grade-halo-a::before { background: radial-gradient(circle, color-mix(in srgb, var(--grade-a) 45%, transparent) 0%, transparent 70%); }
+  .grade-halo-b::before { background: radial-gradient(circle, color-mix(in srgb, var(--grade-b) 45%, transparent) 0%, transparent 70%); }
+  .grade-halo-c::before { background: radial-gradient(circle, color-mix(in srgb, var(--grade-c) 45%, transparent) 0%, transparent 70%); }
+  .grade-halo-d::before { background: radial-gradient(circle, color-mix(in srgb, var(--grade-d) 45%, transparent) 0%, transparent 70%); }
+  .grade-halo-e::before { background: radial-gradient(circle, color-mix(in srgb, var(--grade-e) 45%, transparent) 0%, transparent 70%); }
+
+  .grade-reveal-static::before,
+  .grade-reveal.is-revealed::before {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .grade-reveal .grade {
+      transition: none;
+      transform: scale(1);
+      opacity: 1;
+    }
+    .grade-reveal-pulse,
+    .grade-reveal.is-revealed .grade-reveal-pulse {
+      animation: none !important;
+      opacity: 0 !important;
+    }
+    .grade-halo-a::before,
+    .grade-halo-b::before,
+    .grade-halo-c::before,
+    .grade-halo-d::before,
+    .grade-halo-e::before {
+      transition: none;
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  function initGradeReveal() {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.querySelectorAll(".grade-reveal-animate:not([data-reveal-init])").forEach((el) => {
+      const elem = el as HTMLElement;
+      elem.setAttribute("data-reveal-init", "1");
+      if (reduced) {
+        elem.classList.add("is-revealed");
+        return;
+      }
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            elem.classList.add("is-revealed");
+            obs.unobserve(elem);
+          }
+        });
+      }, { threshold: 0.4 });
+      obs.observe(elem);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initGradeReveal);
+  } else {
+    initGradeReveal();
+  }
+</script>

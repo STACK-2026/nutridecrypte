@@ -4,6 +4,8 @@ import { fontsUrl } from "../utils/config";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import CookieBanner from "../components/CookieBanner.astro";
+import Analytics from "../components/Analytics.astro";
+import EasterEggs from "../components/EasterEggs.astro";
 import { getLocale } from "../i18n/t";
 import { organizationSchema, websiteSchema } from "../lib/structured-data";
 import "../styles/global.css";
@@ -88,8 +90,8 @@ const frHref = siteConfig.url + "/fr" + (cleanPath === "/" ? "/" : cleanPath);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
 
-    <!-- Analytics tracker -->
-    <script src="/tracker.js" defer is:inline></script>
+    <!-- Analytics tracker (consent gated) -->
+    <Analytics />
 
     <!-- Favicon + PWA -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -109,11 +111,13 @@ const frHref = siteConfig.url + "/fr" + (cleanPath === "/" ? "/" : cleanPath);
     </main>
     <Footer />
     <CookieBanner />
+    <EasterEggs />
 
     <script is:inline>
       // Reveal-on-scroll (inline for immediate execution)
       document.addEventListener("DOMContentLoaded", function() {
-        var revealEls = document.querySelectorAll(".reveal");
+        // Broaden the reveal-on-scroll observer to also handle the signature helpers
+        var revealEls = document.querySelectorAll(".reveal, .scale-reveal, .blur-reveal, .fade-up");
 
         // If page loaded with a hash, reveal the targeted element and its
         // reveal ancestors/siblings immediately so deep links never land on
@@ -123,14 +127,22 @@ const frHref = siteConfig.url + "/fr" + (cleanPath === "/" ? "/" : cleanPath);
             var hashEl = document.querySelector(location.hash);
             if (hashEl) {
               var el = hashEl;
+              var revealClasses = ["reveal", "scale-reveal", "blur-reveal", "fade-up"];
+              function hasRevealClass(node) {
+                if (!node || !node.classList) return false;
+                for (var i = 0; i < revealClasses.length; i++) {
+                  if (node.classList.contains(revealClasses[i])) return true;
+                }
+                return false;
+              }
               while (el) {
-                if (el.classList && el.classList.contains("reveal")) el.classList.add("in-view");
+                if (hasRevealClass(el)) el.classList.add("in-view");
                 el = el.parentElement;
               }
               var container = hashEl.parentElement;
               if (container) {
                 Array.prototype.forEach.call(container.children, function(s) {
-                  if (s.classList && s.classList.contains("reveal")) s.classList.add("in-view");
+                  if (hasRevealClass(s)) s.classList.add("in-view");
                 });
               }
             }

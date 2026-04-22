@@ -1,0 +1,168 @@
+---
+/**
+ * LabelScanLine, NutriDécrypte signature scan effect.
+ * Conteneur qui affiche ses enfants avec une ligne fine amber (2px) qui
+ * traverse verticalement ou horizontalement en 1.2s (trigger scroll),
+ * puis disparaît en fondu. Effet barcode scanner qui révèle un produit.
+ *
+ * Props :
+ *   class     : classes additionnelles sur le wrapper
+ *   direction : "vertical" (default) | "horizontal"
+ *   duration  : ms, default 1200
+ *   trigger   : "scroll" (default) | "load" | "hover"
+ */
+interface Props {
+  class?: string;
+  direction?: "vertical" | "horizontal";
+  duration?: number;
+  trigger?: "scroll" | "load" | "hover";
+}
+
+const {
+  class: className = "",
+  direction = "vertical",
+  duration = 1200,
+  trigger = "scroll",
+} = Astro.props;
+---
+
+<div
+  class={`scan-wrap ${className}`}
+  data-scan-direction={direction}
+  data-scan-duration={duration}
+  data-scan-trigger={trigger}
+>
+  <slot />
+  <span class="scan-line" aria-hidden="true"></span>
+</div>
+
+<style>
+  .scan-wrap {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .scan-line {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(245, 158, 11, 0.25) 20%,
+      rgba(245, 158, 11, 1) 50%,
+      rgba(245, 158, 11, 0.25) 80%,
+      transparent 100%
+    );
+    box-shadow: 0 0 18px rgba(245, 158, 11, 0.45);
+    z-index: 2;
+    will-change: transform, opacity;
+  }
+
+  .scan-wrap[data-scan-direction="vertical"] .scan-line {
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 2px;
+    transform: translateY(-6px);
+  }
+
+  .scan-wrap[data-scan-direction="horizontal"] .scan-line {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(245, 158, 11, 0.25) 20%,
+      rgba(245, 158, 11, 1) 50%,
+      rgba(245, 158, 11, 0.25) 80%,
+      transparent 100%
+    );
+    transform: translateX(-6px);
+  }
+
+  .scan-wrap.is-scanning .scan-line {
+    opacity: 1;
+  }
+
+  .scan-wrap.is-scanning[data-scan-direction="vertical"] .scan-line {
+    animation: nd-scan-vertical var(--scan-duration, 1200ms) cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  }
+
+  .scan-wrap.is-scanning[data-scan-direction="horizontal"] .scan-line {
+    animation: nd-scan-horizontal var(--scan-duration, 1200ms) cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  }
+
+  @keyframes nd-scan-vertical {
+    0%   { transform: translateY(-6px); opacity: 0; }
+    15%  { opacity: 1; }
+    85%  { opacity: 1; }
+    100% { transform: translateY(calc(var(--scan-distance, 100%))); opacity: 0; }
+  }
+
+  @keyframes nd-scan-horizontal {
+    0%   { transform: translateX(-6px); opacity: 0; }
+    15%  { opacity: 1; }
+    85%  { opacity: 1; }
+    100% { transform: translateX(var(--scan-distance, 100%)); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scan-line {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function initScanLines() {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.querySelectorAll(".scan-wrap:not([data-scan-init])").forEach((el) => {
+      const wrap = el as HTMLElement;
+      wrap.setAttribute("data-scan-init", "1");
+      const duration = parseInt(wrap.dataset.scanDuration || "1200");
+      const direction = wrap.dataset.scanDirection || "vertical";
+      const trigger = wrap.dataset.scanTrigger || "scroll";
+
+      wrap.style.setProperty("--scan-duration", `${duration}ms`);
+
+      if (reduced) return;
+
+      function runScan() {
+        const rect = wrap.getBoundingClientRect();
+        const distance = direction === "vertical" ? rect.height : rect.width;
+        wrap.style.setProperty("--scan-distance", `${distance}px`);
+        wrap.classList.remove("is-scanning");
+        // reflow to restart animation
+        void wrap.offsetWidth;
+        wrap.classList.add("is-scanning");
+        setTimeout(() => wrap.classList.remove("is-scanning"), duration + 100);
+      }
+
+      if (trigger === "load") {
+        runScan();
+      } else if (trigger === "hover") {
+        wrap.addEventListener("mouseenter", runScan);
+      } else {
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              runScan();
+              obs.unobserve(wrap);
+            }
+          });
+        }, { threshold: 0.2 });
+        obs.observe(wrap);
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initScanLines);
+  } else {
+    initScanLines();
+  }
+</script>
