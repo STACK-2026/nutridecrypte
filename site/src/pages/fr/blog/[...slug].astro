@@ -4,7 +4,7 @@ import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
   const now = new Date();
-  const posts = await getCollection("blog", ({ data }) => !data.draft && data.date <= now);
+  const posts = await getCollection("blog", ({ data }) => !data.draft && data.date <= now && data.lang === "fr");
   return posts.map((post) => ({
     params: { slug: post.id },
     props: { post },
