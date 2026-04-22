@@ -1,0 +1,107 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import { getAllAdditives } from "../../lib/data";
+import { siteConfig } from "../../../site.config";
+
+const additives = await getAllAdditives();
+
+const groups: Record<string, typeof additives> = {
+  high: [],
+  medium: [],
+  low: [],
+  unknown: [],
+};
+for (const a of additives) {
+  const level = (a.risk_level || "unknown") as keyof typeof groups;
+  if (!groups[level]) groups[level] = [];
+  groups[level].push(a);
+}
+
+const groupOrder: Array<keyof typeof groups> = ["high", "medium", "low", "unknown"];
+const labels: Record<string, string> = {
+  high: "High risk",
+  medium: "Medium risk",
+  low: "Low risk",
+  unknown: "Unknown",
+};
+const accents: Record<string, string> = {
+  high: "border-red-400 bg-red-50",
+  medium: "border-amber-400 bg-amber-50",
+  low: "border-emerald-400 bg-emerald-50",
+  unknown: "border-stone-300 bg-stone-50",
+};
+
+const breadcrumbs = [
+  { name: "Home", url: siteConfig.url + "/" },
+  { name: "Additives encyclopedia", url: siteConfig.url + "/encyclopedia/" },
+];
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: breadcrumbs.map((b, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: b.name,
+    item: b.url,
+  })),
+};
+
+const title = `Food additives encyclopedia , ${additives.length} E-numbers decoded | NutriDécrypte`;
+const description = `${additives.length} food additives explained, classified by EFSA and ANSES risk level. High-risk E-numbers, controversial additives, and which products contain them.`;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalUrl={siteConfig.url + "/encyclopedia/"}
+  alternates={{ en: "/encyclopedia/", fr: "/fr/encyclopedie/" }}
+  jsonLd={breadcrumbJsonLd}
+>
+  <section class="max-w-5xl mx-auto px-4 py-12">
+    <Breadcrumbs items={breadcrumbs} />
+
+    <header class="mb-10">
+      <p class="text-sm font-bold uppercase tracking-widest text-teal-700 mb-2">Encyclopedia</p>
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Food additives encyclopedia</h1>
+      <p class="text-lg text-stone-700 max-w-3xl">
+        {additives.length} E-numbers decoded, classified by EFSA + ANSES risk level. Learn what each additive is, whether it is controversial, and which products of our catalog contain it.
+      </p>
+    </header>
+
+    {groupOrder.map((g) => {
+      const arr = groups[g] || [];
+      if (arr.length === 0) return null;
+      return (
+        <section class={`mb-10 border-l-4 rounded-r-xl p-6 ${accents[g]}`}>
+          <div class="flex items-baseline justify-between mb-4">
+            <h2 class="text-2xl font-bold">{labels[g]}</h2>
+            <span class="text-sm text-stone-600">{arr.length} additive{arr.length > 1 ? "s" : ""}</span>
+          </div>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {arr.map((a) => (
+              <a
+                href={`/encyclopedia/${a.slug}/`}
+                class="block bg-white border border-stone-200 rounded-lg p-4 hover:border-teal-400 hover:shadow-sm transition"
+              >
+                <p class="font-mono text-teal-700 text-xs mb-1">{a.e_number}</p>
+                <p class="font-medium text-stone-900 mb-1">{a.name_en || a.name_fr}</p>
+                {a.category && (
+                  <p class="text-xs text-stone-500">{a.category}</p>
+                )}
+                {a.controversy && (
+                  <p class="text-xs text-amber-700 mt-2 font-semibold">Controversial</p>
+                )}
+              </a>
+            ))}
+          </div>
+        </section>
+      );
+    })}
+
+    <footer class="mt-12 text-sm text-stone-600 text-center">
+      <a href="/fr/encyclopedie/" class="text-teal-700 underline">Version française</a>
+    </footer>
+  </section>
+</BaseLayout>

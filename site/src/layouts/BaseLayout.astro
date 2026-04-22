@@ -19,6 +19,9 @@ interface Props {
   publishedTime?: string;
   jsonLd?: object | object[];
   noIndex?: boolean;
+  // Explicit hreflang alternates (used when slug differs per locale,
+  // e.g. /affiliate-disclosure <-> /fr/divulgation-affiliation)
+  alternates?: { en?: string; fr?: string };
 }
 
 const {
@@ -30,6 +33,7 @@ const {
   publishedTime,
   jsonLd,
   noIndex = false,
+  alternates,
 } = Astro.props;
 
 const locale = getLocale(Astro.url);
@@ -43,9 +47,15 @@ const pageJsonLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 const jsonLdArray = [...baseJsonLd, ...pageJsonLd];
 
 // Build hreflang pairs
+// If the page provides explicit `alternates`, trust them (for localized slugs).
+// Otherwise fall back to a naive EN<->FR swap of /fr prefix.
 const cleanPath = Astro.url.pathname.replace(/^\/fr/, "") || "/";
-const enHref = siteConfig.url + cleanPath;
-const frHref = siteConfig.url + "/fr" + (cleanPath === "/" ? "/" : cleanPath);
+const enHref = alternates?.en
+  ? (alternates.en.startsWith("http") ? alternates.en : siteConfig.url + alternates.en)
+  : siteConfig.url + cleanPath;
+const frHref = alternates?.fr
+  ? (alternates.fr.startsWith("http") ? alternates.fr : siteConfig.url + alternates.fr)
+  : siteConfig.url + "/fr" + (cleanPath === "/" ? "/" : cleanPath);
 ---
 
 <!doctype html>

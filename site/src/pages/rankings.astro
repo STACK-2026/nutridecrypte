@@ -1,0 +1,211 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import GradeReveal from "../components/GradeReveal.astro";
+import { getAllProducts, deriveCategories } from "../lib/data";
+import { siteConfig } from "../../site.config";
+
+const products = await getAllProducts(1000);
+const hubs = deriveCategories(products, 3);
+const topCategories = hubs.slice(0, 10);
+
+// Grade distribution
+const dist: Record<string, number> = { A: 0, B: 0, C: 0, D: 0, E: 0 };
+for (const p of products) {
+  if (p.grade) dist[p.grade] = (dist[p.grade] || 0) + 1;
+}
+
+const breadcrumbs = [
+  { name: "Home", url: siteConfig.url + "/" },
+  { name: "Catalog", url: siteConfig.url + "/rankings/" },
+];
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: breadcrumbs.map((b, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: b.name,
+    item: b.url,
+  })),
+};
+
+const title = `Full rankings , ${products.length} products graded A to E | NutriDécrypte`;
+const description = `Independent A to E ranking of ${products.length} food and supplement products. Filter by grade or category. Data from Nutri-Score, NOVA, EFSA additives and ANSES.`;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalUrl={siteConfig.url + "/rankings/"}
+  alternates={{ en: "/rankings/", fr: "/fr/classement/" }}
+  jsonLd={breadcrumbJsonLd}
+>
+  <section class="max-w-6xl mx-auto px-4 py-12">
+    <Breadcrumbs items={breadcrumbs} />
+
+    <header class="mb-10">
+      <p class="text-sm font-bold uppercase tracking-widest text-teal-700 mb-2">Full catalog</p>
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Full rankings</h1>
+      <p class="text-lg text-stone-700 max-w-3xl">
+        {products.length} products graded A to E. Use the filters below to focus on a grade or a category.
+      </p>
+    </header>
+
+    <!-- Stats cards -->
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-10">
+      {(["A", "B", "C", "D", "E"] as const).map((g) => (
+        <div class="bg-white border border-stone-200 rounded-lg p-4 text-center">
+          <div class="flex justify-center mb-2">
+            <GradeReveal grade={g} size="md" animate={false} />
+          </div>
+          <p class="text-2xl font-extrabold text-stone-900">{dist[g] || 0}</p>
+          <p class="text-xs text-stone-500 uppercase tracking-wide">products</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Filter UI -->
+    <div class="bg-stone-50 border border-stone-200 rounded-xl p-4 mb-6">
+      <div class="flex flex-wrap gap-2 items-center">
+        <span class="text-sm font-medium text-stone-600 mr-2">Filter :</span>
+        <button data-grade-filter="all" class="filter-btn is-active px-3 py-1.5 rounded-full text-xs font-medium bg-teal-700 text-white">All</button>
+        {(["A", "B", "C", "D", "E"] as const).map((g) => (
+          <button
+            data-grade-filter={g}
+            class="filter-btn px-3 py-1.5 rounded-full text-xs font-bold text-white"
+            style={`background: var(--grade-${g.toLowerCase()})`}
+          >
+            {g}
+          </button>
+        ))}
+        <span class="text-sm text-stone-400 mx-2">|</span>
+        <select id="category-filter" class="px-3 py-1.5 rounded-lg text-sm border border-stone-300 bg-white">
+          <option value="all">All categories</option>
+          {topCategories.map((c) => (
+            <option value={c.slug}>{c.slug.replace(/-/g, " ")}</option>
+          ))}
+        </select>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div id="rankings-table" class="overflow-x-auto bg-white border border-stone-200 rounded-xl">
+      <table class="w-full text-sm">
+        <thead class="bg-stone-50 text-left text-stone-600 uppercase text-xs">
+          <tr>
+            <th class="px-4 py-3 font-semibold">#</th>
+            <th class="px-4 py-3 font-semibold">Grade</th>
+            <th class="px-4 py-3 font-semibold">Product</th>
+            <th class="px-4 py-3 font-semibold hidden md:table-cell">Brand</th>
+            <th class="px-4 py-3 font-semibold text-right">Score</th>
+          </tr>
+        </thead>
+        <tbody id="rankings-body">
+          {products.map((p, i) => (
+            <tr
+              class="ranking-row border-t border-stone-100 hover:bg-stone-50 transition"
+              data-grade={p.grade || ""}
+              data-categories={(p.categories || []).map((c) => c.replace(/^(en|fr|de|es|it):/, "").toLowerCase()).join(",")}
+              data-index={i}
+            >
+              <td class="px-4 py-3 text-stone-400 font-mono text-xs ranking-index">{i + 1}</td>
+              <td class="px-4 py-3">
+                {p.grade ? (
+                  <GradeReveal grade={p.grade} size="sm" animate={false} />
+                ) : <span class="text-stone-400 text-xs">?</span>}
+              </td>
+              <td class="px-4 py-3">
+                <a href={`/product/${p.slug}/`} class="text-teal-700 hover:underline font-medium">
+                  {p.name}
+                </a>
+              </td>
+              <td class="px-4 py-3 hidden md:table-cell text-stone-600">
+                {p.brand_slug ? (
+                  <a href={`/brand/${p.brand_slug}/`} class="hover:text-teal-700">
+                    {p.brand_slug.replace(/-/g, " ")}
+                  </a>
+                ) : "-"}
+              </td>
+              <td class="px-4 py-3 text-right font-mono text-stone-700">
+                {p.score_overall != null ? p.score_overall : "-"}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <p id="no-results" class="hidden text-center text-stone-500 py-12">
+      No product matches your filter.
+    </p>
+
+    <footer class="mt-8 text-sm text-stone-600 text-center">
+      <a href="/fr/classement/" class="text-teal-700 underline">Version française</a>
+    </footer>
+  </section>
+</BaseLayout>
+
+<style>
+  .filter-btn {
+    cursor: pointer;
+    opacity: 0.55;
+    transition: opacity 0.2s;
+  }
+  .filter-btn.is-active {
+    opacity: 1;
+  }
+  .ranking-row[hidden] {
+    display: none !important;
+  }
+</style>
+
+<script>
+  function initRankingsFilter() {
+    const gradeBtns = document.querySelectorAll<HTMLButtonElement>("[data-grade-filter]");
+    const catSelect = document.getElementById("category-filter") as HTMLSelectElement | null;
+    const rows = document.querySelectorAll<HTMLTableRowElement>(".ranking-row");
+    const noResults = document.getElementById("no-results");
+    let activeGrade = "all";
+    let activeCat = "all";
+
+    function applyFilter() {
+      let visible = 0;
+      let idx = 0;
+      rows.forEach((row) => {
+        const g = row.dataset.grade || "";
+        const cats = (row.dataset.categories || "").split(",");
+        const gradeOk = activeGrade === "all" || g === activeGrade;
+        const catOk = activeCat === "all" || cats.includes(activeCat);
+        const show = gradeOk && catOk;
+        row.hidden = !show;
+        if (show) {
+          visible++;
+          const indexCell = row.querySelector<HTMLTableCellElement>(".ranking-index");
+          if (indexCell) indexCell.textContent = String(++idx);
+        }
+      });
+      if (noResults) noResults.classList.toggle("hidden", visible > 0);
+    }
+
+    gradeBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        activeGrade = btn.dataset.gradeFilter || "all";
+        gradeBtns.forEach((b) => b.classList.toggle("is-active", b === btn));
+        applyFilter();
+      });
+    });
+    if (catSelect) {
+      catSelect.addEventListener("change", () => {
+        activeCat = catSelect.value;
+        applyFilter();
+      });
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initRankingsFilter);
+  } else {
+    initRankingsFilter();
+  }
+</script>

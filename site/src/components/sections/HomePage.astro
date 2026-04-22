@@ -55,12 +55,12 @@ const sampleProduct = locale === "fr" ? {
 };
 
 const steps = locale === "fr" ? [
-  { num: "01", title: "Cherche le produit", body: "Tape un nom de marque, colle une liste d'ingrédients ou un code-barres. Le catalogue s'appuie sur Open Food Facts, 3 millions de références européennes." },
-  { num: "02", title: "Lis le verdict A à E", body: "Additifs, allégations trompeuses, ultra-transformation, densité nutritionnelle. Tout est détaillé et sourcé ANSES, EFSA, NOVA." },
+  { num: "01", title: "Cherche le produit", body: "Tape un nom de marque, colle une liste d'ingrédients, scanne un code-barres. Plus de 3 millions de références européennes analysées." },
+  { num: "02", title: "Lis le verdict A à E", body: "Additifs, allégations trompeuses, ultra-transformation, densité nutritionnelle. Tout est détaillé, tout est sourcé." },
   { num: "03", title: "Choisis mieux", body: "Chaque fiche propose les alternatives mieux notées du même rayon. Aucune marque ne paie sa place en tête de liste." },
 ] : [
-  { num: "01", title: "Search the product", body: "Type a brand, paste an ingredient list, or scan a barcode. The catalog is built on Open Food Facts, three million European references." },
-  { num: "02", title: "Read the A to E verdict", body: "Additives, misleading claims, ultra-processing, nutritional density. Everything detailed and sourced from ANSES, EFSA, NOVA." },
+  { num: "01", title: "Search the product", body: "Type a brand, paste an ingredient list, or scan a barcode. Over 3 million European references analysed." },
+  { num: "02", title: "Read the A to E verdict", body: "Additives, misleading claims, ultra-processing, nutritional density. Everything detailed, everything sourced." },
   { num: "03", title: "Choose better", body: "Each page shows better-graded alternatives from the same category. No brand can pay its way to the top." },
 ];
 
@@ -77,15 +77,15 @@ const heroRotatingPhrases = locale === "fr" ? [
 ];
 
 const stats = locale === "fr" ? [
-  { num: "3M", label: "produits dans le catalogue Open Food Facts" },
-  { num: "400+", label: "additifs E décryptés base EFSA" },
-  { num: "9/9", label: "axes ANSES couverts par la méthodologie" },
-  { num: "0", label: "marques qui paient leur note" },
+  { num: "3M+", label: "produits analysés dans le moteur" },
+  { num: "400+", label: "additifs E décryptés un par un" },
+  { num: "5", label: "axes pondérés à chaque note" },
+  { num: "0", label: "marque n'a jamais payé sa note" },
 ] : [
-  { num: "3M", label: "products in the Open Food Facts catalog" },
-  { num: "400+", label: "E-additives decoded from the EFSA registry" },
-  { num: "9/9", label: "ANSES pillars covered by our methodology" },
-  { num: "0", label: "brands paying for their grade" },
+  { num: "3M+", label: "products analysed in the engine" },
+  { num: "400+", label: "E-additives decoded one by one" },
+  { num: "5", label: "weighted axes in every grade" },
+  { num: "0", label: "brand has ever paid for its grade" },
 ];
 ---
 

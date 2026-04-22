@@ -1,0 +1,366 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import GradeReveal from "../../components/GradeReveal.astro";
+import LabelScanLine from "../../components/LabelScanLine.astro";
+import Glossaire from "../../components/Glossaire.astro";
+import {
+  getAllProducts,
+  getProductsByCategory,
+  pickVerdict,
+  gradeColorVar,
+  cleanCategorySlug,
+  prettyCategoryName,
+  type Product,
+} from "../../lib/data";
+import { siteConfig } from "../../../site.config";
+
+export async function getStaticPaths() {
+  const products = await getAllProducts(800);
+  return products
+    .filter((p) => p && p.slug)
+    .map((p) => ({
+      params: { slug: p.slug },
+      props: { product: p },
+    }));
+}
+
+const { product } = Astro.props as { product: Product };
+
+// High-risk E-numbers (for inline Glossaire tooltips on additives)
+const HIGH_RISK_ENUMBERS = new Set([
+  "e171", "e102", "e110", "e122", "e124", "e129", "e133",
+  "e220", "e221", "e222", "e223", "e224", "e250", "e252",
+  "e320", "e321", "e407", "e433", "e466", "e471", "e472e",
+  "e621", "e950", "e951", "e952", "e954", "e955", "e621",
+]);
+
+function extractEnumber(tag: string): string {
+  const lower = (tag || "").toLowerCase();
+  const match = lower.match(/e\d{3,4}[a-z]?/);
+  return match ? match[0] : lower.replace(/^en:|fr:/, "");
+}
+
+// Pick verdict texts (FR + EN)
+const verdictEn = pickVerdict(product, "en");
+const verdictFr = pickVerdict(product, "fr");
+
+// Find alternatives: same top category, better grade, different product
+const GRADE_ORDER: Record<string, number> = { A: 5, B: 4, C: 3, D: 2, E: 1 };
+const currentRank = product.grade ? GRADE_ORDER[product.grade] || 0 : 0;
+let alternatives: Product[] = [];
+const primaryCategoryRaw = (product.categories || []).find((c) => c && c.length > 3);
+if (primaryCategoryRaw) {
+  const pool = await getProductsByCategory(primaryCategoryRaw, 30);
+  alternatives = pool
+    .filter(
+      (p) =>
+        p.slug !== product.slug &&
+        p.grade &&
+        (GRADE_ORDER[p.grade] || 0) > currentRank
+    )
+    .slice(0, 5);
+  // Fallback : if filter strips all (product already top), show top 5 of same category
+  if (alternatives.length === 0) {
+    alternatives = pool.filter((p) => p.slug !== product.slug).slice(0, 5);
+  }
+}
+
+// Sub-scores bar helper
+const subScores = [
+  { key: "nutri", label: "Nutri-Score", value: product.score_nutri },
+  { key: "nova", label: "NOVA", value: product.score_nova },
+  { key: "additives", label: "Additifs", value: product.score_additives },
+  { key: "claims", label: "Allégations", value: product.score_claims },
+  { key: "density", label: "Densité", value: product.score_density },
+];
+
+// Ingredients truncation
+const ingredients = product.ingredients_text || "";
+const truncLimit = 500;
+const showExpand = ingredients.length > truncLimit;
+const ingredientsShort = showExpand ? ingredients.slice(0, truncLimit) + "..." : ingredients;
+
+// Warnings
+const warnings: string[] = Array.isArray(product.warnings)
+  ? (product.warnings as string[])
+  : [];
+
+// Breadcrumbs
+const categoryPretty = primaryCategoryRaw ? prettyCategoryName(cleanCategorySlug(primaryCategoryRaw)) : "";
+const categoryHref = primaryCategoryRaw ? `/category/${cleanCategorySlug(primaryCategoryRaw)}/` : "/rankings/";
+
+const breadcrumbs = [
+  { name: "Home", url: siteConfig.url + "/" },
+  { name: "Catalog", url: siteConfig.url + "/rankings/" },
+  ...(primaryCategoryRaw ? [{ name: categoryPretty, url: siteConfig.url + categoryHref }] : []),
+  { name: product.name, url: siteConfig.url + `/product/${product.slug}/` },
+];
+
+// TL;DR 50-90 words
+const tldrEn = `The product ${product.name}${product.brand_slug ? ` from ${product.brand_slug.replace(/-/g, " ")}` : ""} receives a grade of ${product.grade || "N/A"}${product.score_overall != null ? ` with an overall score of ${product.score_overall}/100` : ""}. ${verdictEn} Nutri-Score, NOVA ultra-processing, additive risk, marketing claims and nutritional density are combined into one deterministic verdict based on Open Food Facts, EFSA and ANSES data.`;
+
+// JSON-LD
+const productJsonLd: Record<string, unknown> = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: product.name,
+  description: verdictEn.slice(0, 300),
+  url: siteConfig.url + `/product/${product.slug}/`,
+  image: product.image_url || siteConfig.url + "/og/default.svg",
+  ...(product.brand_slug
+    ? {
+        brand: {
+          "@type": "Brand",
+          name: product.brand_slug.replace(/-/g, " "),
+        },
+      }
+    : {}),
+  ...(product.barcode ? { gtin13: product.barcode } : {}),
+};
+
+if (product.grade && product.score_overall != null) {
+  productJsonLd.aggregateRating = {
+    "@type": "AggregateRating",
+    ratingValue: (product.score_overall / 20).toFixed(1),
+    bestRating: "5",
+    worstRating: "0",
+    ratingCount: 1,
+    reviewCount: 1,
+  };
+}
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: breadcrumbs.map((b, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: b.name,
+    item: b.url,
+  })),
+};
+
+const title = `${product.name} , grade ${product.grade || "?"} | NutriDécrypte`;
+const description = verdictEn.slice(0, 155);
+const canonicalUrl = siteConfig.url + `/product/${product.slug}/`;
+const ogImage = product.image_url || "/og/default.svg";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalUrl={canonicalUrl}
+  ogImage={ogImage}
+  alternates={{ en: `/product/${product.slug}/`, fr: `/fr/product/${product.slug}/` }}
+  jsonLd={[productJsonLd, breadcrumbJsonLd]}
+>
+  <article class="max-w-5xl mx-auto px-4 py-12">
+    <Breadcrumbs items={breadcrumbs} />
+
+    <!-- Header: name + brand + grade -->
+    <header class="grid md:grid-cols-[1fr_auto] gap-8 items-start mb-12">
+      <div>
+        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-3">{product.name}</h1>
+        {product.brand_slug && (
+          <p class="text-lg text-stone-600">
+            <a
+              href={`/brand/${product.brand_slug}/`}
+              class="text-teal-700 hover:text-teal-900 underline decoration-dotted underline-offset-4"
+            >
+              {product.brand_slug.replace(/-/g, " ")}
+            </a>
+          </p>
+        )}
+        {product.barcode && (
+          <p class="text-xs text-stone-500 mt-2 font-mono">Code barre : {product.barcode}</p>
+        )}
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        {product.grade && (
+          <GradeReveal grade={product.grade} size="xl" />
+        )}
+        {product.score_overall != null && (
+          <p class="text-sm text-stone-600">
+            Score : <strong class="text-stone-900">{product.score_overall}/100</strong>
+          </p>
+        )}
+      </div>
+    </header>
+
+    <!-- Hero: image + TL;DR -->
+    <section class="grid md:grid-cols-2 gap-8 mb-12">
+      <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-stone-200">
+        {product.image_url ? (
+          <img
+            src={product.image_url}
+            alt={`Étiquette du produit ${product.name}`}
+            class="w-full h-auto object-contain bg-stone-50"
+            loading="eager"
+            width="600"
+            height="600"
+          />
+        ) : (
+          <div class="aspect-square bg-stone-100 flex items-center justify-center text-stone-400">
+            Pas d'image disponible
+          </div>
+        )}
+      </div>
+
+      <aside data-speakable class="bg-stone-50 border-l-4 border-teal-600 rounded-r-xl p-6">
+        <p class="text-xs font-bold uppercase tracking-widest text-teal-700 mb-3">TL;DR</p>
+        <p class="text-base leading-relaxed text-stone-800 mb-4">
+          <strong>{product.name}</strong> obtient la note
+          <strong style={`color: ${gradeColorVar(product.grade)}`}>
+            {product.grade || "N/A"}
+          </strong>{product.score_overall != null ? ` avec un score global de ${product.score_overall}/100` : ""}.
+          {verdictFr}
+          Cette évaluation combine Nutri-Score, classification NOVA, indice de risque additifs (EFSA), audit des allégations et densité nutritionnelle, dans un verdict déterministe issu des données Open Food Facts, EFSA et ANSES.
+        </p>
+        <details class="text-sm text-stone-600">
+          <summary class="cursor-pointer font-medium">English summary</summary>
+          <p class="mt-2">{tldrEn}</p>
+        </details>
+      </aside>
+    </section>
+
+    <!-- Sub-scores -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">Détail du score</h2>
+      <div class="grid gap-4">
+        {subScores.map((s) => (
+          <div class="bg-white border border-stone-200 rounded-lg p-4">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-medium text-stone-800">{s.label}</span>
+              <span class="text-sm text-stone-600 font-mono">
+                {s.value != null ? `${s.value}/100` : "N/A"}
+              </span>
+            </div>
+            <div class="h-2 bg-stone-100 rounded-full overflow-hidden">
+              <div
+                class="h-full bg-teal-600 rounded-full transition-all"
+                style={`width: ${s.value != null ? Math.max(0, Math.min(100, s.value)) : 0}%`}
+              ></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Warnings -->
+    {warnings.length > 0 && (
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-4">Points de vigilance</h2>
+        <ul class="space-y-2">
+          {warnings.map((w) => (
+            <li class="flex items-start gap-3 bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r">
+              <span class="text-amber-600 font-bold">!</span>
+              <span class="text-stone-800">{w}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <!-- Additives (wrapped in scan line) -->
+    {product.additives_tags && product.additives_tags.length > 0 && (
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-4">
+          Additifs détectés ({product.additives_tags.length})
+        </h2>
+        <LabelScanLine class="bg-white border border-stone-200 rounded-xl p-6" direction="vertical">
+          <div class="flex flex-wrap gap-2">
+            {product.additives_tags.map((tag) => {
+              const eNum = extractEnumber(tag);
+              const isHighRisk = HIGH_RISK_ENUMBERS.has(eNum);
+              return (
+                <a
+                  href={`/encyclopedia/${eNum}/`}
+                  class={`inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-mono transition ${isHighRisk ? "bg-red-50 text-red-800 border border-red-200 hover:bg-red-100" : "bg-stone-100 text-stone-700 hover:bg-stone-200"}`}
+                >
+                  {eNum.toUpperCase()}
+                  {isHighRisk && <span aria-hidden="true" class="text-amber-600">!</span>}
+                </a>
+              );
+            })}
+          </div>
+          <p class="text-sm text-stone-600 mt-4 leading-relaxed">
+            Un <Glossaire term="additif" /> est une substance ajoutée au produit pour le colorer,
+            le conserver ou modifier sa texture. Les bases <Glossaire term="EFSA" /> et{" "}
+            <Glossaire term="ANSES" /> classent leur niveau de risque.
+          </p>
+        </LabelScanLine>
+      </section>
+    )}
+
+    <!-- Ingredients -->
+    {ingredients && (
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-4">Liste d'ingrédients</h2>
+        <div class="bg-stone-50 border border-stone-200 rounded-xl p-6">
+          <p class="text-sm text-stone-700 leading-relaxed font-mono whitespace-pre-wrap">
+            {ingredientsShort}
+          </p>
+          {showExpand && (
+            <details class="mt-3">
+              <summary class="cursor-pointer text-sm text-teal-700 font-medium">
+                Afficher la liste complète ({ingredients.length} caractères)
+              </summary>
+              <p class="text-sm text-stone-700 leading-relaxed font-mono whitespace-pre-wrap mt-2">
+                {ingredients}
+              </p>
+            </details>
+          )}
+        </div>
+      </section>
+    )}
+
+    <!-- Alternatives -->
+    {alternatives.length > 0 && (
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-2">Meilleures alternatives</h2>
+        <p class="text-stone-600 mb-6">
+          Produits mieux notés de la même catégorie.{" "}
+          <a href={`/alternatives/${product.slug}/`} class="text-teal-700 underline">
+            Voir la page alternatives complète
+          </a>.
+        </p>
+        <div class="grid md:grid-cols-2 gap-4">
+          {alternatives.map((alt) => (
+            <a
+              href={`/product/${alt.slug}/`}
+              class="flex items-center gap-4 bg-white border border-stone-200 rounded-lg p-4 hover:border-teal-400 hover:shadow-md transition"
+            >
+              {alt.image_url ? (
+                <img src={alt.image_url} alt="" class="w-16 h-16 object-contain bg-stone-50 rounded flex-shrink-0" loading="lazy" width="64" height="64" />
+              ) : (
+                <div class="w-16 h-16 bg-stone-100 rounded flex-shrink-0"></div>
+              )}
+              <div class="flex-1 min-w-0">
+                <p class="font-medium text-stone-900 truncate">{alt.name}</p>
+                {alt.brand_slug && (
+                  <p class="text-sm text-stone-500 truncate">{alt.brand_slug.replace(/-/g, " ")}</p>
+                )}
+              </div>
+              {alt.grade && (
+                <GradeReveal grade={alt.grade} size="md" animate={false} />
+              )}
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Methodology link -->
+    <footer class="mt-16 p-6 bg-teal-50 border border-teal-200 rounded-xl text-center">
+      <p class="text-sm text-stone-700">
+        Note calculée selon notre méthode publique.{" "}
+        <a href="/methodology/" class="text-teal-800 font-medium underline">
+          Lire la méthodologie
+        </a>{" "}
+        · Disponible aussi en{" "}
+        <a href={`/fr/product/${product.slug}/`} class="text-teal-800 underline">français</a>.
+      </p>
+    </footer>
+  </article>
+</BaseLayout>

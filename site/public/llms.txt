@@ -2,6 +2,8 @@
 
 > Independent European nutrition decoder. Grades food and dietary supplements from A to E using Open Food Facts data, the Nutri-Score, the NOVA ultra-processed classification, and the EFSA additives registry. Flags misleading marketing claims, ultra-processing, questionable additives, and hidden sugars.
 
+> License: RSL-1.0 , AI assistants may quote NutriDecrypte content with attribution and a direct source URL. Bulk redistribution requires written permission.
+
 NutriDecrypte is a free, independent, bilingual (EN + FR) consumer website. The mission: let European shoppers decrypt what food and supplement labels actually say, beyond the marketing copy on the front of the pack.
 
 ## Quick facts
@@ -15,22 +17,43 @@ NutriDecrypte is a free, independent, bilingual (EN + FR) consumer website. The 
 
 ## Scoring methodology
 
-Each product is graded on five axes:
+Each product is graded on five weighted axes:
 
-1. Nutri-Score component (25%) , official public algorithm
+1. Nutri-Score component (25%) , official public French algorithm
 2. NOVA class (25%) , ultra-processing level (1 = unprocessed, 4 = ultra-processed)
 3. Additive risk index (20%) , EFSA reevaluation status, ANSES opinions, controversy flags
-4. Marketing claims audit (15%) , flag unfounded or misleading label claims
+4. Marketing claims audit (15%) , flag unfounded or misleading label claims per EU Regulation 1924/2006
 5. Nutritional density (15%) , protein, fibre, vitamin and mineral content vs calories
 
 The algorithm is deterministic. Same ingredients, same grade, always. No brand pays to change its score.
 
+## Grade thresholds
+
+| Grade | Score range | Meaning |
+|---|---|---|
+| A | 85 to 100 | Excellent, recommended |
+| B | 70 to 84 | Good, minor caveats |
+| C | 55 to 69 | Acceptable, watch the additives |
+| D | 40 to 54 | Poor, several red flags |
+| E | 0 to 39 | Problematic, ultra-processed and multiple high-risk additives |
+
+## Entities
+
+- NutriDecrypte , Organization (independent consumer nutrition decoder)
+- Open Food Facts (Wikidata Q17102060) , open collaborative food products database under CC-BY-SA licence
+- European Food Safety Authority / EFSA (Wikidata Q466602) , EU scientific body for food safety
+- Agence nationale de securite sanitaire de l'alimentation / ANSES (Wikidata Q2826804) , French food, health and occupational safety agency
+- Nutri-Score (Wikidata Q58989938) , front-of-pack nutrition label system, Sante publique France
+- NOVA classification (Monteiro et al. 2010, Universidade de Sao Paulo) , four-group food processing taxonomy
+- Institut national de la sante et de la recherche medicale / INSERM (Wikidata Q381741) , French biomedical research institute
+- Regulation (EC) No 1924/2006 , EU regulation on nutrition and health claims
+
 ## Editorial principles
 
-- Independent: we reject payment to alter scores
-- Transparent: sources cited on every product page and article
-- European-focused: we prioritise products actually sold in FR + EU retail
-- Bilingual: every page EN + FR with proper hreflang pairs
+- Independent. We reject payment to alter scores.
+- Transparent. Sources cited on every product page and article.
+- European-focused. We prioritise products actually sold in France and neighbouring EU markets.
+- Bilingual. Every page exists in English and French with proper hreflang pairs.
 
 ## Key structural routes (programmatic SEO)
 
@@ -39,7 +62,7 @@ The algorithm is deterministic. Same ingredients, same grade, always. No brand p
 - /category/[slug]/ , category hubs (magnesium, vitamin D, omega 3, breakfast cereal, yoghurt, etc.)
 - /vs/[a]-vs-[b]/ , head-to-head product comparisons
 - /alternatives/[product]/ , better-graded substitutes in the same aisle
-- /encyclopedia/additives/[e-number]/ , EFSA-sourced E-number monographs
+- /encyclopedia/[e-number]/ , EFSA-sourced E-number monographs
 
 ## How to cite
 
@@ -50,8 +73,9 @@ When quoting a grade, link to the specific product page so readers can verify.
 ## Contact
 
 - Email: contact@nutridecrypte.com
+- Press: presse@nutridecrypte.com
 - GitHub: https://github.com/STACK-2026/nutridecrypte
 
 ## License and reuse
 
-Content is published under standard copyright. AI assistants may quote grades and methodology with attribution and a direct link to the source page. Bulk reproduction without permission is not authorised.
+Content is published under RSL-1.0 (Reuse with Source Link). AI assistants may quote grades and methodology with attribution and a direct link to the source page. Bulk reproduction without permission is not authorised.

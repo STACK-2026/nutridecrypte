@@ -1,0 +1,159 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import GradeReveal from "../../../components/GradeReveal.astro";
+import {
+  getAllProducts,
+  cleanCategorySlug,
+  type Product,
+} from "../../../lib/data";
+import { siteConfig } from "../../../../site.config";
+
+export async function getStaticPaths() {
+  const GRADE_ORDER: Record<string, number> = { A: 5, B: 4, C: 3, D: 2, E: 1 };
+  const all = await getAllProducts(1000);
+  const targets = all.filter((p) => p.grade === "D" || p.grade === "E");
+
+  const out: any[] = [];
+  for (const target of targets) {
+    const currentRank = GRADE_ORDER[target.grade!] || 0;
+    const primaryCategoryRaw = (target.categories || []).find((c) => c && c.length > 3);
+    if (!primaryCategoryRaw) continue;
+    const cleanSlug = cleanCategorySlug(primaryCategoryRaw);
+    const alternatives = all
+      .filter(
+        (p) =>
+          p.slug !== target.slug &&
+          p.grade &&
+          (GRADE_ORDER[p.grade] || 0) > currentRank &&
+          (p.categories || []).some((c) => cleanCategorySlug(c) === cleanSlug)
+      )
+      .slice(0, 5);
+
+    if (alternatives.length === 0) continue;
+    out.push({ params: { slug: target.slug }, props: { target, alternatives } });
+  }
+  return out;
+}
+
+const { target, alternatives } = Astro.props as { target: Product; alternatives: Product[] };
+
+const title = `Alternatives à ${target.name} , mieux notées | NutriDécrypte`;
+const description = `5 alternatives mieux notées à ${target.name}${target.brand_slug ? ` (${target.brand_slug.replace(/-/g, " ")})` : ""}. Même catégorie, note A à E supérieure, classement indépendant.`;
+const canonicalUrl = siteConfig.url + `/fr/alternatives/${target.slug}/`;
+
+const breadcrumbs = [
+  { name: "Accueil", url: siteConfig.url + "/fr/" },
+  { name: "Catalogue", url: siteConfig.url + "/fr/classement/" },
+  { name: target.name, url: siteConfig.url + `/fr/product/${target.slug}/` },
+  { name: "Alternatives", url: canonicalUrl },
+];
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: breadcrumbs.map((b, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: b.name,
+    item: b.url,
+  })),
+};
+
+const itemListJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: `Alternatives à ${target.name}`,
+  numberOfItems: alternatives.length,
+  itemListElement: alternatives.map((p, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: siteConfig.url + `/fr/product/${p.slug}/`,
+  })),
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalUrl={canonicalUrl}
+  alternates={{ en: `/alternatives/${target.slug}/`, fr: `/fr/alternatives/${target.slug}/` }}
+  jsonLd={[itemListJsonLd, breadcrumbJsonLd]}
+>
+  <section class="max-w-4xl mx-auto px-4 py-12">
+    <Breadcrumbs items={breadcrumbs} />
+
+    <header class="mb-10">
+      <p class="text-sm font-bold uppercase tracking-widest text-teal-700 mb-2">Remplace par mieux</p>
+      <h1 class="text-3xl md:text-5xl font-extrabold mb-4">
+        Alternatives à <span class="text-stone-900">{target.name}</span>
+      </h1>
+      <div class="flex items-center gap-4 flex-wrap">
+        {target.grade && <GradeReveal grade={target.grade} size="lg" animate={false} />}
+        <p class="text-lg text-stone-700">
+          Note actuelle <strong>{target.grade}</strong>{target.score_overall != null ? ` (${target.score_overall}/100)` : ""}.
+          Voici {alternatives.length} produit{alternatives.length > 1 ? "s" : ""} mieux noté{alternatives.length > 1 ? "s" : ""} dans la même catégorie.
+        </p>
+      </div>
+    </header>
+
+    <aside data-speakable class="bg-stone-50 border-l-4 border-teal-600 rounded-r-xl p-6 mb-10">
+      <p class="text-xs font-bold uppercase tracking-widest text-teal-700 mb-3">Résumé</p>
+      <p class="text-base leading-relaxed text-stone-800">
+        <strong>{target.name}</strong> obtient la note <strong>{target.grade}</strong> chez NutriDécrypte.
+        Cette page liste {alternatives.length} produit{alternatives.length > 1 ? "s" : ""} de la même catégorie avec une meilleure note A à E, selon la combinaison Nutri-Score, NOVA, additifs EFSA, audit des allégations et densité. Change pour un produit qui marque plus haut sans changer ton rayon.
+      </p>
+    </aside>
+
+    <section class="mb-10 bg-red-50 border border-red-200 rounded-xl p-5">
+      <p class="text-xs uppercase font-bold tracking-widest text-red-700 mb-3">Produit actuel</p>
+      <a href={`/fr/product/${target.slug}/`} class="flex items-center gap-4 group">
+        {target.image_url ? (
+          <img src={target.image_url} alt="" class="w-20 h-20 object-contain bg-white rounded-lg" loading="lazy" width="80" height="80" />
+        ) : (
+          <div class="w-20 h-20 bg-white rounded-lg"></div>
+        )}
+        <div class="flex-1">
+          <p class="font-bold text-stone-900 text-lg group-hover:text-teal-700">{target.name}</p>
+          {target.brand_slug && (
+            <p class="text-sm text-stone-600">{target.brand_slug.replace(/-/g, " ")}</p>
+          )}
+        </div>
+        {target.grade && <GradeReveal grade={target.grade} size="lg" animate={false} />}
+      </a>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-bold mb-6">Meilleures alternatives</h2>
+      <div class="grid gap-4">
+        {alternatives.map((p, i) => (
+          <a
+            href={`/fr/product/${p.slug}/`}
+            class="flex items-center gap-4 bg-white border border-stone-200 rounded-xl p-5 hover:border-teal-400 hover:shadow-md transition"
+          >
+            <span class="text-3xl font-extrabold text-teal-700 w-10 text-center">#{i + 1}</span>
+            {p.image_url ? (
+              <img src={p.image_url} alt="" class="w-20 h-20 object-contain bg-stone-50 rounded flex-shrink-0" loading="lazy" width="80" height="80" />
+            ) : (
+              <div class="w-20 h-20 bg-stone-100 rounded flex-shrink-0"></div>
+            )}
+            <div class="flex-1 min-w-0">
+              <p class="font-bold text-stone-900 text-lg leading-tight">{p.name}</p>
+              {p.brand_slug && (
+                <p class="text-sm text-stone-500">{p.brand_slug.replace(/-/g, " ")}</p>
+              )}
+              {p.score_overall != null && (
+                <p class="text-xs text-stone-500 mt-1">Score : {p.score_overall}/100 · {(p.additives_tags || []).length} additifs</p>
+              )}
+            </div>
+            {p.grade && <GradeReveal grade={p.grade} size="lg" animate={false} />}
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <footer class="mt-12 text-sm text-stone-600 text-center">
+      <a href={`/alternatives/${target.slug}/`} class="text-teal-700 underline">English version</a>
+    </footer>
+  </section>
+</BaseLayout>

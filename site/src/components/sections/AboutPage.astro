@@ -19,6 +19,16 @@ const locale: Locale = getLocale(Astro.url);
     </p>
   </header>
 
+  <aside class="tldr" data-speakable>
+    <p class="tldr-label">TL;DR</p>
+    <p>
+      <strong>{locale === "fr" ? "NutriDécrypte" : "NutriDécrypte"}</strong>
+      {locale === "fr"
+        ? " est un décodeur d'étiquettes européen indépendant, publié par une équipe de quatre rédacteurs spécialisés. On note chaque aliment et complément de A à E à partir de sources publiques officielles (Open Food Facts, Nutri-Score Santé publique France, classification NOVA, registre additifs EFSA, avis ANSES). Aucune marque ne paie pour changer sa note. L'algorithme est déterministe : même liste d'ingrédients, même note, toujours."
+        : " is an independent European label decoder, published by a team of four specialised editors. We grade every food and supplement from A to E using public sources (Open Food Facts, Santé publique France Nutri-Score, NOVA classification, EFSA additives registry, ANSES scientific opinions). No brand pays to change a score. The algorithm is deterministic: same ingredients, same grade, always."}
+    </p>
+  </aside>
+
   <section class="origin-story">
     <h2>{locale === "fr" ? "L'histoire" : "The story"}</h2>
     <div class="story-content">
@@ -201,6 +211,30 @@ const locale: Locale = getLocale(Astro.url);
     line-height: 1.15;
   }
   .lede { color: var(--color-ink-soft); font-size: 1.15rem; line-height: 1.65; }
+
+  .tldr {
+    max-width: 48rem;
+    margin: 0 0 3rem;
+    background: var(--color-bg-soft);
+    border-left: 4px solid var(--color-primary);
+    border-radius: 0 0.75rem 0.75rem 0;
+    padding: 1.25rem 1.5rem;
+  }
+  .tldr-label {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-primary-dark);
+    margin: 0 0 0.5rem;
+    font-weight: 700;
+  }
+  .tldr p:last-child {
+    margin: 0;
+    color: var(--color-ink);
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
 
   section { margin-bottom: 3rem; }
   h2 {

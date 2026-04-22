@@ -1,0 +1,201 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import GradeReveal from "../../components/GradeReveal.astro";
+import Glossaire from "../../components/Glossaire.astro";
+import {
+  getAllProducts,
+  deriveCategories,
+  prettyCategoryName,
+  cleanCategorySlug,
+  type Product,
+} from "../../lib/data";
+import { siteConfig } from "../../../site.config";
+
+export async function getStaticPaths() {
+  const all = await getAllProducts(1000);
+  const hubs = deriveCategories(all, 3);
+  // Group products per cleaned slug
+  const out: any[] = [];
+  for (const hub of hubs) {
+    const slug = hub.slug;
+    const products = all.filter((p) =>
+      (p.categories || []).some((c) => cleanCategorySlug(c) === slug)
+    );
+    if (products.length < 3) continue;
+    out.push({
+      params: { slug },
+      props: { hub, products, slugCat: slug },
+    });
+  }
+  return out;
+}
+
+const { hub, products, slugCat } = Astro.props as { hub: any; products: Product[]; slugCat: string };
+
+// Sort by score
+const sorted = [...products].sort((a, b) => (b.score_overall || 0) - (a.score_overall || 0));
+const topBest = sorted.slice(0, 10);
+const topWorst = [...sorted].reverse().slice(0, 10);
+
+const totalGraded = products.filter((p) => p.grade).length;
+const categoryPretty = prettyCategoryName(slugCat);
+
+const breadcrumbs = [
+  { name: "Home", url: siteConfig.url + "/" },
+  { name: "Catalog", url: siteConfig.url + "/rankings/" },
+  { name: categoryPretty, url: siteConfig.url + `/category/${slugCat}/` },
+];
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: breadcrumbs.map((b, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: b.name,
+    item: b.url,
+  })),
+};
+
+const collectionJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: `${categoryPretty} , graded A to E`,
+  url: siteConfig.url + `/category/${slugCat}/`,
+  numberOfItems: products.length,
+};
+
+// Grade percentages
+const dist = hub.grade_distribution || { A: 0, B: 0, C: 0, D: 0, E: 0 };
+const totalDist = Object.values(dist).reduce((a: number, b: any) => a + (b as number), 0) || 1;
+const pct = (g: string) => Math.round(((dist[g] || 0) / totalDist) * 100);
+
+const title = `${categoryPretty} , ${products.length} products graded A to E | NutriDécrypte`;
+const description = `Independent A to E ranking of ${products.length} ${categoryPretty.toLowerCase()} products. Top 10 best and worst graded, based on Nutri-Score, NOVA, EFSA additives and marketing claims.`;
+const canonicalUrl = siteConfig.url + `/category/${slugCat}/`;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalUrl={canonicalUrl}
+  alternates={{ en: `/category/${slugCat}/`, fr: `/fr/categorie/${slugCat}/` }}
+  jsonLd={[collectionJsonLd, breadcrumbJsonLd]}
+>
+  <section class="max-w-6xl mx-auto px-4 py-12">
+    <Breadcrumbs items={breadcrumbs} />
+
+    <header class="mb-10">
+      <p class="text-sm font-bold uppercase tracking-widest text-teal-700 mb-2">Category decoded</p>
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-4">{categoryPretty}</h1>
+      <p class="text-lg text-stone-700 leading-relaxed max-w-3xl">
+        {products.length} graded {categoryPretty.toLowerCase()} products. Average score <strong>{hub.avg_score}/100</strong>.
+        Each is evaluated on Nutri-Score, <Glossaire term="NOVA" />, additives (<Glossaire term="EFSA" />), claim audit and density.
+      </p>
+    </header>
+
+    <aside data-speakable class="bg-stone-50 border-l-4 border-teal-600 rounded-r-xl p-6 mb-12">
+      <p class="text-xs font-bold uppercase tracking-widest text-teal-700 mb-3">TL;DR</p>
+      <p class="text-base leading-relaxed text-stone-800">
+        The <strong>{categoryPretty}</strong> category contains {products.length} graded products in the NutriDécrypte catalog, with a mean score of {hub.avg_score}/100.
+        Grade spread : A={dist.A} · B={dist.B} · C={dist.C} · D={dist.D} · E={dist.E}.
+        Ranking combines Nutri-Score, NOVA ultra-processing class, additive risk from the EFSA registry, marketing claims audit and nutritional density. Use the top 10 below to pick a better alternative.
+      </p>
+    </aside>
+
+    <!-- Grade distribution chart -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-4">Répartition des notes</h2>
+      <div class="space-y-2">
+        {(["A", "B", "C", "D", "E"] as const).map((g) => (
+          <div class="flex items-center gap-3">
+            <div class="w-10 flex justify-center">
+              <GradeReveal grade={g} size="sm" animate={false} />
+            </div>
+            <div class="flex-1 h-6 bg-stone-100 rounded-full overflow-hidden relative">
+              <div
+                class="h-full rounded-full transition-all"
+                style={`width: ${pct(g)}%; background: var(--grade-${g.toLowerCase()})`}
+              ></div>
+            </div>
+            <div class="w-20 text-sm font-mono text-stone-700 text-right">
+              {dist[g] || 0} · {pct(g)}%
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Top 10 best -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">Top 10 best</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        {topBest.map((p, i) => (
+          <a
+            href={`/product/${p.slug}/`}
+            class="flex items-center gap-4 bg-white border border-stone-200 rounded-lg p-4 hover:border-teal-400 hover:shadow-md transition"
+          >
+            <span class="text-2xl font-extrabold text-stone-400 w-8 text-center">#{i + 1}</span>
+            {p.image_url ? (
+              <img src={p.image_url} alt="" class="w-14 h-14 object-contain bg-stone-50 rounded flex-shrink-0" loading="lazy" width="56" height="56" />
+            ) : (
+              <div class="w-14 h-14 bg-stone-100 rounded flex-shrink-0"></div>
+            )}
+            <div class="flex-1 min-w-0">
+              <p class="font-medium text-stone-900 truncate">{p.name}</p>
+              {p.brand_slug && (
+                <p class="text-sm text-stone-500 truncate">{p.brand_slug.replace(/-/g, " ")}</p>
+              )}
+            </div>
+            <div class="flex flex-col items-end gap-1">
+              {p.grade && <GradeReveal grade={p.grade} size="md" animate={false} />}
+              {p.score_overall != null && (
+                <span class="text-xs text-stone-500 font-mono">{p.score_overall}/100</span>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Top 10 worst -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-2">Top 10 worst</h2>
+      <p class="text-stone-600 mb-6">
+        Attention : produits <Glossaire term="ultra-transformation" display="ultra-transformés" />, additifs à risque ou allégations trompeuses.
+      </p>
+      <div class="grid md:grid-cols-2 gap-4">
+        {topWorst.map((p, i) => (
+          <a
+            href={`/product/${p.slug}/`}
+            class="flex items-center gap-4 bg-white border border-stone-200 rounded-lg p-4 hover:border-red-400 hover:shadow-md transition"
+          >
+            <span class="text-2xl font-extrabold text-stone-400 w-8 text-center">#{i + 1}</span>
+            {p.image_url ? (
+              <img src={p.image_url} alt="" class="w-14 h-14 object-contain bg-stone-50 rounded flex-shrink-0" loading="lazy" width="56" height="56" />
+            ) : (
+              <div class="w-14 h-14 bg-stone-100 rounded flex-shrink-0"></div>
+            )}
+            <div class="flex-1 min-w-0">
+              <p class="font-medium text-stone-900 truncate">{p.name}</p>
+              {p.brand_slug && (
+                <p class="text-sm text-stone-500 truncate">{p.brand_slug.replace(/-/g, " ")}</p>
+              )}
+            </div>
+            <div class="flex flex-col items-end gap-1">
+              {p.grade && <GradeReveal grade={p.grade} size="md" animate={false} />}
+              {p.score_overall != null && (
+                <span class="text-xs text-stone-500 font-mono">{p.score_overall}/100</span>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <footer class="mt-12 text-sm text-stone-600 text-center">
+      <a href={`/fr/categorie/${slugCat}/`} class="text-teal-700 underline">Version française</a>
+    </footer>
+  </section>
+</BaseLayout>

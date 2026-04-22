@@ -1,0 +1,172 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import GradeReveal from "../../components/GradeReveal.astro";
+import {
+  getAllBrands,
+  getProductsByBrand,
+  type Brand,
+  type Product,
+} from "../../lib/data";
+import { siteConfig } from "../../../site.config";
+
+export async function getStaticPaths() {
+  const brands = await getAllBrands(500);
+  const out: any[] = [];
+  for (const b of brands) {
+    if (!b.slug) continue;
+    const products = await getProductsByBrand(b.slug);
+    if (products.length === 0) continue;
+    out.push({ params: { slug: b.slug }, props: { brand: b, products } });
+  }
+  return out;
+}
+
+const { brand, products } = Astro.props as { brand: Brand; products: Product[] };
+
+// Compute averages
+const GRADE_ORDER: Record<string, number> = { A: 5, B: 4, C: 3, D: 2, E: 1 };
+const GRADE_FROM_AVG = ["E", "E", "D", "C", "B", "A"];
+const scored = products.filter((p) => p.score_overall != null);
+const avgScore = scored.length
+  ? Math.round(scored.reduce((a, p) => a + (p.score_overall || 0), 0) / scored.length)
+  : null;
+const gradedProducts = products.filter((p) => p.grade);
+const avgGradeRank = gradedProducts.length
+  ? Math.round(gradedProducts.reduce((a, p) => a + (GRADE_ORDER[p.grade!] || 0), 0) / gradedProducts.length)
+  : 0;
+const avgGrade = gradedProducts.length ? GRADE_FROM_AVG[Math.min(5, Math.max(0, avgGradeRank))] : null;
+
+// Grade distribution
+const dist: Record<string, number> = { A: 0, B: 0, C: 0, D: 0, E: 0 };
+for (const p of products) {
+  if (p.grade) dist[p.grade] = (dist[p.grade] || 0) + 1;
+}
+
+const brandPretty = brand.name || brand.slug.replace(/-/g, " ");
+
+const breadcrumbs = [
+  { name: "Home", url: siteConfig.url + "/" },
+  { name: "Brands", url: siteConfig.url + "/rankings/" },
+  { name: brandPretty, url: siteConfig.url + `/brand/${brand.slug}/` },
+];
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: breadcrumbs.map((b, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: b.name,
+    item: b.url,
+  })),
+};
+
+const brandJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Brand",
+  name: brandPretty,
+  url: siteConfig.url + `/brand/${brand.slug}/`,
+  ...(brand.website ? { sameAs: [brand.website] } : {}),
+};
+
+const title = `${brandPretty} decoded , ${products.length} products graded | NutriDécrypte`;
+const description = `Independent A to E grading of ${products.length} ${brandPretty} products. Additives, Nutri-Score, NOVA ultra-processing, EFSA data. Average grade ${avgGrade || "N/A"}.`;
+const canonicalUrl = siteConfig.url + `/brand/${brand.slug}/`;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalUrl={canonicalUrl}
+  alternates={{ en: `/brand/${brand.slug}/`, fr: `/fr/marque/${brand.slug}/` }}
+  jsonLd={[brandJsonLd, breadcrumbJsonLd]}
+>
+  <section class="max-w-5xl mx-auto px-4 py-12">
+    <Breadcrumbs items={breadcrumbs} />
+
+    <header class="mb-12">
+      <p class="text-sm font-bold uppercase tracking-widest text-teal-700 mb-2">Brand decoded</p>
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-4">{brandPretty}</h1>
+      {brand.description && (
+        <p class="text-lg text-stone-700 leading-relaxed max-w-3xl">{brand.description}</p>
+      )}
+    </header>
+
+    <!-- TL;DR -->
+    <aside data-speakable class="bg-stone-50 border-l-4 border-teal-600 rounded-r-xl p-6 mb-12">
+      <p class="text-xs font-bold uppercase tracking-widest text-teal-700 mb-3">TL;DR</p>
+      <p class="text-base leading-relaxed text-stone-800">
+        <strong>{brandPretty}</strong> holds {products.length} product{products.length > 1 ? "s" : ""} in the NutriDécrypte catalog.
+        Average grade <strong>{avgGrade || "N/A"}</strong>{avgScore != null ? ` with a mean overall score of ${avgScore}/100` : ""}.
+        Grade distribution : A={dist.A} · B={dist.B} · C={dist.C} · D={dist.D} · E={dist.E}.
+        Each score combines the Nutri-Score, the NOVA ultra-processing classification, additive risk from the EFSA registry, marketing claim audits, and nutritional density.
+      </p>
+    </aside>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+      <div class="bg-white border border-stone-200 rounded-lg p-5 text-center">
+        <p class="text-3xl font-extrabold text-teal-700">{products.length}</p>
+        <p class="text-sm text-stone-600 mt-1">Products</p>
+      </div>
+      <div class="bg-white border border-stone-200 rounded-lg p-5 text-center">
+        <p class="text-3xl font-extrabold" style={`color: var(--grade-${(avgGrade || "c").toLowerCase()})`}>
+          {avgGrade || "?"}
+        </p>
+        <p class="text-sm text-stone-600 mt-1">Average grade</p>
+      </div>
+      <div class="bg-white border border-stone-200 rounded-lg p-5 text-center">
+        <p class="text-3xl font-extrabold text-teal-700">{avgScore ?? "?"}</p>
+        <p class="text-sm text-stone-600 mt-1">Average score /100</p>
+      </div>
+      <div class="bg-white border border-stone-200 rounded-lg p-5 text-center">
+        <p class="text-3xl font-extrabold text-stone-900">{dist.A + dist.B}</p>
+        <p class="text-sm text-stone-600 mt-1">Graded A or B</p>
+      </div>
+    </div>
+
+    <!-- Products table -->
+    <section>
+      <h2 class="text-2xl font-bold mb-6">All graded products</h2>
+      <div class="overflow-x-auto bg-white border border-stone-200 rounded-xl">
+        <table class="w-full text-sm">
+          <thead class="bg-stone-50 text-left text-stone-600 uppercase text-xs">
+            <tr>
+              <th class="px-4 py-3 font-semibold">Grade</th>
+              <th class="px-4 py-3 font-semibold">Product</th>
+              <th class="px-4 py-3 font-semibold text-right">Score</th>
+              <th class="px-4 py-3 font-semibold hidden md:table-cell">Additives</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((p) => (
+              <tr class="border-t border-stone-100 hover:bg-stone-50 transition">
+                <td class="px-4 py-3">
+                  {p.grade ? (
+                    <GradeReveal grade={p.grade} size="sm" animate={false} />
+                  ) : <span class="text-stone-400 text-xs">?</span>}
+                </td>
+                <td class="px-4 py-3">
+                  <a href={`/product/${p.slug}/`} class="text-teal-700 hover:underline font-medium">
+                    {p.name}
+                  </a>
+                </td>
+                <td class="px-4 py-3 text-right font-mono text-stone-700">
+                  {p.score_overall != null ? `${p.score_overall}` : "-"}
+                </td>
+                <td class="px-4 py-3 hidden md:table-cell text-stone-600">
+                  {(p.additives_tags || []).length}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="mt-12 text-sm text-stone-600 text-center">
+      <a href={`/fr/marque/${brand.slug}/`} class="text-teal-700 underline">Version française</a>
+    </footer>
+  </section>
+</BaseLayout>

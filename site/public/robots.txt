@@ -48,4 +48,6 @@ User-agent: CCBot
 Allow: /
 
 Sitemap: https://nutridecrypte.com/sitemap-index.xml
-Sitemap: https://nutridecrypte.com/sitemap.xml
+
+# IndexNow (Bing + Yandex + partners)
+IndexNow-Key: 584654e394e846b6938ffa66c46092e8

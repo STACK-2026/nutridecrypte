@@ -8,7 +8,22 @@ import { siteConfig } from "./site.config.ts";
 
 export default defineConfig({
   site: siteConfig.url,
-  integrations: [sitemap({ lastmod: new Date() })],
+  integrations: [
+    sitemap({
+      lastmod: new Date(),
+      // Drop 404 + noindex scaffold URLs
+      filter: (page) =>
+        !page.includes("/404") &&
+        !page.includes("/fr/affiliate-disclosure"), // FR slug is /divulgation-affiliation
+      i18n: {
+        defaultLocale: "en",
+        locales: {
+          en: "en-US",
+          fr: "fr-FR",
+        },
+      },
+    }),
+  ],
   i18n: {
     defaultLocale: "en",
     locales: ["en", "fr"],
