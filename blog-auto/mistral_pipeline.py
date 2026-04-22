@@ -165,6 +165,12 @@ def _strip_md_fence(text):
     t = text.strip()
     t = re.sub(r"^```(?:markdown|md|yaml)?\s*\n", "", t)
     t = re.sub(r"\n```\s*$", "", t)
+    t = t.strip()
+    m = re.match(r"^```(?:yaml|yml|markdown|md)?\s*\n(---\s*\n[\s\S]*?\n---\s*)\n```\s*\n", t)
+    if m:
+        t = m.group(1) + "\n" + t[m.end():]
+    t = re.sub(r"^```(?:yaml|yml|markdown|md)?\s*\n(?=---\s*\n)", "", t)
+    t = re.sub(r"(\n---\s*\n)```\s*\n", r"\1", t, count=1)
     return t.strip()
 
 
