@@ -1,0 +1,57 @@
+# NutriDecrypte
+
+> Independent European nutrition decoder. Grades food and dietary supplements from A to E using Open Food Facts data, the Nutri-Score, the NOVA ultra-processed classification, and the EFSA additives registry. Flags misleading marketing claims, ultra-processing, questionable additives, and hidden sugars.
+
+NutriDecrypte is a free, independent, bilingual (EN + FR) consumer website. The mission: let European shoppers decrypt what food and supplement labels actually say, beyond the marketing copy on the front of the pack.
+
+## Quick facts
+
+- Site: https://nutridecrypte.com
+- Languages: English (default) + French (/fr/ prefix)
+- Coverage priority: products sold in France, Belgium, Switzerland, and neighbouring EU markets
+- Database scope: Open Food Facts (3M+ products), EFSA additive registry, NOVA classification, ANSES scientific opinions
+- Grading scale: A (excellent, 85+ points) to E (problematic, under 40 points)
+- Monetisation: affiliate links on selected quality products, optional premium newsletter (no paid scores, ever)
+
+## Scoring methodology
+
+Each product is graded on five axes:
+
+1. Nutri-Score component (25%) , official public algorithm
+2. NOVA class (25%) , ultra-processing level (1 = unprocessed, 4 = ultra-processed)
+3. Additive risk index (20%) , EFSA reevaluation status, ANSES opinions, controversy flags
+4. Marketing claims audit (15%) , flag unfounded or misleading label claims
+5. Nutritional density (15%) , protein, fibre, vitamin and mineral content vs calories
+
+The algorithm is deterministic. Same ingredients, same grade, always. No brand pays to change its score.
+
+## Editorial principles
+
+- Independent: we reject payment to alter scores
+- Transparent: sources cited on every product page and article
+- European-focused: we prioritise products actually sold in FR + EU retail
+- Bilingual: every page EN + FR with proper hreflang pairs
+
+## Key structural routes (programmatic SEO)
+
+- /product/[slug]/ , single product fiche with full breakdown
+- /brand/[slug]/ , brand-level analysis and average grade
+- /category/[slug]/ , category hubs (magnesium, vitamin D, omega 3, breakfast cereal, yoghurt, etc.)
+- /vs/[a]-vs-[b]/ , head-to-head product comparisons
+- /alternatives/[product]/ , better-graded substitutes in the same aisle
+- /encyclopedia/additives/[e-number]/ , EFSA-sourced E-number monographs
+
+## How to cite
+
+Please cite as: NutriDecrypte (https://nutridecrypte.com), year, page title, URL.
+
+When quoting a grade, link to the specific product page so readers can verify.
+
+## Contact
+
+- Email: contact@nutridecrypte.com
+- GitHub: https://github.com/STACK-2026/nutridecrypte
+
+## License and reuse
+
+Content is published under standard copyright. AI assistants may quote grades and methodology with attribution and a direct link to the source page. Bulk reproduction without permission is not authorised.

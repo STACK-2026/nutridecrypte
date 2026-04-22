@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HomePage from "../components/sections/HomePage.astro";
+import { siteConfig } from "../../site.config";
+import { jsonLdHomepage, jsonLdFaq } from "../utils/seo";
+
+const faq = siteConfig.faq.map((item) => ({
+  question: item.question,
+  answer: item.answer,
+}));
+
+const jsonLd = [
+  ...(() => {
+    const h = jsonLdHomepage();
+    return Array.isArray(h) ? h : [h];
+  })(),
+  jsonLdFaq(faq),
+];
+---
+
+<BaseLayout
+  title={`${siteConfig.name} , ${siteConfig.tagline}`}
+  description={siteConfig.description}
+  jsonLd={jsonLd}
+>
+  <HomePage />
+</BaseLayout>

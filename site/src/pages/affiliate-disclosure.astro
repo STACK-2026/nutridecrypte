@@ -1,0 +1,108 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const title = "Affiliate disclosure · NutriDécrypte";
+const description = "How NutriDécrypte is funded: affiliate links, full transparency, zero brand sponsorship on grades. Independent A to E scoring.";
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="legal-page">
+    <header class="legal-header">
+      <p class="eyebrow">Transparency</p>
+      <h1>Affiliate disclosure</h1>
+      <p class="lede">
+        NutriDécrypte is an independent editorial rating service. A to E grades are awarded without any financial counterpart from brands. To stay free, we occasionally use affiliate links. Here is exactly how it works.
+      </p>
+    </header>
+
+    <section class="legal-section">
+      <h2>What is an affiliate link?</h2>
+      <p>
+        When you click a "Buy" or "See price" button from NutriDécrypte, you reach the partner store through a tracked link. If you purchase within a few days, the store pays NutriDécrypte a small commission (typically 3 to 8% of the basket). You pay the exact same price as visiting directly. No surcharge.
+      </p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Who are our partners?</h2>
+      <p>As of 22 April 2026:</p>
+      <ul>
+        <li>No affiliate partner is active yet. Phase 0 of the project is editorial only.</li>
+        <li>Pending partners: supplements, organic grocery, quality food brands. All candidates must already rank B or A on NutriDécrypte to be approached. We never onboard a brand to fix its grade.</li>
+      </ul>
+      <p>Only relevant products will carry a "Buy" link. Other pages stay purely informational.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Does affiliation influence grades?</h2>
+      <p>
+        No. A to E scores are computed by our public methodology (Nutri-Score, NOVA, EFSA additive risk, claims audit, nutritional density). No brand can "buy" a better grade. No affiliate partner has access to our scoring sheets before publication. Grades are never modified after a partnership is accepted.
+      </p>
+      <p>
+        Concretely: a brand graded D stays graded D, whether it ships from an affiliate partner or not. Supermarket private labels, which do not pay any referral, are graded the same way as premium brands.
+      </p>
+    </section>
+
+    <section class="legal-section">
+      <h2>How to spot an affiliate link?</h2>
+      <p>
+        Every sponsored CTA is flagged: "Affiliate partner" badge, distinct button, explicit disclosure. Links go through our <code>/go/{"{"}product-id{"}"}</code> redirect so we can measure clicks on our side. Links carry <code>rel="sponsored nofollow"</code> per Google guidelines.
+      </p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Your rights as a user</h2>
+      <ul>
+        <li>You can use NutriDécrypte without ever clicking an affiliate link. All grades and analyses stay accessible.</li>
+        <li>You can withdraw your consent for analytics cookies via the cookie banner (footer).</li>
+        <li>Affiliate click data contains no personally identifiable information. We store: product id, partner, referrer, country, date.</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Questions?</h2>
+      <p>
+        Write to <a href="mailto:contact@nutridecrypte.com">contact@nutridecrypte.com</a>. We reply within 48 hours on weekdays.
+      </p>
+    </section>
+  </article>
+
+  <style>
+    .legal-page {
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 3rem 1.25rem 5rem;
+    }
+    .legal-header {
+      margin-bottom: 2.5rem;
+    }
+    .eyebrow {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0 0 0.5rem;
+    }
+    .legal-page h1 {
+      font-size: 2.25rem;
+      line-height: 1.15;
+      margin: 0 0 1rem;
+    }
+    .lede {
+      font-size: 1.1rem;
+      line-height: 1.55;
+      color: var(--color-ink-soft);
+      margin: 0;
+    }
+    .legal-section { margin-top: 2.25rem; }
+    .legal-section h2 { font-size: 1.35rem; margin: 0 0 0.6rem; }
+    .legal-section p { line-height: 1.65; margin: 0 0 0.75rem; }
+    .legal-section ul { margin: 0.5rem 0 1rem 1.25rem; line-height: 1.65; }
+    .legal-section code {
+      background: rgba(15, 118, 110, 0.08);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.92em;
+    }
+  </style>
+</BaseLayout>

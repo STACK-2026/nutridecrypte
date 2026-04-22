@@ -1,0 +1,265 @@
+---
+import { getLocale, type Locale } from "../../i18n/t";
+
+interface Props {
+  kind: "privacy" | "terms" | "cookies";
+}
+const { kind } = Astro.props;
+const locale: Locale = getLocale(Astro.url);
+
+type L = "en" | "fr";
+interface LegalCopy {
+  title: Record<L, string>;
+  lede: Record<L, string>;
+  updated: Record<L, string>;
+  sections: Array<{
+    h2: Record<L, string>;
+    body: Record<L, string>;
+  }>;
+}
+
+const docs: Record<"privacy" | "terms" | "cookies", LegalCopy> = {
+  privacy: {
+    title: { en: "Privacy policy", fr: "Politique de confidentialité" },
+    lede: {
+      en: "This policy explains how NutriDécrypte collects, uses, and protects your personal data. Designed to comply with EU GDPR (RGPD) and, where applicable, the Swiss Federal Act on Data Protection (FADP).",
+      fr: "Cette politique explique comment NutriDécrypte collecte, utilise et protège tes données personnelles. Conforme au RGPD UE et, le cas échéant, à la LPD suisse.",
+    },
+    updated: { en: "Last updated: 22 April 2026", fr: "Dernière mise à jour : 22 avril 2026" },
+    sections: [
+      {
+        h2: { en: "Who we are", fr: "Qui nous sommes" },
+        body: {
+          en: "NutriDécrypte is an independent European nutrition decoder operating at nutridecrypte.com. You can reach us at contact@nutridecrypte.com.",
+          fr: "NutriDécrypte est un décodeur nutritionnel européen indépendant opérant sur nutridecrypte.com. Contact : contact@nutridecrypte.com.",
+        },
+      },
+      {
+        h2: { en: "What we collect", fr: "Ce que nous collectons" },
+        body: {
+          en: "Newsletter email if you subscribe, product interactions (searches, saved grades, comparisons) if you create an account, and basic technical data (approximate city location, browser, pages visited) through our privacy-respecting analytics. No payment data because the public site is free.",
+          fr: "L'email si tu t'abonnes à la newsletter, tes interactions produit (recherches, notes sauvegardées, comparaisons) si tu crées un compte, et des données techniques simples (localisation approximative par ville, navigateur, pages visitées) via notre analytics respectueux de la vie privée. Aucune donnée de paiement, le site public est gratuit.",
+        },
+      },
+      {
+        h2: { en: "How we use it", fr: "Comment nous l'utilisons" },
+        body: {
+          en: "To operate the site and its features (grading, personalized alerts, comparisons), to improve the additives database and the scoring algorithm through aggregated usage analytics, to respond to your enquiries, and to comply with legal obligations. We never sell personal data.",
+          fr: "Pour faire tourner le site et ses fonctions (notation, alertes personnalisées, comparaisons), pour améliorer la base additifs et l'algorithme via des analytics agrégés, pour répondre à tes questions et pour respecter nos obligations légales. Jamais de revente de données personnelles.",
+        },
+      },
+      {
+        h2: { en: "Legal basis", fr: "Base légale" },
+        body: {
+          en: "We process your personal data on the basis of consent (analytics cookies, marketing communications), legitimate interest (site operation, fraud prevention), and legal obligation (where required by law).",
+          fr: "On traite tes données sur la base du consentement (cookies analytics, communications marketing), de l'intérêt légitime (exploitation du site, prévention de la fraude) et de l'obligation légale (quand la loi l'exige).",
+        },
+      },
+      {
+        h2: { en: "Who we share data with", fr: "Avec qui on partage" },
+        body: {
+          en: "Trusted service providers that help us operate the site (Supabase for database and auth, Cloudflare for hosting, Resend for transactional email) under strict data processing agreements. Affiliate partners receive only anonymous click referrals. We never sell data.",
+          fr: "Des prestataires de confiance qui nous aident à faire tourner le site (Supabase pour la base et l'auth, Cloudflare pour l'hébergement, Resend pour les emails transactionnels) sous contrats de sous-traitance stricts. Les partenaires affiliés ne reçoivent que des clics anonymisés. Jamais de revente.",
+        },
+      },
+      {
+        h2: { en: "Your rights", fr: "Tes droits" },
+        body: {
+          en: "Under GDPR you can request access to your data, correction of inaccurate data, deletion (right to be forgotten), restriction of processing, portability, and objection to certain processing. Write to contact@nutridecrypte.com and we reply within 30 days.",
+          fr: "En vertu du RGPD tu peux demander l'accès à tes données, la correction de données inexactes, la suppression (droit à l'oubli), la limitation du traitement, la portabilité, et l'opposition à certains traitements. Écris à contact@nutridecrypte.com, on répond sous 30 jours.",
+        },
+      },
+      {
+        h2: { en: "Retention", fr: "Conservation" },
+        body: {
+          en: "Account data is kept as long as your account is active. After deletion, minimal audit logs are kept for 90 days then purged. Usage analytics are anonymized after 13 months, per CNIL guidelines.",
+          fr: "Les données de compte sont conservées tant que ton compte est actif. Après suppression, des logs d'audit minimaux sont gardés 90 jours puis purgés. Les analytics d'usage sont anonymisés après 13 mois, conformément aux recommandations CNIL.",
+        },
+      },
+      {
+        h2: { en: "International transfers", fr: "Transferts internationaux" },
+        body: {
+          en: "Our primary servers are in the EU. When data transits to the United States (e.g. Resend), we rely on Standard Contractual Clauses and additional safeguards required by GDPR.",
+          fr: "Nos serveurs principaux sont dans l'UE. Quand des données transitent vers les États-Unis (par exemple via Resend), on s'appuie sur les clauses contractuelles standard et les garanties supplémentaires exigées par le RGPD.",
+        },
+      },
+      {
+        h2: { en: "Complaints", fr: "Réclamations" },
+        body: {
+          en: "If you feel your data rights have not been respected, you can complain to your local data protection authority. In France, the CNIL (cnil.fr). In Belgium, the APD (autoriteprotectiondonnees.be). In Switzerland, the PFPDT (edoeb.admin.ch).",
+          fr: "Si tu estimes que tes droits ne sont pas respectés, tu peux te plaindre auprès de ton autorité locale. En France, la CNIL (cnil.fr). En Belgique, l'APD (autoriteprotectiondonnees.be). En Suisse, le PFPDT (edoeb.admin.ch).",
+        },
+      },
+    ],
+  },
+  terms: {
+    title: { en: "Terms of use", fr: "Conditions d'utilisation" },
+    lede: {
+      en: "These terms govern your use of NutriDécrypte. By using the site you agree to them. If you do not agree, do not use the site.",
+      fr: "Ces conditions régissent ton utilisation de NutriDécrypte. En utilisant le site, tu les acceptes. Si tu n'es pas d'accord, n'utilise pas le site.",
+    },
+    updated: { en: "Last updated: 22 April 2026", fr: "Dernière mise à jour : 22 avril 2026" },
+    sections: [
+      {
+        h2: { en: "What NutriDécrypte is", fr: "Ce qu'est NutriDécrypte" },
+        body: {
+          en: "NutriDécrypte is an independent European editorial rating service. We score every food and supplement from A to E based on the official Nutri-Score, the NOVA ultra-processing classification, the EFSA additives registry, a marketing claims audit, and a nutritional density index. We are not a medical practice, a food manufacturer, or a marketplace.",
+          fr: "NutriDécrypte est un service éditorial de notation européen indépendant. On note chaque aliment et complément de A à E sur la base du Nutri-Score officiel, de la classification NOVA d'ultra-transformation, de la base EFSA des additifs, d'un audit des allégations marketing et d'un indice de densité nutritionnelle. On n'est ni un cabinet médical, ni un fabricant, ni un marketplace.",
+        },
+      },
+      {
+        h2: { en: "Not medical advice", fr: "Pas un avis médical" },
+        body: {
+          en: "Content on NutriDécrypte is informational only. It is not a substitute for a consultation with a registered dietitian or physician. For any medical decision regarding your diet or health, always consult a licensed professional.",
+          fr: "Le contenu de NutriDécrypte est informatif uniquement. Ce n'est pas un substitut à une consultation avec un diététicien diplômé ou ton médecin. Pour toute décision médicale sur ton alimentation ou ta santé, consulte un professionnel diplômé.",
+        },
+      },
+      {
+        h2: { en: "Accuracy of grades", fr: "Exactitude des notes" },
+        body: {
+          en: "We work hard to keep our grades accurate and up to date. Manufacturers reformulate, and our database may occasionally lag. Always check the official label on the product you buy, and email us if you spot a discrepancy.",
+          fr: "On travaille dur pour que nos notes soient exactes et à jour. Les fabricants reformulent, et notre base peut occasionnellement être en retard. Vérifie toujours l'étiquette officielle du produit que tu achètes, et écris-nous si tu détectes un écart.",
+        },
+      },
+      {
+        h2: { en: "Affiliate links", fr: "Liens d'affiliation" },
+        body: {
+          en: "Some product pages include affiliate links to external retailers. When you click a link and purchase, we may receive a small commission. This commission never influences our grading. Affiliate relationships are disclosed on every affected page and on the /affiliate-disclosure/ page.",
+          fr: "Certaines fiches produit contiennent des liens d'affiliation vers des revendeurs externes. Quand tu cliques et achètes, on peut recevoir une petite commission. Cette commission n'influence jamais notre notation. Les relations d'affiliation sont déclarées sur chaque page concernée et sur la page /divulgation-affiliation/.",
+        },
+      },
+      {
+        h2: { en: "Acceptable use", fr: "Utilisation acceptable" },
+        body: {
+          en: "You agree not to scrape data at scale, reverse-engineer the algorithm for commercial resale, spam or harass other users, impersonate anyone, or introduce malware. Violations may result in account termination and, where relevant, legal action.",
+          fr: "Tu t'engages à ne pas scraper la donnée à grande échelle, ne pas désosser l'algorithme pour revente commerciale, ne pas spammer ou harceler, ne pas usurper l'identité d'autrui, ne pas introduire de malware. Les violations peuvent entraîner la résiliation du compte et, le cas échéant, des poursuites.",
+        },
+      },
+      {
+        h2: { en: "Intellectual property", fr: "Propriété intellectuelle" },
+        body: {
+          en: "The NutriDécrypte name, logo, methodology, database, product analyses, and editorial content are owned by NutriDécrypte or licensed to it. You may quote short excerpts with a link back, but you may not republish full pages or tables without written permission.",
+          fr: "Le nom NutriDécrypte, le logo, la méthodologie, la base, les analyses produit et le contenu éditorial appartiennent à NutriDécrypte ou lui sont concédés sous licence. Tu peux citer de courts extraits avec un lien, mais pas republier des pages ou des tableaux entiers sans autorisation écrite.",
+        },
+      },
+      {
+        h2: { en: "Liability", fr: "Responsabilité" },
+        body: {
+          en: "We try to keep the site useful and reliable but we provide it 'as is'. To the extent permitted by law, we exclude liability for indirect or consequential losses arising from your use of the site. Nothing here limits liability for gross negligence or fraud.",
+          fr: "On fait de notre mieux pour que le site soit utile et fiable mais on le fournit 'tel quel'. Dans la limite permise par la loi, on exclut toute responsabilité pour les pertes indirectes ou consécutives liées à ton usage du site. Rien ici ne limite la responsabilité pour négligence grave ou fraude.",
+        },
+      },
+      {
+        h2: { en: "Governing law", fr: "Loi applicable" },
+        body: {
+          en: "These terms are governed by French law. Disputes are subject to the exclusive jurisdiction of the French courts, except where your statutory consumer rights allow you to bring proceedings elsewhere.",
+          fr: "Ces conditions sont régies par le droit français. Les litiges relèvent de la compétence exclusive des tribunaux français, sauf si tes droits de consommateur te permettent d'agir ailleurs.",
+        },
+      },
+      {
+        h2: { en: "Changes", fr: "Modifications" },
+        body: {
+          en: "We may update these terms. The date at the top reflects the most recent version. Material changes are highlighted in the footer for at least 30 days.",
+          fr: "On peut mettre à jour ces conditions. La date en haut indique la version la plus récente. Les changements matériels sont mis en évidence dans le pied de page pendant au moins 30 jours.",
+        },
+      },
+    ],
+  },
+  cookies: {
+    title: { en: "Cookie policy", fr: "Politique de cookies" },
+    lede: {
+      en: "NutriDécrypte uses a minimal set of cookies. This page explains which cookies we use, what they do, and how to control them.",
+      fr: "NutriDécrypte utilise un ensemble minimal de cookies. Cette page explique lesquels, à quoi ils servent et comment les contrôler.",
+    },
+    updated: { en: "Last updated: 22 April 2026", fr: "Dernière mise à jour : 22 avril 2026" },
+    sections: [
+      {
+        h2: { en: "What cookies we use", fr: "Quels cookies on utilise" },
+        body: {
+          en: "Essential cookies for authentication, session persistence, CSRF protection, and rate limiting. Analytics cookies (privacy-respecting, self-hosted) to understand which pages are popular and where visitors drop off. No third-party ad trackers, no Facebook Pixel, no Google Ads cookies.",
+          fr: "Cookies essentiels pour l'authentification, la persistance de session, la protection CSRF et la limitation de taux. Cookies analytics (auto-hébergés, respectueux de la vie privée) pour comprendre quelles pages marchent et où les visiteurs décrochent. Aucun tracker publicitaire tiers, aucun Facebook Pixel, aucun cookie Google Ads.",
+        },
+      },
+      {
+        h2: { en: "Consent", fr: "Consentement" },
+        body: {
+          en: "Essential cookies are set automatically. Analytics cookies only run if you consent via the cookie banner. You can withdraw consent any time by clicking 'Manage cookies' in the footer.",
+          fr: "Les cookies essentiels sont posés automatiquement. Les cookies analytics ne tournent que si tu les acceptes via la bannière. Tu peux retirer ton consentement à tout moment en cliquant sur « Gérer les cookies » dans le pied de page.",
+        },
+      },
+      {
+        h2: { en: "How to control cookies", fr: "Comment contrôler les cookies" },
+        body: {
+          en: "Most browsers let you block or delete cookies in their privacy settings. Blocking essential cookies may prevent login and some interactive features from working. Analytics cookies can be disabled from our banner without affecting the site.",
+          fr: "La plupart des navigateurs permettent de bloquer ou supprimer les cookies dans les paramètres de confidentialité. Bloquer les cookies essentiels peut empêcher la connexion et certaines fonctionnalités interactives. Les cookies analytics peuvent être désactivés via notre bannière sans impacter le site.",
+        },
+      },
+      {
+        h2: { en: "Third parties", fr: "Tiers" },
+        body: {
+          en: "Cloudflare (hosting) sets its own technical cookies to protect the site. Supabase (auth) sets session persistence cookies. Both are strictly necessary and covered by their own privacy policies.",
+          fr: "Cloudflare (hébergement) pose ses propres cookies techniques pour protéger le site. Supabase (auth) pose des cookies de persistance de session. Les deux sont strictement nécessaires et couverts par leurs propres politiques de confidentialité.",
+        },
+      },
+      {
+        h2: { en: "More information", fr: "Plus d'informations" },
+        body: {
+          en: "For more about how we handle your personal data, see our privacy policy. For questions about cookies, email contact@nutridecrypte.com.",
+          fr: "Pour en savoir plus sur nos pratiques de traitement de données, consulte notre politique de confidentialité. Pour toute question sur les cookies, écris à contact@nutridecrypte.com.",
+        },
+      },
+    ],
+  },
+};
+
+const doc = docs[kind];
+---
+
+<article class="legal">
+  <header>
+    <h1>{doc.title[locale]}</h1>
+    <p class="lede">{doc.lede[locale]}</p>
+    <p class="meta">{doc.updated[locale]}</p>
+  </header>
+
+  {doc.sections.map((s) => (
+    <section>
+      <h2>{s.h2[locale]}</h2>
+      <p>{s.body[locale]}</p>
+    </section>
+  ))}
+</article>
+
+<style>
+  .legal {
+    max-width: 44rem;
+    margin: 2rem auto 4rem;
+    padding: 0 1rem;
+  }
+  .legal h1 {
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.75rem, 4vw, 2.4rem);
+  }
+  .lede {
+    color: var(--color-ink-soft);
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+  .meta {
+    font-size: 0.8rem;
+    color: #a8a29e;
+    margin-bottom: 2rem;
+  }
+  section { margin-bottom: 2rem; }
+  h2 {
+    font-size: 1.2rem;
+    color: var(--color-primary-dark);
+    margin: 0 0 0.65rem;
+  }
+  p {
+    color: var(--color-ink-soft);
+    line-height: 1.75;
+    margin: 0;
+  }
+</style>

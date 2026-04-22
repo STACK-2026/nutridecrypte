@@ -1,0 +1,227 @@
+---
+import { siteConfig } from "../../site.config";
+import { fontsUrl } from "../utils/config";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import CookieBanner from "../components/CookieBanner.astro";
+import { getLocale } from "../i18n/t";
+import { organizationSchema, websiteSchema } from "../lib/structured-data";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  ogType?: "website" | "article";
+  publishedTime?: string;
+  jsonLd?: object | object[];
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonicalUrl = Astro.url.href,
+  ogImage = siteConfig.ogImage,
+  ogType = "website",
+  publishedTime,
+  jsonLd,
+  noIndex = false,
+} = Astro.props;
+
+const locale = getLocale(Astro.url);
+const htmlLang = locale === "fr" ? "fr-FR" : "en-US";
+const ogLocale = locale === "fr" ? "fr_FR" : "en_US";
+
+const imageUrl = ogImage?.startsWith("http") ? ogImage : `${siteConfig.url}${ogImage}`;
+// Always inject Organization + WebSite schemas, then merge any page-specific JSON-LD
+const baseJsonLd = [organizationSchema(), websiteSchema(locale)];
+const pageJsonLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+const jsonLdArray = [...baseJsonLd, ...pageJsonLd];
+
+// Build hreflang pairs
+const cleanPath = Astro.url.pathname.replace(/^\/fr/, "") || "/";
+const enHref = siteConfig.url + cleanPath;
+const frHref = siteConfig.url + "/fr" + (cleanPath === "/" ? "/" : cleanPath);
+---
+
+<!doctype html>
+<html lang={htmlLang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={fontsUrl()} />
+
+    <!-- SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="author" content={siteConfig.author} />
+    <meta name="keywords" content={siteConfig.keywords.join(", ")} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Hreflang (bilingual EN + FR) -->
+    <link rel="alternate" hreflang="en" href={enHref} />
+    <link rel="alternate" hreflang="fr" href={frHref} />
+    <link rel="alternate" hreflang="x-default" href={enHref} />
+    <link rel="alternate" type="application/rss+xml" title="NutriDécrypte Blog (EN)" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="NutriDécrypte Blog (FR)" href="/fr/rss.xml" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:site_name" content={siteConfig.name} />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+
+    <!-- Analytics tracker -->
+    <script src="/tracker.js" defer is:inline></script>
+
+    <!-- Favicon + PWA -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <meta name="theme-color" content="#0f766e" />
+
+    <!-- JSON-LD -->
+    {jsonLdArray.map((ld) => (
+      <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+    ))}
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <Header />
+    <main id="main-content" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+    <CookieBanner />
+
+    <script is:inline>
+      // Reveal-on-scroll (inline for immediate execution)
+      document.addEventListener("DOMContentLoaded", function() {
+        var revealEls = document.querySelectorAll(".reveal");
+
+        // If page loaded with a hash, reveal the targeted element and its
+        // reveal ancestors/siblings immediately so deep links never land on
+        // an invisible section.
+        if (location.hash && location.hash.length > 1) {
+          try {
+            var hashEl = document.querySelector(location.hash);
+            if (hashEl) {
+              var el = hashEl;
+              while (el) {
+                if (el.classList && el.classList.contains("reveal")) el.classList.add("in-view");
+                el = el.parentElement;
+              }
+              var container = hashEl.parentElement;
+              if (container) {
+                Array.prototype.forEach.call(container.children, function(s) {
+                  if (s.classList && s.classList.contains("reveal")) s.classList.add("in-view");
+                });
+              }
+            }
+          } catch (e) {}
+        }
+
+        if ("IntersectionObserver" in window && revealEls.length) {
+          var io = new IntersectionObserver(
+            function(entries) {
+              entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("in-view");
+                  io.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.08, rootMargin: "0px 0px -30px 0px" }
+          );
+          revealEls.forEach(function(el) {
+            if (el.classList.contains("in-view")) return;
+            io.observe(el);
+          });
+        } else {
+          revealEls.forEach(function(el) { el.classList.add("in-view"); });
+        }
+
+        // Count-up
+        var counters = document.querySelectorAll("[data-count-up]");
+        if (counters.length && "IntersectionObserver" in window) {
+          var cio = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (!entry.isIntersecting) return;
+              var el = entry.target;
+              var target = parseInt(el.getAttribute("data-count-up") || "0", 10);
+              var duration = 1400;
+              var startTime = performance.now();
+              function tick(now) {
+                var progress = Math.min(1, (now - startTime) / duration);
+                var eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.round(target * eased).toLocaleString();
+                if (progress < 1) requestAnimationFrame(tick);
+              }
+              requestAnimationFrame(tick);
+              cio.unobserve(el);
+            });
+          }, { threshold: 0.5 });
+          counters.forEach(function(c) { cio.observe(c); });
+        }
+
+        // Stagger children reveal on scroll
+        var staggerEls = document.querySelectorAll(".stagger-children");
+        if (staggerEls.length && "IntersectionObserver" in window) {
+          var sio = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("in-view");
+                sio.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.1 });
+          staggerEls.forEach(function(el) { sio.observe(el); });
+        }
+
+        // Subtle parallax on scroll
+        var parallaxEls = document.querySelectorAll(".parallax-slow");
+        if (parallaxEls.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          window.addEventListener("scroll", function() {
+            var y = window.scrollY;
+            parallaxEls.forEach(function(el) {
+              var speed = parseFloat(el.getAttribute("data-parallax-speed") || "0.15");
+              el.style.transform = "translateY(" + (y * speed) + "px)";
+            });
+          }, { passive: true });
+        }
+      });
+    </script>
+
+    <style is:global>
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        background: var(--color-primary-dark);
+        color: #ffffff;
+        padding: 0.5rem 1rem;
+        border-radius: 0 0 0.5rem 0;
+        z-index: 100;
+      }
+      .skip-link:focus {
+        left: 0;
+      }
+    </style>
+  </body>
+</html>

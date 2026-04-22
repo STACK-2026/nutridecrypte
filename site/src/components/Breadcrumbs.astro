@@ -1,0 +1,25 @@
+---
+import { getLocale } from "../i18n/t";
+
+interface Props {
+  items: Array<{ name: string; url: string }>;
+}
+
+const { items } = Astro.props;
+const locale = getLocale(Astro.url);
+---
+
+<nav aria-label={locale === "fr" ? "Fil d'ariane" : "Breadcrumbs"} class="mb-6 text-sm text-stone-500">
+  <ol class="flex flex-wrap items-center gap-1">
+    {items.map((item, i) => (
+      <li class="flex items-center gap-1">
+        {i > 0 && <span class="mx-1">/</span>}
+        {i < items.length - 1 ? (
+          <a href={item.url} class="hover:text-teal-700 transition-colors">{item.name}</a>
+        ) : (
+          <span class="text-stone-900 font-medium">{item.name}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>

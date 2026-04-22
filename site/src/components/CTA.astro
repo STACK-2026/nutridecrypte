@@ -1,0 +1,28 @@
+---
+import { siteConfig } from "../../site.config";
+import { tr, t, getLocale, localeUrl } from "../i18n/t";
+
+const locale = getLocale(Astro.url);
+---
+
+<section class="py-20 px-4">
+  <div
+    class="max-w-4xl mx-auto text-center text-white rounded-2xl p-12 md:p-16"
+    style={`background: linear-gradient(135deg, ${siteConfig.colors.primary}, ${siteConfig.colors.secondary});`}
+  >
+    <h2 class="text-white mb-4">{t(tr.finalCta.title, locale)}</h2>
+    <p class="text-white/80 text-lg mb-8 max-w-xl mx-auto">
+      {t(tr.finalCta.body, locale)}
+    </p>
+    <a
+      href={localeUrl("/rankings", locale)}
+      class="inline-flex items-center gap-2 bg-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:scale-105 hover:shadow-lg"
+      style={`color: ${siteConfig.colors.primary};`}
+    >
+      {t(tr.finalCta.cta, locale)}
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      </svg>
+    </a>
+  </div>
+</section>

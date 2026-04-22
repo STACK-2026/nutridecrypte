@@ -1,0 +1,54 @@
+name: blog-auto
+
+on:
+  schedule:
+    # Random-ish weekday slot between 07:00 and 09:00 Europe/Paris (UTC+2 in summer)
+    # Cron is UTC. We target 06:23 UTC (~08:23 Paris). publish.py adds its own randomisation.
+    - cron: '23 6 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Dry run (no commit, no deploy)
+        required: false
+        default: 'false'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: blog-auto-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: self-hosted
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        working-directory: blog-auto
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run publish.py
+        working-directory: blog-auto
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          BING_URL_SUBMISSION_KEY: ${{ secrets.BING_URL_SUBMISSION_KEY }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: python publish.py

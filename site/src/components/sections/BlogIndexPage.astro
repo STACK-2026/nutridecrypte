@@ -1,0 +1,161 @@
+---
+import { getCollection } from "astro:content";
+import { getLocale, type Locale } from "../../i18n/t";
+import BlogCard from "../BlogCard.astro";
+
+const locale: Locale = getLocale(Astro.url);
+
+const now = new Date();
+const allPosts = (await getCollection("blog", ({ data }) => !data.draft && data.date <= now))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const posts = allPosts.filter((p) => (p.data.lang || "en") === locale);
+---
+
+<section class="blog-index">
+  <header class="blog-hero">
+    <p class="eyebrow">
+      {locale === "fr" ? "Le journal NutriDécrypte" : "The NutriDécrypte journal"}
+    </p>
+    <h1>
+      {locale === "fr"
+        ? "Articles, enquêtes et guides nutrition"
+        : "Articles, investigations, and nutrition guides"}
+    </h1>
+    <p class="lede">
+      {locale === "fr"
+        ? "Nos guides expliquent ce que les étiquettes cachent, comparent les marques et traduisent la science nutritionnelle en décisions d'achat concrètes. Mis à jour chaque semaine, relu par une diététicienne diplômée."
+        : "Our guides explain what labels hide, compare brands, and turn nutrition science into practical buying decisions. Updated weekly, reviewed by a registered dietitian."}
+    </p>
+  </header>
+
+  <div class="blog-body">
+    {posts.length === 0 ? (
+      <div class="empty-state">
+        <div class="empty-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none">
+            <defs>
+              <linearGradient id="bgE" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0f766e"/>
+                <stop offset="100%" stop-color="#065f46"/>
+              </linearGradient>
+            </defs>
+            <rect width="64" height="64" rx="14" fill="url(#bgE)" opacity="0.12"/>
+            <rect x="18" y="14" width="28" height="36" rx="3" fill="#0f766e" opacity="0.8"/>
+            <line x1="22" y1="22" x2="42" y2="22" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="22" y1="28" x2="40" y2="28" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="22" y1="34" x2="38" y2="34" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h2>
+          {locale === "fr"
+            ? "Les premiers articles arrivent bientôt"
+            : "First articles landing soon"}
+        </h2>
+        <p>
+          {locale === "fr"
+            ? "Notre équipe éditoriale (Lucie, Camille, Thomas, Sarah) prépare les premiers guides. En attendant, explore la méthodologie ou le catalogue."
+            : "Our editorial team (Lucie, Camille, Thomas, Sarah) is preparing the first guides. In the meantime, explore the methodology or the catalog."}
+        </p>
+        <div class="empty-ctas">
+          <a href={locale === "fr" ? "/fr/methodology" : "/methodology"} class="btn-secondary">
+            {locale === "fr" ? "Méthodologie" : "Methodology"}
+          </a>
+          <a href={locale === "fr" ? "/fr/rankings" : "/rankings"} class="btn-primary">
+            {locale === "fr" ? "Catalogue" : "Catalog"}
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    ) : (
+      <div class="posts-grid">
+        {posts.map((post) => (
+          <BlogCard
+            title={post.data.title}
+            description={post.data.description}
+            date={post.data.date}
+            slug={post.id}
+            image={post.data.image}
+            imageAlt={post.data.imageAlt}
+            category={post.data.category}
+          />
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .blog-index {
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  .blog-hero {
+    max-width: 44rem;
+    margin: 3rem auto;
+    text-align: center;
+  }
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-primary-dark);
+    margin-bottom: 0.75rem;
+  }
+  .blog-hero h1 {
+    margin-bottom: 1rem;
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+  .lede {
+    color: var(--color-ink-soft);
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .blog-body {
+    padding-bottom: 4rem;
+  }
+
+  .empty-state {
+    max-width: 36rem;
+    margin: 2rem auto;
+    padding: 2.5rem 2rem;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 1.25rem;
+    text-align: center;
+    box-shadow: var(--shadow-card);
+  }
+  .empty-icon {
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto 1rem;
+  }
+  .empty-state h2 {
+    font-size: 1.25rem;
+    color: var(--color-primary-dark);
+    margin: 0 0 0.75rem;
+  }
+  .empty-state p {
+    color: var(--color-ink-soft);
+    margin: 0 0 1.5rem;
+    line-height: 1.6;
+  }
+  .empty-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 640px) { .posts-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .posts-grid { grid-template-columns: repeat(3, 1fr); } }
+</style>

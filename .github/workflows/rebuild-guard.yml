@@ -1,0 +1,33 @@
+name: rebuild-guard
+
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  touch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Touch rebuild marker
+        run: |
+          mkdir -p site/public
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > site/public/.rebuild-marker
+          echo "rebuild-guard $(date -u +%F)" >> site/public/.rebuild-marker
+
+      - name: Commit and push marker
+        run: |
+          git config user.name "rebuild-guard[bot]"
+          git config user.email "rebuild-guard@users.noreply.github.com"
+          if [ -n "$(git status --porcelain site/public/.rebuild-marker)" ]; then
+            git add site/public/.rebuild-marker
+            git commit -m "chore(rebuild-guard): daily marker $(date -u +%F)"
+            git push
+          fi

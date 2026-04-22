@@ -1,0 +1,132 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { siteConfig } from "../../site.config";
+import { fullUrl } from "../utils/config";
+import { jsonLdArticle, jsonLdBreadcrumbs } from "../utils/seo";
+import { getLocale } from "../i18n/t";
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  author?: string;
+  category?: string;
+  tags?: string[];
+  image?: string;
+  imageAlt?: string;
+  slug: string;
+  keywords?: string;
+  lastReviewed?: Date;
+  reviewedBy?: string;
+}
+
+const {
+  title,
+  description,
+  date,
+  author = siteConfig.blog.defaultAuthor,
+  category,
+  tags = [],
+  image,
+  imageAlt,
+  slug,
+  keywords,
+  lastReviewed,
+  reviewedBy,
+} = Astro.props;
+
+const dateStr = date.toISOString().split("T")[0];
+const reviewedStr = lastReviewed ? lastReviewed.toISOString().split("T")[0] : dateStr;
+
+const locale = getLocale(Astro.url);
+const blogBasePath = locale === "fr" ? "/fr/blog" : "/blog";
+const articleUrl = fullUrl(`${blogBasePath}/${slug}`);
+const homeLabel = locale === "fr" ? "Accueil" : "Home";
+const blogLabel = "Blog";
+const dateLocale = locale === "fr" ? "fr-FR" : "en-US";
+
+const breadcrumbs = [
+  { name: homeLabel, url: siteConfig.url + (locale === "fr" ? "/fr/" : "/") },
+  { name: blogLabel, url: fullUrl(blogBasePath) },
+  { name: title, url: articleUrl },
+];
+
+const jsonLd = [
+  jsonLdArticle({
+    title,
+    description,
+    url: articleUrl,
+    datePublished: dateStr,
+    image,
+    author,
+    keywords: keywords?.split(",").map((k) => k.trim()),
+  }),
+  jsonLdBreadcrumbs(breadcrumbs),
+];
+---
+
+<BaseLayout
+  title={`${title} | ${siteConfig.name}`}
+  description={description}
+  canonicalUrl={articleUrl}
+  ogImage={image}
+  ogType="article"
+  publishedTime={dateStr}
+  jsonLd={jsonLd}
+>
+  <article class="max-w-3xl mx-auto px-4 py-12">
+    <Breadcrumbs items={breadcrumbs} />
+
+    <header class="mb-10">
+      {category && (
+        <span class="inline-block text-sm font-medium px-3 py-1 rounded-full mb-4" style="background: rgb(15 118 110 / 0.1); color: var(--color-primary-dark)">
+          {category}
+        </span>
+      )}
+      <h1 class="mb-4">{title}</h1>
+      <div class="flex items-center gap-4 text-stone-500 text-sm flex-wrap">
+        <span class="font-semibold" style="color: var(--color-primary-dark)">{author}</span>
+        <span>|</span>
+        <time datetime={dateStr}>
+          {date.toLocaleDateString(dateLocale, {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}
+        </time>
+        {reviewedBy && (
+          <span class="text-xs px-2 py-0.5 rounded-full border" style="background: rgb(15 118 110 / 0.08); color: var(--color-primary-dark); border-color: rgb(15 118 110 / 0.2)">
+            {locale === "fr" ? "Relu le" : "Reviewed"} {reviewedStr} {locale === "fr" ? "par" : "by"} {reviewedBy}
+          </span>
+        )}
+      </div>
+      {tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mt-4">
+          {tags.map((tag) => (
+            <span class="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    {image && (
+      <figure class="mb-10">
+        <img
+          src={image}
+          alt={imageAlt || title}
+          class="w-full rounded-xl"
+          loading="eager"
+          width="800"
+          height="450"
+        />
+      </figure>
+    )}
+
+    <div class="prose max-w-none">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

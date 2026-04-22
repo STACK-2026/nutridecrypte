@@ -1,0 +1,1076 @@
+---
+import { siteConfig } from "../../../site.config";
+import { tr, t, getLocale, localeUrl } from "../../i18n/t";
+import { getCollection } from "astro:content";
+
+const locale = getLocale(Astro.url);
+
+const now = new Date();
+const latestPosts = (await getCollection("blog", ({ data }) => !data.draft && data.date <= now))
+  .filter(p => (p.data.lang || "en") === locale)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+// Mock decoded product shown in the aperçu section
+const sampleProduct = locale === "fr" ? {
+  brand: "Marque d'exemple",
+  name: "Yaourt \"nature allégé\"",
+  grade: "D",
+  score: 48,
+  nutriScore: "C",
+  nova: 4,
+  claimsFlagged: [
+    "« Allégé » : enrichi en amidon modifié et édulcorants",
+    "« Nature » : 3 additifs, 2 arômes",
+    "« Source de calcium » : identique au yaourt standard",
+  ],
+  additives: [
+    { code: "E1442", name: "Amidon hydroxypropylé", risk: "À surveiller" },
+    { code: "E955", name: "Sucralose", risk: "Débat scientifique" },
+    { code: "E330", name: "Acide citrique", risk: "Neutre" },
+  ],
+} : {
+  brand: "Example Brand",
+  name: "\"Light natural\" yogurt",
+  grade: "D",
+  score: 48,
+  nutriScore: "C",
+  nova: 4,
+  claimsFlagged: [
+    "\"Light\" : actually loaded with modified starch and sweeteners",
+    "\"Natural\" : 3 additives, 2 flavourings",
+    "\"Source of calcium\" : same as standard yogurt",
+  ],
+  additives: [
+    { code: "E1442", name: "Hydroxypropyl starch", risk: "Watch" },
+    { code: "E955", name: "Sucralose", risk: "Disputed" },
+    { code: "E330", name: "Citric acid", risk: "Neutral" },
+  ],
+};
+
+const steps = locale === "fr" ? [
+  { num: "01", title: "Cherche le produit", body: "Tape un nom de marque, colle une liste d'ingrédients ou un code-barres. Le catalogue s'appuie sur Open Food Facts, 3 millions de références européennes." },
+  { num: "02", title: "Lis le verdict A à E", body: "Additifs, allégations trompeuses, ultra-transformation, densité nutritionnelle. Tout est détaillé et sourcé ANSES, EFSA, NOVA." },
+  { num: "03", title: "Choisis mieux", body: "Chaque fiche propose les alternatives mieux notées du même rayon. Aucune marque ne paie sa place en tête de liste." },
+] : [
+  { num: "01", title: "Search the product", body: "Type a brand, paste an ingredient list, or scan a barcode. The catalog is built on Open Food Facts, three million European references." },
+  { num: "02", title: "Read the A to E verdict", body: "Additives, misleading claims, ultra-processing, nutritional density. Everything detailed and sourced from ANSES, EFSA, NOVA." },
+  { num: "03", title: "Choose better", body: "Each page shows better-graded alternatives from the same category. No brand can pay its way to the top." },
+];
+
+const stats = locale === "fr" ? [
+  { num: "3M", label: "produits dans le catalogue Open Food Facts" },
+  { num: "400+", label: "additifs E décryptés base EFSA" },
+  { num: "9/9", label: "axes ANSES couverts par la méthodologie" },
+  { num: "0", label: "marques qui paient leur note" },
+] : [
+  { num: "3M", label: "products in the Open Food Facts catalog" },
+  { num: "400+", label: "E-additives decoded from the EFSA registry" },
+  { num: "9/9", label: "ANSES pillars covered by our methodology" },
+  { num: "0", label: "brands paying for their grade" },
+];
+---
+
+<!-- 1. HERO -->
+<section class="nd-hero">
+  <div class="nd-hero-bg" aria-hidden="true">
+    <div class="nd-hero-gradient"></div>
+    <div class="nd-hero-grid-lines"></div>
+  </div>
+
+  <div class="nd-hero-inner">
+    <span class="nd-hero-badge">
+      <span class="nd-hero-dot" aria-hidden="true"></span>
+      {t(tr.hero.badge, locale)}
+    </span>
+    <h1 class="nd-hero-title" data-speakable>
+      {t(tr.hero.title1, locale)}{" "}
+      <span class="nd-hero-title-accent">{t(tr.hero.title2, locale)}</span>
+    </h1>
+    <p class="nd-hero-lede" data-speakable>{t(tr.hero.lede, locale)}</p>
+
+    <div class="nd-hero-ctas">
+      <a href={localeUrl("/rankings", locale)} class="btn-primary">
+        {t(tr.hero.ctaPrimary, locale)}
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+        </svg>
+      </a>
+      <a href={localeUrl("/methodology", locale)} class="btn-secondary">
+        {locale === "fr" ? "Voir la méthodologie" : "See the methodology"}
+      </a>
+    </div>
+
+    <ul class="nd-hero-bullets" role="list">
+      <li>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+        {t(tr.hero.bullet1, locale)}
+      </li>
+      <li>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+        {t(tr.hero.bullet2, locale)}
+      </li>
+      <li>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+        {t(tr.hero.bullet3, locale)}
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 2. SOCIAL PROOF / SOURCES -->
+<section class="nd-proof">
+  <div class="nd-proof-inner">
+    <p class="nd-proof-title">
+      {locale === "fr"
+        ? "Nos notes croisent uniquement des sources publiques et officielles"
+        : "Our grades cross-reference public and official sources only"}
+    </p>
+    <ul class="nd-proof-logos" role="list">
+      <li><span class="nd-logo">ANSES</span><span class="nd-logo-tag">{locale === "fr" ? "Santé alimentaire FR" : "FR food safety"}</span></li>
+      <li><span class="nd-logo">EFSA</span><span class="nd-logo-tag">{locale === "fr" ? "Additifs UE" : "EU additives"}</span></li>
+      <li><span class="nd-logo">Open Food Facts</span><span class="nd-logo-tag">{locale === "fr" ? "3M produits" : "3M products"}</span></li>
+      <li><span class="nd-logo">NOVA</span><span class="nd-logo-tag">{locale === "fr" ? "Ultra-transformés" : "Ultra-processed"}</span></li>
+      <li><span class="nd-logo">Nutri-Score</span><span class="nd-logo-tag">{locale === "fr" ? "Santé publique FR" : "FR public health"}</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. PROBLEM / ENEMY DECLARATION -->
+<section class="nd-problem section">
+  <div class="nd-container">
+    <div class="nd-problem-grid">
+      <div class="nd-problem-copy">
+        <p class="nd-eyebrow nd-eyebrow-alert">{locale === "fr" ? "Le vrai sujet" : "The real subject"}</p>
+        <h2>
+          {locale === "fr"
+            ? "3 000 nouveaux ultra-transformés par an, et toi seul face à l'étiquette"
+            : "3,000 new ultra-processed launches a year, and you alone facing the label"}
+        </h2>
+        <p class="nd-problem-lede">
+          {locale === "fr"
+            ? "Le marketing agroalimentaire a perfectionné l'art du flou : « naturel », « riche en », « sans sucre ajouté ». Le Nutri-Score existe mais ignore l'ultra-transformation. Les additifs discutables multiplient les noms. Et 80% des produits vendus en Europe sont ultra-transformés selon la classification NOVA."
+            : "Food marketing has perfected the art of vagueness: \"natural\", \"rich in\", \"no added sugar\". The Nutri-Score exists but ignores ultra-processing. Disputed additives hide behind new names. And 80% of products sold in Europe are ultra-processed by NOVA standards."}
+        </p>
+        <ul class="nd-problem-list">
+          <li>
+            <span class="nd-problem-num">+55%</span>
+            <span>{locale === "fr" ? "d'ultra-transformés dans les caddies européens depuis 2000 (BMJ, 2024)" : "more ultra-processed in European carts since 2000 (BMJ, 2024)"}</span>
+          </li>
+          <li>
+            <span class="nd-problem-num">400+</span>
+            <span>{locale === "fr" ? "additifs E autorisés, dont 180 avec une alerte ANSES ou EFSA" : "authorized E-additives, 180 of them flagged by ANSES or EFSA"}</span>
+          </li>
+          <li>
+            <span class="nd-problem-num">1/3</span>
+            <span>{locale === "fr" ? "des allégations nutritionnelles ne résistent pas à une lecture de liste d'ingrédients" : "of nutrition claims do not survive a reading of the ingredient list"}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="nd-problem-art" aria-hidden="true">
+        <div class="nd-label-stack">
+          <div class="nd-label nd-label-1">100% naturel</div>
+          <div class="nd-label nd-label-2">Source de protéines</div>
+          <div class="nd-label nd-label-3">Sans sucre ajouté</div>
+          <div class="nd-label-verdict">
+            <span class="grade grade-lg grade-e">E</span>
+            <span class="nd-label-verdict-text">{locale === "fr" ? "Score réel" : "Real score"}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. PRODUCT PREVIEW (mock decoded card) -->
+<section class="nd-preview section">
+  <div class="nd-container">
+    <div class="nd-preview-head">
+      <p class="nd-eyebrow">{locale === "fr" ? "Aperçu d'une fiche" : "Product card preview"}</p>
+      <h2>{locale === "fr" ? "Ce que ça donne quand on décrypte un produit" : "What it looks like when we decode a product"}</h2>
+    </div>
+
+    <div class="nd-preview-card">
+      <div class="nd-preview-header">
+        <div class="nd-preview-grade">
+          <span class={`grade grade-xl grade-${sampleProduct.grade.toLowerCase()}`}>{sampleProduct.grade}</span>
+          <span class="nd-preview-score">{sampleProduct.score}/100</span>
+        </div>
+        <div class="nd-preview-title">
+          <p class="nd-preview-brand">{sampleProduct.brand}</p>
+          <h3 class="nd-preview-name">{sampleProduct.name}</h3>
+          <div class="nd-preview-meta">
+            <span class="nd-pill">Nutri-Score {sampleProduct.nutriScore}</span>
+            <span class="nd-pill nd-pill-alert">NOVA {sampleProduct.nova}</span>
+            <span class="nd-pill nd-pill-muted">{locale === "fr" ? "Exemple pédagogique" : "Educational example"}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="nd-preview-grid">
+        <div class="nd-preview-block">
+          <p class="nd-preview-block-title">
+            <span class="nd-dot nd-dot-alert" aria-hidden="true"></span>
+            {locale === "fr" ? "Allégations marketing décryptées" : "Marketing claims decoded"}
+          </p>
+          <ul class="nd-preview-claims">
+            {sampleProduct.claimsFlagged.map((claim) => <li>{claim}</li>)}
+          </ul>
+        </div>
+
+        <div class="nd-preview-block">
+          <p class="nd-preview-block-title">
+            <span class="nd-dot nd-dot-accent" aria-hidden="true"></span>
+            {locale === "fr" ? "Additifs détectés (base EFSA)" : "Additives detected (EFSA registry)"}
+          </p>
+          <ul class="nd-preview-additives">
+            {sampleProduct.additives.map((add) => (
+              <li>
+                <span class="nd-add-code">{add.code}</span>
+                <span class="nd-add-name">{add.name}</span>
+                <span class="nd-add-risk">{add.risk}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div class="nd-preview-footer">
+        <a href={localeUrl("/rankings", locale)} class="btn-primary">
+          {locale === "fr" ? "Voir une vraie fiche" : "See a real product page"}
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. FEATURES -->
+<section class="nd-features section">
+  <div class="nd-container">
+    <div class="nd-section-head">
+      <p class="nd-eyebrow">{locale === "fr" ? "Ce qu'on fait" : "What we do"}</p>
+      <h2>{locale === "fr" ? "Trois promesses, zéro blabla" : "Three promises, zero fluff"}</h2>
+    </div>
+    <div class="nd-features-grid">
+      {siteConfig.features.map((feature) => (
+        <a href={localeUrl("/methodology", locale)} class="nd-feature-card">
+          <div class="nd-feature-icon" aria-hidden="true">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              {feature.icon === "zap" && <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>}
+              {feature.icon === "shield" && <path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>}
+              {feature.icon === "chart" && <path stroke-linecap="round" stroke-linejoin="round" d="M18 20V10M12 20V4M6 20v-6"/>}
+            </svg>
+          </div>
+          <h3>{feature.title}</h3>
+          <p>{feature.description}</p>
+          <span class="nd-feature-link">{locale === "fr" ? "Lire la méthodologie" : "Read the methodology"} &rarr;</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- 6. HOW IT WORKS -->
+<section class="nd-how section">
+  <div class="nd-container">
+    <div class="nd-section-head">
+      <p class="nd-eyebrow">{t(tr.how.eyebrow, locale)}</p>
+      <h2>{t(tr.how.title, locale)}</h2>
+      <p class="nd-section-lede">{t(tr.how.lede, locale)}</p>
+    </div>
+    <ol class="nd-how-steps" role="list">
+      {steps.map((step) => (
+        <li class="nd-how-step">
+          <span class="nd-how-num">{step.num}</span>
+          <h3>{step.title}</h3>
+          <p>{step.body}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<!-- 7. STATS -->
+<section class="nd-stats section">
+  <div class="nd-container">
+    <div class="nd-section-head">
+      <p class="nd-eyebrow">{locale === "fr" ? "Chiffres clés" : "Key numbers"}</p>
+      <h2>{locale === "fr" ? "L'infrastructure derrière chaque note" : "The infrastructure behind each grade"}</h2>
+    </div>
+    <dl class="nd-stats-grid">
+      {stats.map((stat) => (
+        <div class="nd-stat">
+          <dt class="nd-stat-num">{stat.num}</dt>
+          <dd class="nd-stat-label">{stat.label}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<!-- 8. BLOG TEASER -->
+<section class="nd-blog section">
+  <div class="nd-container">
+    <div class="nd-section-head">
+      <p class="nd-eyebrow">{locale === "fr" ? "Le journal" : "The journal"}</p>
+      <h2>{locale === "fr" ? "Derniers décryptages et enquêtes" : "Latest decryptions and investigations"}</h2>
+      <p class="nd-section-lede">
+        {locale === "fr"
+          ? "Enquêtes marques, ultra-transformation, nouveaux additifs, régimes spécifiques. Écrit par l'équipe éditoriale, relu par une diététicienne diplômée."
+          : "Brand investigations, ultra-processing, new additives, special diets. Written by the editorial team, reviewed by a registered dietitian."}
+      </p>
+    </div>
+    {latestPosts.length === 0 ? (
+      <div class="nd-blog-empty">
+        <p>{locale === "fr"
+          ? "Les premiers articles arrivent très bientôt. L'équipe éditoriale prépare les enquêtes de lancement."
+          : "First articles landing very soon. The editorial team is preparing the launch investigations."}</p>
+        <a href={localeUrl("/methodology", locale)} class="btn-secondary">
+          {locale === "fr" ? "En attendant, lis la méthodologie" : "In the meantime, read the methodology"}
+        </a>
+      </div>
+    ) : (
+      <div class="nd-blog-grid">
+        {latestPosts.map((post) => (
+          <a href={`${locale === "fr" ? "/fr" : ""}/blog/${post.id}/`} class="nd-blog-card">
+            {post.data.image && <img src={post.data.image} alt={post.data.imageAlt || ""} loading="lazy" class="nd-blog-img"/>}
+            <div class="nd-blog-body">
+              {post.data.category && <span class="nd-blog-cat">{post.data.category}</span>}
+              <h3>{post.data.title}</h3>
+              <p>{post.data.description}</p>
+              <span class="nd-blog-author">{post.data.author}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    )}
+    <div class="nd-blog-cta">
+      <a href={localeUrl("/blog", locale)} class="btn-secondary">
+        {locale === "fr" ? "Tous les articles" : "All articles"}
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 9. FAQ -->
+<section class="nd-faq section">
+  <div class="nd-container nd-faq-container">
+    <div class="nd-section-head">
+      <p class="nd-eyebrow">{t(tr.faq.eyebrow, locale)}</p>
+      <h2>{t(tr.faq.title, locale)}</h2>
+    </div>
+    <div class="nd-faq-list">
+      {siteConfig.faq.map((item) => (
+        <details class="nd-faq-item">
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- 10. FINAL CTA -->
+<section class="nd-final section">
+  <div class="nd-container">
+    <div class="nd-final-card">
+      <div class="nd-final-corner nd-final-corner-tl" aria-hidden="true"></div>
+      <div class="nd-final-corner nd-final-corner-br" aria-hidden="true"></div>
+      <p class="nd-final-kicker">
+        {locale === "fr" ? "Notation publique · Gratuit · Indépendant" : "Public grading · Free · Independent"}
+      </p>
+      <h2 class="nd-final-title">{t(tr.finalCta.title, locale)}</h2>
+      <p class="nd-final-body">{t(tr.finalCta.body, locale)}</p>
+      <div class="nd-final-ctas">
+        <a href={localeUrl("/rankings", locale)} class="btn-primary">
+          {t(tr.finalCta.cta, locale)}
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href={localeUrl("/methodology", locale)} class="btn-secondary">
+          {locale === "fr" ? "Méthodologie complète" : "Full methodology"}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .nd-container {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .nd-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-primary-dark);
+    margin-bottom: 0.75rem;
+  }
+  .nd-eyebrow-alert { color: var(--color-alert); }
+
+  .nd-section-head {
+    max-width: 44rem;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  .nd-section-lede {
+    color: var(--color-ink-soft);
+    font-size: 1.08rem;
+    line-height: 1.6;
+  }
+
+  /* ---- 1. Hero ---- */
+  .nd-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 5rem 1rem 4rem;
+    isolation: isolate;
+  }
+  @media (min-width: 900px) { .nd-hero { padding: 7rem 1.5rem 5rem; } }
+
+  .nd-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+  .nd-hero-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 18% 22%, rgb(15 118 110 / 0.12), transparent 55%),
+      radial-gradient(ellipse at 82% 78%, rgb(245 158 11 / 0.1), transparent 60%),
+      linear-gradient(180deg, #fafaf9 0%, #ffffff 100%);
+  }
+  .nd-hero-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgb(15 118 110 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(15 118 110 / 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  }
+
+  .nd-hero-inner {
+    max-width: 44rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .nd-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.4rem 0.9rem;
+    background: #ffffff;
+    border: 1px solid rgb(15 118 110 / 0.25);
+    border-radius: 9999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px -4px rgb(15 118 110 / 0.2);
+  }
+  .nd-hero-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    background: var(--color-primary);
+    border-radius: 9999px;
+    animation: ndPulse 2s ease-in-out infinite;
+  }
+  @keyframes ndPulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.25); }
+  }
+  .nd-hero-title {
+    margin: 0 0 1.25rem;
+  }
+  .nd-hero-title-accent {
+    background: linear-gradient(120deg, var(--color-primary), var(--color-primary-dark));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .nd-hero-lede {
+    font-size: 1.08rem;
+    color: var(--color-ink-soft);
+    max-width: 38rem;
+    margin: 0 auto 2rem;
+    line-height: 1.65;
+  }
+  .nd-hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 1.75rem;
+  }
+  .nd-hero-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    justify-content: center;
+  }
+  .nd-hero-bullets li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .nd-hero-bullets svg {
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  /* ---- 2. Proof ---- */
+  .nd-proof {
+    padding: 2.5rem 1rem;
+    background: #ffffff;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .nd-proof-inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .nd-proof-title {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+    margin: 0 0 1.5rem;
+  }
+  .nd-proof-logos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    justify-content: center;
+  }
+  .nd-proof-logos li {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+  }
+  .nd-logo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--color-primary-dark);
+    letter-spacing: -0.02em;
+  }
+  .nd-logo-tag {
+    font-size: 0.65rem;
+    color: var(--color-ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+
+  /* ---- 3. Problem ---- */
+  .nd-problem { background: var(--color-bg-soft); }
+  .nd-problem-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 900px) { .nd-problem-grid { grid-template-columns: 1.15fr 1fr; } }
+  .nd-problem-copy h2 { margin-bottom: 1rem; }
+  .nd-problem-lede {
+    color: var(--color-ink-soft);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  .nd-problem-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .nd-problem-list li {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+  }
+  .nd-problem-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.45rem;
+    color: var(--color-alert);
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .nd-problem-art {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  .nd-label-stack {
+    position: relative;
+    width: 100%;
+    max-width: 22rem;
+    aspect-ratio: 1 / 1.1;
+  }
+  .nd-label {
+    position: absolute;
+    padding: 0.9rem 1.2rem;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-card);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.92rem;
+    color: var(--color-ink-soft);
+  }
+  .nd-label-1 { top: 0; left: 2%; transform: rotate(-5deg); }
+  .nd-label-2 { top: 22%; right: 0; transform: rotate(4deg); }
+  .nd-label-3 { top: 42%; left: 8%; transform: rotate(-2deg); }
+  .nd-label-verdict {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1.2rem;
+    background: linear-gradient(135deg, #0c0a09, #27272a);
+    color: #ffffff;
+    border-radius: 0.875rem;
+    box-shadow: 0 16px 40px -12px rgb(220 38 38 / 0.45);
+  }
+  .nd-label-verdict-text {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  /* ---- 4. Preview ---- */
+  .nd-preview { background: #ffffff; }
+  .nd-preview-head { text-align: center; max-width: 44rem; margin: 0 auto 2.5rem; }
+  .nd-preview-card {
+    max-width: 58rem;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 1.25rem;
+    padding: 2rem;
+    box-shadow: var(--shadow-card);
+  }
+  @media (min-width: 768px) { .nd-preview-card { padding: 2.5rem; } }
+
+  .nd-preview-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.5rem;
+    align-items: center;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px dashed var(--color-border);
+  }
+  .nd-preview-grade {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .nd-preview-score {
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--color-ink-soft);
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .nd-preview-brand {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-primary-dark);
+    font-weight: 800;
+    margin: 0;
+  }
+  .nd-preview-name {
+    margin: 0.2rem 0 0.75rem;
+    font-size: 1.35rem;
+    color: var(--color-ink);
+  }
+  .nd-preview-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .nd-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.65rem;
+    background: rgb(15 118 110 / 0.08);
+    color: var(--color-primary-dark);
+    font-weight: 700;
+    font-size: 0.75rem;
+    border-radius: 9999px;
+  }
+  .nd-pill-alert { background: rgb(220 38 38 / 0.1); color: var(--color-alert); }
+  .nd-pill-muted { background: #f5f5f4; color: var(--color-ink-soft); }
+
+  .nd-preview-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 768px) { .nd-preview-grid { grid-template-columns: 1fr 1fr; } }
+
+  .nd-preview-block-title {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    margin: 0 0 0.85rem;
+  }
+  .nd-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 9999px;
+    display: inline-block;
+  }
+  .nd-dot-alert { background: var(--color-alert); }
+  .nd-dot-accent { background: var(--color-accent); }
+
+  .nd-preview-claims,
+  .nd-preview-additives {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .nd-preview-claims li {
+    padding: 0.7rem 0.9rem;
+    background: rgb(220 38 38 / 0.05);
+    border-left: 3px solid var(--color-alert);
+    border-radius: 0.4rem;
+    font-size: 0.88rem;
+    color: var(--color-ink);
+    line-height: 1.5;
+  }
+  .nd-preview-additives li {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr auto;
+    gap: 0.65rem;
+    align-items: center;
+    padding: 0.55rem 0.8rem;
+    background: var(--color-bg-soft);
+    border-radius: 0.4rem;
+    font-size: 0.82rem;
+  }
+  .nd-add-code {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-weight: 800;
+    color: var(--color-primary-dark);
+    letter-spacing: 0.02em;
+  }
+  .nd-add-name { color: var(--color-ink); font-weight: 500; }
+  .nd-add-risk {
+    color: var(--color-ink-soft);
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .nd-preview-footer {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px dashed var(--color-border);
+    text-align: center;
+  }
+
+  /* ---- 5. Features ---- */
+  .nd-features { background: var(--color-bg-soft); }
+  .nd-features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  @media (min-width: 768px) { .nd-features-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; } }
+  .nd-feature-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    padding: 1.75rem;
+    text-decoration: none;
+    color: var(--color-ink);
+    transition: transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease;
+  }
+  .nd-feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--color-primary);
+  }
+  .nd-feature-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(15 118 110 / 0.1);
+    color: var(--color-primary-dark);
+  }
+  .nd-feature-card h3 { margin: 0; font-size: 1.1rem; }
+  .nd-feature-card p { margin: 0; color: var(--color-ink-soft); font-size: 0.92rem; line-height: 1.55; }
+  .nd-feature-link {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--color-primary-dark);
+    margin-top: auto;
+  }
+
+  /* ---- 6. How ---- */
+  .nd-how { background: #ffffff; }
+  .nd-how-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  @media (min-width: 768px) { .nd-how-steps { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; } }
+  .nd-how-step {
+    padding: 2rem 1.75rem;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-card);
+  }
+  .nd-how-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 0.65rem;
+    background: linear-gradient(135deg, rgb(15 118 110 / 0.12), rgb(15 118 110 / 0.02));
+    color: var(--color-primary-dark);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.95rem;
+    margin-bottom: 0.9rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .nd-how-step h3 { margin: 0 0 0.5rem; font-size: 1.15rem; }
+  .nd-how-step p { margin: 0; color: var(--color-ink-soft); font-size: 0.93rem; line-height: 1.55; }
+
+  /* ---- 7. Stats ---- */
+  .nd-stats {
+    background: linear-gradient(135deg, #0c1a17, #064037);
+    color: #ffffff;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  .nd-stats .nd-eyebrow { color: #5eead4; }
+  .nd-stats h2 { color: #ffffff; }
+  .nd-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin: 0;
+  }
+  @media (min-width: 768px) { .nd-stats-grid { grid-template-columns: repeat(4, 1fr); } }
+  .nd-stat {
+    padding: 1.5rem;
+    background: rgb(255 255 255 / 0.04);
+    border: 1px solid rgb(255 255 255 / 0.08);
+    border-radius: 0.875rem;
+    backdrop-filter: blur(10px);
+  }
+  .nd-stat-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+    color: var(--color-accent);
+    margin: 0 0 0.35rem;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+  .nd-stat-label {
+    font-size: 0.82rem;
+    color: #cfe4db;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  /* ---- 8. Blog ---- */
+  .nd-blog { background: #ffffff; }
+  .nd-blog-empty {
+    max-width: 34rem;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+    background: var(--color-bg-soft);
+    border: 1px dashed var(--color-border);
+    border-radius: 1rem;
+    text-align: center;
+  }
+  .nd-blog-empty p {
+    margin: 0 0 1.25rem;
+    color: var(--color-ink-soft);
+  }
+  .nd-blog-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  @media (min-width: 768px) { .nd-blog-grid { grid-template-columns: repeat(3, 1fr); } }
+  .nd-blog-card {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 240ms ease, box-shadow 240ms ease;
+  }
+  .nd-blog-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-card-hover); }
+  .nd-blog-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+  }
+  .nd-blog-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .nd-blog-cat {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+  .nd-blog-body h3 { margin: 0; font-size: 1.05rem; }
+  .nd-blog-body p { margin: 0; font-size: 0.9rem; color: var(--color-ink-soft); }
+  .nd-blog-author {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+  }
+  .nd-blog-cta { text-align: center; margin-top: 2rem; }
+
+  /* ---- 9. FAQ ---- */
+  .nd-faq { background: var(--color-bg-soft); }
+  .nd-faq-container { max-width: 44rem; }
+  .nd-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .nd-faq-item {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    overflow: hidden;
+  }
+  .nd-faq-item summary {
+    padding: 1rem 1.25rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--color-ink);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .nd-faq-item summary::-webkit-details-marker { display: none; }
+  .nd-faq-item summary::after {
+    content: "+";
+    color: var(--color-primary);
+    font-weight: 800;
+    font-size: 1.25rem;
+  }
+  .nd-faq-item[open] summary::after { content: "\2212"; }
+  .nd-faq-item p {
+    padding: 0 1.25rem 1.25rem;
+    color: var(--color-ink-soft);
+    margin: 0;
+  }
+
+  /* ---- 10. Final CTA ---- */
+  .nd-final { background: #ffffff; padding-bottom: 6rem; }
+  .nd-final-card {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid rgb(15 118 110 / 0.14);
+    border-radius: 4px;
+    padding: clamp(2rem, 5vw, 4rem);
+    box-shadow: 0 1px 0 rgb(12 10 9 / 0.02), 0 20px 60px rgb(15 118 110 / 0.08);
+    text-align: center;
+    max-width: 52rem;
+    margin: 0 auto;
+  }
+  .nd-final-corner {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 1px solid rgb(15 118 110 / 0.4);
+  }
+  .nd-final-corner-tl { top: -5px; left: -5px; border-right: 0; border-bottom: 0; }
+  .nd-final-corner-br { bottom: -5px; right: -5px; border-left: 0; border-top: 0; }
+  .nd-final-kicker {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-primary-dark);
+    margin: 0 0 1rem;
+  }
+  .nd-final-title {
+    margin: 0 0 1rem;
+    font-size: clamp(1.85rem, 4vw, 2.75rem);
+  }
+  .nd-final-body {
+    color: var(--color-ink-soft);
+    font-size: 1.05rem;
+    line-height: 1.65;
+    max-width: 36rem;
+    margin: 0 auto 1.75rem;
+  }
+  .nd-final-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+</style>

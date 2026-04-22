@@ -1,0 +1,439 @@
+---
+import { getLocale, type Locale } from "../../i18n/t";
+import { WEIGHTS, GRADE_THRESHOLDS } from "../../lib/scoring";
+
+const locale: Locale = getLocale(Astro.url);
+
+const axes = [
+  {
+    key: "nutriScore",
+    weight: WEIGHTS.nutriScore,
+    en: {
+      title: "Nutri-Score (official)",
+      body: "We use the official Nutri-Score published by Santé publique France as the nutritional backbone. It captures the balance of positive nutrients (fiber, protein, fruits/vegetables) against negative ones (saturated fat, sugar, salt). We map A through E to a 0-100 scale, A = 95, E = 15.",
+    },
+    fr: {
+      title: "Nutri-Score (officiel)",
+      body: "On utilise le Nutri-Score officiel publié par Santé publique France comme socle nutritionnel. Il capte l'équilibre entre les nutriments positifs (fibres, protéines, fruits/légumes) et négatifs (graisses saturées, sucre, sel). On projette A à E sur une échelle 0-100, A = 95, E = 15.",
+    },
+  },
+  {
+    key: "nova",
+    weight: WEIGHTS.nova,
+    en: {
+      title: "NOVA ultra-processing class",
+      body: "The NOVA classification (University of São Paulo) ranks foods from 1 (unprocessed) to 4 (ultra-processed). It is the single strongest predictor of long-term metabolic risk, independent of macronutrients. NOVA 1 scores 95 here; NOVA 4 drops to 20.",
+    },
+    fr: {
+      title: "Classification NOVA (ultra-transformation)",
+      body: "La classification NOVA (Université de São Paulo) range les aliments de 1 (non transformé) à 4 (ultra-transformé). C'est le meilleur prédicteur isolé du risque métabolique long terme, indépendamment des macronutriments. NOVA 1 vaut 95, NOVA 4 tombe à 20.",
+    },
+  },
+  {
+    key: "additives",
+    weight: WEIGHTS.additives,
+    en: {
+      title: "Additive risk (EFSA)",
+      body: "Every E-number is cross-referenced against the EFSA food additives database and the latest ANSES opinions. Each additive carries a risk score from 0 (neutral) to 3 (to avoid). A product with zero additives starts at 100, with heavy penalties applied by risk bucket.",
+    },
+    fr: {
+      title: "Risque additifs (EFSA)",
+      body: "Chaque code E est croisé avec la base EFSA des additifs alimentaires et les derniers avis ANSES. Chaque additif porte un score de risque de 0 (neutre) à 3 (à éviter). Un produit sans additifs démarre à 100, avec des pénalités par palier de risque.",
+    },
+  },
+  {
+    key: "claims",
+    weight: WEIGHTS.claims,
+    en: {
+      title: "Marketing claims audit",
+      body: "Every front-of-pack claim ('natural', 'source of', 'free from') is audited against the actual ingredient list. Honest claims pass without penalty. Stretched claims (technically true, practically misleading) deduct 12 points. Outright misleading claims deduct 30. This axis is what makes the NutriDécrypte grade different from a nutrition score.",
+    },
+    fr: {
+      title: "Audit des allégations marketing",
+      body: "Chaque allégation du recto (« naturel », « source de », « sans ») est auditée face à la vraie liste d'ingrédients. Les allégations honnêtes passent sans pénalité. Les allégations étirées (techniquement vraies, pratiquement trompeuses) coûtent 12 points. Les allégations carrément trompeuses coûtent 30. C'est cet axe qui différencie la note NutriDécrypte d'un simple score nutritionnel.",
+    },
+  },
+  {
+    key: "density",
+    weight: WEIGHTS.density,
+    en: {
+      title: "Nutritional density",
+      body: "Measures how much real nutrition the product delivers per 100 g: protein and fiber push the score up, excess sugar, saturated fat, and sodium pull it down. When a micronutrient density index is available (iron, calcium, B vitamins), it replaces the formula.",
+    },
+    fr: {
+      title: "Densité nutritionnelle",
+      body: "Mesure ce que le produit apporte vraiment pour 100 g : protéines et fibres poussent la note vers le haut, l'excès de sucre, de graisses saturées et de sel la tire vers le bas. Quand un indice de densité en micronutriments est disponible (fer, calcium, vitamines B), il remplace la formule.",
+    },
+  },
+];
+
+const weightPct = {
+  nutriScore: Math.round(WEIGHTS.nutriScore * 100),
+  nova: Math.round(WEIGHTS.nova * 100),
+  additives: Math.round(WEIGHTS.additives * 100),
+  claims: Math.round(WEIGHTS.claims * 100),
+  density: Math.round(WEIGHTS.density * 100),
+};
+---
+
+<article class="methodology-page">
+  <header class="m-header">
+    <p class="eyebrow">{locale === "fr" ? "Méthodologie" : "Methodology"}</p>
+    <h1>
+      {locale === "fr"
+        ? "Comment NutriDécrypte calcule chaque note"
+        : "How NutriDécrypte computes every grade"}
+    </h1>
+    <p class="lede">
+      {locale === "fr"
+        ? "Chaque produit reçoit une note unique de A à E, composée de cinq axes pondérés. Aucun jugement humain, aucune influence sponsor, aucune IA black-box. L'algorithme est déterministe et reproductible : même liste d'ingrédients, même note."
+        : "Every product receives a single A to E grade composed from five weighted axes. No human judgement, no sponsor influence, no black-box AI. The algorithm is deterministic and reproducible: same ingredient list, same grade."}
+    </p>
+  </header>
+
+  <aside class="tldr" data-speakable>
+    <p class="tldr-label">{locale === "fr" ? "TL;DR" : "TL;DR"}</p>
+    <p>
+      <strong>{locale === "fr" ? "La note NutriDécrypte" : "The NutriDécrypte Score"}</strong>
+      {locale === "fr"
+        ? " combine cinq axes pondérés : Nutri-Score officiel (25%), classification NOVA d'ultra-transformation (25%), risque additifs EFSA (20%), audit des allégations (15%), densité nutritionnelle (15%). Le score de 0 à 100 est traduit en lettre A (≥ 85), B (≥ 70), C (≥ 55), D (≥ 40), E (< 40). Déterministe, reproductible, sources publiques."
+        : " combines five weighted axes: official Nutri-Score (25%), NOVA ultra-processing class (25%), EFSA additive risk (20%), marketing claims audit (15%), nutritional density (15%). The 0-100 score maps to a letter A (≥ 85), B (≥ 70), C (≥ 55), D (≥ 40), E (< 40). Deterministic, reproducible, public sources."}
+    </p>
+  </aside>
+
+  <section class="m-section">
+    <h2>{locale === "fr" ? "La note A à E en un coup d'œil" : "The A to E grade at a glance"}</h2>
+    <div class="grade-scale">
+      <div class="grade-item">
+        <span class="grade grade-lg grade-a">A</span>
+        <p><strong>{locale === "fr" ? "Excellent" : "Excellent"}</strong><span>{GRADE_THRESHOLDS.A}-100</span></p>
+      </div>
+      <div class="grade-item">
+        <span class="grade grade-lg grade-b">B</span>
+        <p><strong>{locale === "fr" ? "Bon" : "Good"}</strong><span>{GRADE_THRESHOLDS.B}-{GRADE_THRESHOLDS.A - 1}</span></p>
+      </div>
+      <div class="grade-item">
+        <span class="grade grade-lg grade-c">C</span>
+        <p><strong>{locale === "fr" ? "Moyen" : "Average"}</strong><span>{GRADE_THRESHOLDS.C}-{GRADE_THRESHOLDS.B - 1}</span></p>
+      </div>
+      <div class="grade-item">
+        <span class="grade grade-lg grade-d">D</span>
+        <p><strong>{locale === "fr" ? "Médiocre" : "Poor"}</strong><span>{GRADE_THRESHOLDS.D}-{GRADE_THRESHOLDS.C - 1}</span></p>
+      </div>
+      <div class="grade-item">
+        <span class="grade grade-lg grade-e">E</span>
+        <p><strong>{locale === "fr" ? "À éviter" : "Avoid"}</strong><span>0-{GRADE_THRESHOLDS.D - 1}</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="m-section">
+    <h2>{locale === "fr" ? "Les cinq axes pondérés" : "The five weighted axes"}</h2>
+    <p class="m-section-lede">
+      {locale === "fr"
+        ? "Chaque axe est noté de 0 à 100, puis multiplié par son poids. Les cinq contributions sont additionnées pour produire le score final."
+        : "Each axis is scored from 0 to 100, then multiplied by its weight. The five contributions are summed to produce the final score."}
+    </p>
+    <div class="subscores">
+      {axes.map((axis, i) => (
+        <div class="subscore-card">
+          <div class="subscore-head">
+            <div class="subscore-num">0{i + 1}</div>
+            <div class="subscore-weight">
+              <span class="subscore-weight-num">{Math.round(axis.weight * 100)}%</span>
+              <span class="subscore-weight-label">{locale === "fr" ? "du score final" : "of final score"}</span>
+            </div>
+          </div>
+          <h3>{locale === "fr" ? axis.fr.title : axis.en.title}</h3>
+          <p>{locale === "fr" ? axis.fr.body : axis.en.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="m-section">
+    <h2>{locale === "fr" ? "Formule complète" : "Full formula"}</h2>
+    <pre class="formula">
+Score = {weightPct.nutriScore}% · Nutri-Score
+      + {weightPct.nova}% · NOVA
+      + {weightPct.additives}% · Additifs EFSA
+      + {weightPct.claims}% · Allégations
+      + {weightPct.density}% · Densité
+    </pre>
+    <p>
+      {locale === "fr"
+        ? "Les poids sont publics. Toute modification est versionnée et annoncée dans le journal. Même composition = même note. Tu peux recalculer n'importe quelle note à la main à partir des sous-scores affichés sur chaque fiche."
+        : "Weights are public. Any change is versioned and announced in the journal. Same composition = same grade. You can recompute any grade by hand from the sub-scores shown on each product page."}
+    </p>
+  </section>
+
+  <section class="m-section">
+    <h2>{locale === "fr" ? "Nos sources officielles" : "Our official sources"}</h2>
+    <ul class="sources-list">
+      <li>
+        <strong>Open Food Facts</strong>
+        <span>{locale === "fr" ? "Base collaborative de 3 millions de produits européens, licence ODbL." : "Collaborative database of 3 million European products, ODbL licence."}</span>
+      </li>
+      <li>
+        <strong>EFSA</strong>
+        <span>{locale === "fr" ? "European Food Safety Authority, base des additifs, avis scientifiques." : "European Food Safety Authority, additives database, scientific opinions."}</span>
+      </li>
+      <li>
+        <strong>ANSES</strong>
+        <span>{locale === "fr" ? "Agence nationale de sécurité sanitaire FR, rapports nutrition, avis risques." : "French national food safety agency, nutrition reports, risk opinions."}</span>
+      </li>
+      <li>
+        <strong>NOVA</strong>
+        <span>{locale === "fr" ? "Classification des aliments par degré de transformation, Université de São Paulo." : "Food classification by degree of processing, University of São Paulo."}</span>
+      </li>
+      <li>
+        <strong>Nutri-Score</strong>
+        <span>{locale === "fr" ? "Logo nutritionnel officiel FR, Santé publique France." : "Official FR nutrition logo, Santé publique France."}</span>
+      </li>
+      <li>
+        <strong>data.gouv.fr</strong>
+        <span>{locale === "fr" ? "Jeux de données nutrition et sécurité sanitaire, INCA 3, CIQUAL." : "Nutrition and food safety datasets, INCA 3, CIQUAL."}</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="m-section">
+    <h2>{locale === "fr" ? "Ce que nous ne faisons PAS" : "What we do NOT do"}</h2>
+    <ul class="not-list">
+      <li>
+        <strong>{locale === "fr" ? "Aucun paiement pour changer une note" : "No payment to change a grade"}</strong>
+        {locale === "fr" ? " : les marques ne peuvent pas acheter un upgrade, jamais." : " : brands cannot buy their way up, ever."}
+      </li>
+      <li>
+        <strong>{locale === "fr" ? "Aucun scoring opaque" : "No opaque scoring"}</strong>
+        {locale === "fr"
+          ? " : chaque axe, chaque poids et chaque pénalité est visible sur chaque fiche produit."
+          : " : every axis, weight, and penalty is visible on every product page."}
+      </li>
+      <li>
+        <strong>{locale === "fr" ? "Aucun jugement moral" : "No moral judgement"}</strong>
+        {locale === "fr"
+          ? " : on note une composition face à des sources officielles, pas une marque, un packaging ou un style de vie."
+          : " : we rate a composition against official sources, not a brand, a packaging, or a lifestyle."}
+      </li>
+      <li>
+        <strong>{locale === "fr" ? "Aucun avis médical" : "No medical advice"}</strong>
+        {locale === "fr"
+          ? " : nos notes sont informatives. Pour toute condition nutritionnelle, consulte un diététicien diplômé ou ton médecin."
+          : " : our grades are informational. For any nutritional condition, consult a registered dietitian or physician."}
+      </li>
+    </ul>
+  </section>
+
+  <section class="m-section">
+    <h2>{locale === "fr" ? "Mises à jour et révisions" : "Updates and revisions"}</h2>
+    <p>
+      {locale === "fr"
+        ? "Notre base produits est synchronisée avec Open Food Facts toutes les semaines. Quand une marque change sa formulation ou qu'un avis EFSA / ANSES révise un additif, les notes concernées sont recalculées automatiquement. L'historique des révisions de l'algorithme est public."
+        : "Our product database is synchronized with Open Food Facts every week. When a brand changes its formulation or an EFSA / ANSES opinion revises an additive, affected grades are recomputed automatically. The algorithm revision history is public."}
+    </p>
+  </section>
+</article>
+
+<style>
+  .methodology-page {
+    max-width: 52rem;
+    margin: 2rem auto 4rem;
+    padding: 0 1rem;
+  }
+  .m-header {
+    max-width: 44rem;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-primary-dark);
+    margin-bottom: 0.75rem;
+  }
+  .m-header h1 {
+    margin-bottom: 1rem;
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+  .lede { color: var(--color-ink-soft); font-size: 1.1rem; }
+
+  .tldr {
+    max-width: 48rem;
+    margin: 0 auto 3rem;
+    background: var(--color-bg-soft);
+    border-left: 4px solid var(--color-primary);
+    border-radius: 0 0.75rem 0.75rem 0;
+    padding: 1.25rem 1.5rem;
+  }
+  .tldr-label {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-primary-dark);
+    margin: 0 0 0.5rem;
+    font-weight: 700;
+  }
+  .tldr p:last-child {
+    margin: 0;
+    color: var(--color-ink);
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+
+  .m-section { margin-bottom: 3rem; }
+  .m-section > h2 {
+    font-size: 1.45rem;
+    color: var(--color-primary-dark);
+    margin: 0 0 1.25rem;
+  }
+  .m-section p {
+    color: var(--color-ink-soft);
+    line-height: 1.75;
+  }
+  .m-section-lede { margin-bottom: 1.5rem; }
+
+  .grade-scale {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+  @media (min-width: 640px) { .grade-scale { grid-template-columns: repeat(5, 1fr); } }
+  .grade-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 1rem;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 0.875rem;
+  }
+  @media (min-width: 640px) {
+    .grade-item { flex-direction: column; text-align: center; gap: 0.6rem; }
+  }
+  .grade-item p { margin: 0; display: flex; flex-direction: column; gap: 0.15rem; }
+  .grade-item strong {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    font-size: 0.95rem;
+  }
+  .grade-item span {
+    font-size: 0.72rem;
+    color: var(--color-ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .subscores {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .subscore-card {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 0.875rem;
+    padding: 1.5rem;
+  }
+  .subscore-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+  .subscore-num {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--color-primary);
+    opacity: 0.4;
+    line-height: 1;
+  }
+  .subscore-weight {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.15rem;
+  }
+  .subscore-weight-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--color-primary-dark);
+  }
+  .subscore-weight-label {
+    font-size: 0.65rem;
+    color: var(--color-ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .subscore-card h3 {
+    font-size: 1.15rem;
+    color: var(--color-primary-dark);
+    margin: 0 0 0.5rem;
+  }
+  .subscore-card p { font-size: 0.95rem; margin: 0; }
+
+  .formula {
+    background: #0c1a17;
+    color: #5eead4;
+    padding: 1.25rem 1.5rem;
+    border-radius: 0.75rem;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    margin: 0 0 1.25rem;
+    overflow-x: auto;
+  }
+
+  .sources-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+  @media (min-width: 640px) { .sources-list { grid-template-columns: repeat(2, 1fr); } }
+  .sources-list li {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 0.65rem;
+    padding: 0.85rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .sources-list strong {
+    color: var(--color-primary-dark);
+    font-weight: 800;
+    font-size: 0.92rem;
+  }
+  .sources-list span {
+    color: var(--color-ink-soft);
+    font-size: 0.85rem;
+  }
+
+  .not-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .not-list li {
+    padding: 0.9rem 1.1rem;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    margin-bottom: 0.55rem;
+    color: var(--color-ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .not-list strong {
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+</style>

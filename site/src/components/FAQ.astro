@@ -1,0 +1,33 @@
+---
+import { siteConfig } from "../../site.config";
+import { jsonLdFaq } from "../utils/seo";
+import { getLocale } from "../i18n/t";
+
+const locale = getLocale(Astro.url);
+---
+
+<section class="py-20 px-4">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-center mb-12">{locale === "fr" ? "Questions fréquentes" : "Frequently asked questions"}</h2>
+    <div class="space-y-4">
+      {siteConfig.faq.map((item) => (
+        <details class="group bg-white border border-stone-200 rounded-xl overflow-hidden">
+          <summary class="flex items-center justify-between p-6 cursor-pointer font-semibold text-stone-900 hover:bg-stone-50 transition-colors">
+            {item.question}
+            <svg
+              class="w-5 h-5 text-stone-400 group-open:rotate-180 transition-transform"
+              fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-6 text-stone-600">
+            <p>{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdFaq(siteConfig.faq))} />
+</section>

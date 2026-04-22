@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import HomePage from "../../components/sections/HomePage.astro";
+import { siteConfig } from "../../../site.config";
+import { jsonLdHomepage, jsonLdFaq } from "../../utils/seo";
+
+const title = "NutriDécrypte , On décrypte ce que les étiquettes cachent";
+const description =
+  "NutriDécrypte note chaque aliment et complément de A à E. Additifs, ultra-transformation, allégations trompeuses, Nutri-Score, NOVA. Indépendant, gratuit, sources ANSES + EFSA + Open Food Facts.";
+
+const faq = siteConfig.faq.map((item) => ({
+  question: item.question,
+  answer: item.answer,
+}));
+
+const jsonLd = [
+  ...(() => {
+    const h = jsonLdHomepage();
+    return Array.isArray(h) ? h : [h];
+  })(),
+  jsonLdFaq(faq),
+];
+---
+
+<BaseLayout title={title} description={description} jsonLd={jsonLd}>
+  <HomePage />
+</BaseLayout>

@@ -1,0 +1,53 @@
+---
+import { getLocale } from "../i18n/t";
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  slug: string;
+  image?: string;
+  imageAlt?: string;
+  category?: string;
+}
+
+const { title, description, date, slug, image, imageAlt, category } = Astro.props;
+const locale = getLocale(Astro.url);
+const dateLocale = locale === "fr" ? "fr-FR" : "en-US";
+const baseUrl = locale === "fr" ? "/fr/blog" : "/blog";
+---
+
+<article class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+  <a href={`${baseUrl}/${slug}`} class="block">
+    {image ? (
+      <img
+        src={image}
+        alt={imageAlt || title}
+        class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+        loading="lazy"
+        width="400"
+        height="200"
+      />
+    ) : (
+      <div class="w-full h-48 bg-stone-100 flex items-center justify-center">
+        <svg class="w-12 h-12 text-stone-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+        </svg>
+      </div>
+    )}
+    <div class="p-6">
+      {category && (
+        <span class="text-xs font-medium uppercase tracking-wide" style="color: var(--color-primary)">
+          {category}
+        </span>
+      )}
+      <h3 class="text-lg font-bold mt-1 mb-2 group-hover:text-teal-700 transition-colors line-clamp-2">
+        {title}
+      </h3>
+      <p class="text-stone-600 text-sm line-clamp-3 mb-3">{description}</p>
+      <time class="text-xs text-stone-400" datetime={date.toISOString().split("T")[0]}>
+        {date.toLocaleDateString(dateLocale, { day: "numeric", month: "long", year: "numeric" })}
+      </time>
+    </div>
+  </a>
+</article>

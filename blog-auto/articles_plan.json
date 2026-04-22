@@ -1,0 +1,172 @@
+{
+  "plan_version": "v1",
+  "created_at": "2026-04-22",
+  "rules": {
+    "language_split": "7 FR + 5 EN + 3 bilingual pillar slots",
+    "scheduling": "random 07:00 to 09:00 Europe/Paris, one per weekday",
+    "pipeline": "serp_brief (Gemini 2.5 Pro grounded) -> Mistral large draft -> Claude Sonnet audit grounding -> Mistral fix",
+    "standards": "3500+ words, TL;DR data-speakable, FAQ 5+, Sources 5+, internal links 10+, external authority 5+, zero em-dash"
+  },
+  "articles": [
+    {
+      "slug": "additifs-alimentaires-dangereux-liste-2026",
+      "lang": "fr",
+      "scheduled_date": "2026-04-27",
+      "target_keyword": "additifs alimentaires a eviter",
+      "working_title": "Additifs alimentaires a eviter en 2026 : la liste noire des E-numeros",
+      "intent": "informational",
+      "author_pen_name": "Thomas Moreau",
+      "angle": "Cross-check EFSA reevaluation + ANSES warnings + banned-in-EU list. Position NutriDecrypte comme la reference francaise."
+    },
+    {
+      "slug": "nutri-score-limites-critique",
+      "lang": "fr",
+      "scheduled_date": "2026-04-28",
+      "target_keyword": "nutri-score critique limites",
+      "working_title": "Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels exploitent",
+      "intent": "informational",
+      "author_pen_name": "Sarah Keller",
+      "angle": "Reconnaitre la valeur du Nutri-Score tout en montrant ses angles morts: ultra-transformation, additifs, portion, edulcorants, contexte alimentaire global."
+    },
+    {
+      "slug": "ultra-transforme-nova-classification",
+      "lang": "fr",
+      "scheduled_date": "2026-04-29",
+      "target_keyword": "ultra transforme nova",
+      "working_title": "Ultra-transformes : la classification NOVA expliquee (et pourquoi c'est plus important que le Nutri-Score)",
+      "intent": "informational",
+      "author_pen_name": "Sarah Keller",
+      "angle": "Expliquer NOVA groupes 1 a 4, chiffres ANSES sur la consommation francaise, lien avec maladies cardiovasculaires (Etude NutriNet-Sante)."
+    },
+    {
+      "slug": "ultra-processed-food-what-you-should-know",
+      "lang": "en",
+      "scheduled_date": "2026-04-30",
+      "target_keyword": "ultra processed food",
+      "working_title": "Ultra-processed food: a clear guide to the NOVA classification and why it matters",
+      "intent": "informational",
+      "author_pen_name": "Camille Roux",
+      "angle": "Global context: UK NHS, BMJ meta-analysis, US CDC data. Reframe for English readers with European nuance."
+    },
+    {
+      "slug": "magnesium-complement-meilleur-2026",
+      "lang": "fr",
+      "scheduled_date": "2026-05-01",
+      "target_keyword": "meilleur magnesium complement",
+      "working_title": "Meilleur complement de magnesium 2026 : decryptage des 12 formes (bisglycinate, malate, oxyde, citrate)",
+      "intent": "commercial_investigation",
+      "author_pen_name": "Sarah Keller",
+      "angle": "Le oxyde = le pire (biodisponibilite 4%), bisglycinate = le meilleur. Classement honnete avec sources. Pas de placement produit, affiliation optionnelle en bas."
+    },
+    {
+      "slug": "allegations-marketing-trompeuses-supermarche",
+      "lang": "fr",
+      "scheduled_date": "2026-05-04",
+      "target_keyword": "allegations nutritionnelles trompeuses",
+      "working_title": "Les 17 allegations marketing qui vous trompent au supermarche (et comment les reperer)",
+      "intent": "informational",
+      "author_pen_name": "Thomas Moreau",
+      "angle": "Regles UE 1924/2006, exemples concrets (naturel, source de, riche en, sans sucre ajoute). Capture d'ecran d'etiquettes reelles."
+    },
+    {
+      "slug": "vitamine-d-complement-choisir",
+      "lang": "fr",
+      "scheduled_date": "2026-05-05",
+      "target_keyword": "complement vitamine d choisir",
+      "working_title": "Vitamine D : D3 vs D2, IU vs microgrammes, dosage ANSES 2026, les 8 pieges a eviter",
+      "intent": "commercial_investigation",
+      "author_pen_name": "Sarah Keller",
+      "angle": "Chiffres ANSES 77% carence France, D3 = 3x plus biodisponible que D2, references officielles, tableau comparatif 15 marques."
+    },
+    {
+      "slug": "e-numbers-banned-eu-safe-us",
+      "lang": "en",
+      "scheduled_date": "2026-05-06",
+      "target_keyword": "e numbers banned EU allowed US",
+      "working_title": "E-numbers banned in the EU but allowed in the US: the full 2026 list",
+      "intent": "informational",
+      "author_pen_name": "Camille Roux",
+      "angle": "Titanium dioxide (E171), BHA (E320), brominated vegetable oil, red 3. Position NutriDecrypte as the European reference for English speakers."
+    },
+    {
+      "slug": "sucres-caches-etiquettes-noms-differents",
+      "lang": "fr",
+      "scheduled_date": "2026-05-07",
+      "target_keyword": "sucres caches etiquette noms",
+      "working_title": "Sucres caches : les 67 noms differents que l'industrie utilise pour masquer le sucre",
+      "intent": "informational",
+      "author_pen_name": "Thomas Moreau",
+      "angle": "Liste exhaustive (dextrose, maltodextrine, concentre de jus de pomme, sirop d'agave). Tableau ANSES, references OMS. Impact sante avec chiffres."
+    },
+    {
+      "slug": "omega-3-complement-epa-dha-differences",
+      "lang": "fr",
+      "scheduled_date": "2026-05-08",
+      "target_keyword": "complement omega 3 EPA DHA",
+      "working_title": "Omega-3 : EPA vs DHA vs ALA, quel complement choisir en 2026 ?",
+      "intent": "commercial_investigation",
+      "author_pen_name": "Sarah Keller",
+      "angle": "Triglycerides vs ethyl esters, indice TOTOX, huile de poisson vs algues vegan, chiffres EFSA apport journalier."
+    },
+    {
+      "slug": "dioxyde-titane-e171-etat-2026",
+      "lang": "fr",
+      "scheduled_date": "2026-05-11",
+      "target_keyword": "dioxyde de titane e171 interdit",
+      "working_title": "Dioxyde de titane (E171) en 2026 : ou en est-on vraiment ?",
+      "intent": "informational",
+      "author_pen_name": "Thomas Moreau",
+      "angle": "Interdit UE depuis 2022, toujours dans medicaments, bataille industrielle, chiffres ANSES, verdicts tribunaux."
+    },
+    {
+      "slug": "how-to-read-food-label-europe",
+      "lang": "en",
+      "scheduled_date": "2026-05-12",
+      "target_keyword": "how to read a food label",
+      "working_title": "How to read a European food label: the definitive 2026 decoder",
+      "intent": "informational",
+      "author_pen_name": "Camille Roux",
+      "angle": "Regulation 1169/2011 INCO, Nutri-Score, NOVA, allergens in bold, quantitative ingredient declaration (QUID)."
+    },
+    {
+      "slug": "petit-dejeuner-industriel-pire-meilleur",
+      "lang": "fr",
+      "scheduled_date": "2026-05-13",
+      "target_keyword": "petit dejeuner industriel pire meilleur",
+      "working_title": "Cereales petit-dejeuner : le top 10 du pire, le top 10 du meilleur (notes NutriDecrypte)",
+      "intent": "commercial_investigation",
+      "author_pen_name": "Thomas Moreau",
+      "angle": "Classement A to E des 50 cereales les plus vendues en France. Pas de politesse inutile. Nommer les marques."
+    },
+    {
+      "slug": "collagene-complement-efficace-science",
+      "lang": "fr",
+      "scheduled_date": "2026-05-14",
+      "target_keyword": "collagene complement alimentaire efficace",
+      "working_title": "Collagene : est-ce que les complements marchent vraiment ? Ce que dit la science en 2026",
+      "intent": "commercial_investigation",
+      "author_pen_name": "Sarah Keller",
+      "angle": "Peptides hydrolyses oui, gelatine non, biodisponibilite reelle, marques testees, chiffres ANSES, verdict clair."
+    },
+    {
+      "slug": "bio-label-ab-europeen-vraiment-different",
+      "lang": "fr",
+      "scheduled_date": "2026-05-15",
+      "target_keyword": "label bio ab europeen difference",
+      "working_title": "Label AB, Bio europeen, Demeter, Nature et Progres : les 7 labels bio decryptes",
+      "intent": "informational",
+      "author_pen_name": "Thomas Moreau",
+      "angle": "Cahier des charges compare, pesticides autorises, limites du bio, verdict NutriDecrypte pour le consommateur."
+    },
+    {
+      "slug": "misleading-health-claims-eu-rules",
+      "lang": "en",
+      "scheduled_date": "2026-05-18",
+      "target_keyword": "misleading health claims food",
+      "working_title": "Misleading health claims on food: what EU Regulation 1924 actually allows (and what it does not)",
+      "intent": "informational",
+      "author_pen_name": "Camille Roux",
+      "angle": "How 'natural', 'rich in', 'source of' are regulated. Cross with FDA US for context."
+    }
+  ]
+}

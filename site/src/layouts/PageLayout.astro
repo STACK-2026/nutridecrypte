@@ -1,0 +1,48 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { siteConfig } from "../../site.config";
+import { jsonLdBreadcrumbs } from "../utils/seo";
+import { getLocale } from "../i18n/t";
+
+interface Props {
+  title: string;
+  description?: string;
+  lastUpdated?: Date;
+}
+
+const { title, description = "", lastUpdated } = Astro.props;
+const locale = getLocale(Astro.url);
+const homeLabel = locale === "fr" ? "Accueil" : "Home";
+const dateLocale = locale === "fr" ? "fr-FR" : "en-US";
+const updatedLabel = locale === "fr" ? "Dernière mise à jour" : "Last updated";
+
+const breadcrumbs = [
+  { name: homeLabel, url: siteConfig.url + (locale === "fr" ? "/fr/" : "/") },
+  { name: title, url: Astro.url.href },
+];
+---
+
+<BaseLayout
+  title={`${title} | ${siteConfig.name}`}
+  description={description || `${title} , ${siteConfig.name}`}
+  jsonLd={jsonLdBreadcrumbs(breadcrumbs)}
+>
+  <div class="max-w-3xl mx-auto px-4 py-12">
+    <Breadcrumbs items={breadcrumbs} />
+    <h1 class="mb-8">{title}</h1>
+    {lastUpdated && (
+      <p class="text-sm text-stone-500 mb-8">
+        {updatedLabel} :{" "}
+        {lastUpdated.toLocaleDateString(dateLocale, {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        })}
+      </p>
+    )}
+    <div class="prose max-w-none">
+      <slot />
+    </div>
+  </div>
+</BaseLayout>

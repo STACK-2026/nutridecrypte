@@ -1,0 +1,331 @@
+---
+import { getLocale, type Locale } from "../../i18n/t";
+import { AUTHORS } from "../../data/authors";
+const locale: Locale = getLocale(Astro.url);
+---
+
+<article class="about-page">
+  <header class="a-header">
+    <p class="eyebrow">{locale === "fr" ? "À propos" : "About"}</p>
+    <h1>
+      {locale === "fr"
+        ? "On décrypte ce que les étiquettes cachent."
+        : "We decode what labels hide."}
+    </h1>
+    <p class="lede">
+      {locale === "fr"
+        ? "NutriDécrypte note chaque aliment et complément de A à E. Indépendant. Transparent. Aucune marque ne paie pour changer une note."
+        : "NutriDécrypte grades every food and supplement from A to E. Independent. Transparent. No brand pays to change a grade."}
+    </p>
+  </header>
+
+  <section class="origin-story">
+    <h2>{locale === "fr" ? "L'histoire" : "The story"}</h2>
+    <div class="story-content">
+      <p>
+        {locale === "fr"
+          ? "Tout a commencé avec un yaourt « nature allégé ». Le paquet promettait du simple, du sain, du protéiné. En retournant l'étiquette, on a compté trois additifs, deux arômes et plus de sucre qu'un yaourt standard. C'était le produit phare d'une marque pourtant notée B au Nutri-Score."
+          : "It started with a \"light natural\" yogurt. The front of pack promised simple, healthy, high-protein. Flip the label and you find three additives, two flavourings, and more sugar than a standard yogurt. It was the hero product of a brand still flying a B on the Nutri-Score."}
+      </p>
+      <p>
+        {locale === "fr"
+          ? "On a cherché un outil public qui croiserait le Nutri-Score, la classification NOVA et la base EFSA des additifs. Il n'existait pas. Alors on l'a construit."
+          : "We looked for a public tool that combined the Nutri-Score, the NOVA classification, and the EFSA additives registry. It did not exist. So we built it."}
+      </p>
+      <p>
+        {locale === "fr"
+          ? "NutriDécrypte est né d'une conviction simple : le consommateur européen mérite un verdict unique, reproductible, adossé à des sources officielles, sur tout ce qu'il met dans son caddie. Pas du marketing. Pas du jargon réglementaire. Une note de A à E, sourcée, réécrite à chaque reformulation."
+          : "NutriDécrypte is built on a simple conviction: the European consumer deserves a single, reproducible verdict, anchored in official sources, on everything they put in the cart. Not marketing. Not regulatory jargon. One grade from A to E, sourced, recomputed at every reformulation."}
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>{locale === "fr" ? "Notre ennemi déclaré" : "Our declared enemy"}</h2>
+    <div class="enemy-block">
+      <p>
+        <strong>{locale === "fr" ? "Le marketing agroalimentaire qui fabrique du flou." : "The food industry marketing that manufactures vagueness."}</strong>
+        {locale === "fr"
+          ? " Les allégations « naturel », « source de », « sans » qui ne racontent qu'une moitié de la vérité. L'ultra-transformation déguisée en produit du terroir. Les additifs qui changent de nom quand ils sont pointés du doigt."
+          : " The \"natural\", \"source of\", \"free from\" claims that tell half the truth. Ultra-processing disguised as farmhouse food. Additives renamed every time they get flagged."}
+      </p>
+      <p>
+        {locale === "fr"
+          ? "Nous ne notons pas les marques. Nous notons leur composition exacte, face à la science, face aux avis officiels, face à la réalité du caddie européen."
+          : "We do not rate brands. We rate their exact composition against science, against official opinions, against the reality of the European shopping cart."}
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>{locale === "fr" ? "L'équipe éditoriale" : "The editorial team"}</h2>
+    <p class="section-intro">
+      {locale === "fr"
+        ? "NutriDécrypte est publié par une équipe de quatre professionnels. Noms de plume éditoriaux assumés, bios complètes sur la page auteur. Relecture clinique obligatoire sur les sujets santé."
+        : "NutriDécrypte is published by a team of four professionals. Editorial pen names, full bios on each author page. Clinical review required on every health-related topic."}
+    </p>
+    <div class="team-grid">
+      {AUTHORS.map((author) => (
+        <div class="team-card">
+          <div class="team-avatar" style={`background: ${author.avatarBg};`}>{author.initials}</div>
+          <h3>{author.name}</h3>
+          <p class="team-role">{locale === "fr" ? author.role.fr : author.role.en}</p>
+          <p class="team-desc">{locale === "fr" ? author.short.fr : author.short.en}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2>{locale === "fr" ? "Ce qui nous guide" : "What drives us"}</h2>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h3>{locale === "fr" ? "Transparence totale" : "Total transparency"}</h3>
+        <p>{locale === "fr"
+          ? "Chaque note est déterministe et reproductible. La méthodologie est publique. Pas de boite noire."
+          : "Every grade is deterministic and reproducible. The methodology is public. No black box."}</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/>
+          </svg>
+        </div>
+        <h3>{locale === "fr" ? "Zéro influence" : "Zero influence"}</h3>
+        <p>{locale === "fr"
+          ? "Aucune marque ne paie pour changer une note. Les liens d'affiliation financent le site, jamais le scoring."
+          : "No brand pays to change a grade. Affiliate links fund the site, never the scoring."}</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <h3>{locale === "fr" ? "Pour le consommateur" : "For the consumer"}</h3>
+        <p>{locale === "fr"
+          ? "Chaque fiche est écrite pour une décision au rayon, pas pour un auditeur réglementaire. Clarté > exhaustivité."
+          : "Every page is written for an aisle-side decision, not a regulator. Clarity over exhaustiveness."}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="promise-section">
+    <h2>{locale === "fr" ? "Notre promesse éditoriale" : "Our editorial promise"}</h2>
+    <ul>
+      <li>
+        <strong>{locale === "fr" ? "Aucun paiement ne change une note." : "No payment ever changes a grade."}</strong>
+        {locale === "fr"
+          ? " Les liens d'affiliation financent l'opération mais ne touchent pas au scoring."
+          : " Affiliate links fund the operation but do not touch scoring."}
+      </li>
+      <li>
+        <strong>{locale === "fr" ? "Sources officielles uniquement." : "Official sources only."}</strong>
+        {locale === "fr" ? " ANSES, EFSA, Open Food Facts, NOVA, Santé publique France. Chaque donnée est citée." : " ANSES, EFSA, Open Food Facts, NOVA, Santé publique France. Every data point cited."}
+      </li>
+      <li>
+        <strong>{locale === "fr" ? "Méthodologie ouverte." : "Open methodology."}</strong>
+        {locale === "fr" ? " Chaque note est reproductible depuis notre " : " Every grade is reproducible from our "}
+        <a href={locale === "fr" ? "/fr/methodology" : "/methodology"}>
+          {locale === "fr" ? "page méthodologie" : "methodology page"}
+        </a>.
+      </li>
+      <li>
+        <strong>{locale === "fr" ? "Pas d'avis médical." : "No medical advice."}</strong>
+        {locale === "fr"
+          ? " Pour toute question de santé, consulte un professionnel diplômé. Nos guides cliniques sont relus par Sarah Keller, diététicienne-nutritionniste."
+          : " For any health question, consult a licensed professional. Our clinical guides are reviewed by Sarah Keller, registered dietitian."}
+      </li>
+      <li>
+        <strong>{locale === "fr" ? "Respect des données." : "Data respect."}</strong>
+        {locale === "fr" ? " Aucune revente. Voir notre " : " Never sold. See our "}
+        <a href={locale === "fr" ? "/fr/privacy-policy" : "/privacy-policy"}>
+          {locale === "fr" ? "politique de confidentialité" : "privacy policy"}
+        </a>.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>{locale === "fr" ? "Comment on finance le site" : "How we fund the site"}</h2>
+    <p>
+      {locale === "fr"
+        ? "Le site est gratuit pour tous les utilisateurs. On reçoit une commission d'affiliation quand quelqu'un clique sur un lien vers une marketplace partenaire (compléments, produits bio, épicerie qualité). Cette commission ne touche jamais au scoring. Les marques ne peuvent pas négocier un upgrade de note."
+        : "The site is free for all users. We receive an affiliate commission when someone clicks a link to a partner marketplace (supplements, organic brands, quality groceries). That commission never touches the scoring. Brands cannot negotiate a grade upgrade."}
+    </p>
+  </section>
+
+  <section class="manifesto">
+    <blockquote>
+      {locale === "fr"
+        ? "L'alimentation est la première dépense non contrainte du foyer européen. C'est aussi la première source d'inquiétude sanitaire. Si on peut aider une seule étiquette à être lue vraiment, le projet se justifie."
+        : "Food is the number-one discretionary expense in European households. It is also the number-one source of health anxiety. If we can help one label get read for real, the project pays for itself."}
+    </blockquote>
+  </section>
+
+  <section>
+    <h2>{locale === "fr" ? "Contact" : "Contact"}</h2>
+    <p>
+      {locale === "fr" ? "Écris-nous à " : "Email us at "}
+      <a href="mailto:contact@nutridecrypte.com">contact@nutridecrypte.com</a>
+      {locale === "fr"
+        ? ". Marques : utilise le même email pour signaler une erreur de composition ou une reformulation récente. On traite ces demandes en priorité."
+        : ". Brands: use the same email to flag a composition error or a recent reformulation. We handle these requests on priority."}
+    </p>
+  </section>
+</article>
+
+<style>
+  .about-page {
+    max-width: 52rem;
+    margin: 2rem auto 4rem;
+    padding: 0 1.5rem;
+  }
+  .a-header { margin-bottom: 3rem; }
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-primary-dark);
+    margin-bottom: 0.75rem;
+  }
+  .a-header h1 {
+    margin-bottom: 1.25rem;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    line-height: 1.15;
+  }
+  .lede { color: var(--color-ink-soft); font-size: 1.15rem; line-height: 1.65; }
+
+  section { margin-bottom: 3rem; }
+  h2 {
+    font-size: 1.4rem;
+    color: var(--color-primary-dark);
+    margin: 0 0 1rem;
+  }
+  p {
+    color: var(--color-ink-soft);
+    line-height: 1.75;
+    margin: 0 0 1rem;
+  }
+
+  .section-intro {
+    margin-bottom: 1.5rem;
+  }
+
+  .story-content {
+    border-left: 3px solid var(--color-primary);
+    padding-left: 1.5rem;
+  }
+  .story-content p:last-child { margin-bottom: 0; }
+
+  .enemy-block {
+    background: #fef2f2;
+    border: 1px solid rgb(220 38 38 / 0.15);
+    border-left: 4px solid var(--color-alert);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+  }
+  .enemy-block p:last-child { margin-bottom: 0; }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  @media (min-width: 640px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+  .team-card {
+    padding: 1.5rem;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    transition: transform 200ms ease, box-shadow 200ms ease;
+  }
+  .team-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px -12px rgb(15 118 110 / 0.2);
+  }
+  .team-avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+  }
+  .team-card h3 { font-size: 1.05rem; margin: 0 0 0.25rem; color: var(--color-ink); }
+  .team-role {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .team-desc { font-size: 0.88rem; margin: 0; }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  @media (min-width: 640px) { .values-grid { grid-template-columns: repeat(3, 1fr); } }
+  .value-card {
+    padding: 1.5rem;
+    background: var(--color-bg-soft);
+    border-radius: 1rem;
+    text-align: center;
+  }
+  .value-icon {
+    width: 3rem;
+    height: 3rem;
+    margin: 0 auto 0.75rem;
+    color: var(--color-primary);
+  }
+  .value-icon svg { width: 100%; height: 100%; }
+  .value-card h3 { font-size: 1rem; margin: 0 0 0.5rem; color: var(--color-ink); }
+  .value-card p { font-size: 0.88rem; margin: 0; text-align: center; }
+
+  .promise-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .promise-section li {
+    padding: 0.85rem 1.25rem;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 0.625rem;
+    margin-bottom: 0.6rem;
+    color: var(--color-ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  strong { color: var(--color-ink); }
+  a {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .manifesto blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding: 1.5rem 2rem;
+    margin: 0;
+    background: linear-gradient(135deg, rgb(15 118 110 / 0.04), rgb(15 118 110 / 0.01));
+    border-radius: 0 1rem 1rem 0;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--color-ink);
+    line-height: 1.75;
+  }
+</style>
