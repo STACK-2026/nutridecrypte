@@ -7,37 +7,30 @@
     "pipeline": "serp_brief (Gemini 2.5 Pro grounded) -> Mistral large draft -> Claude Sonnet audit grounding -> Mistral fix",
     "standards": "3500+ words, TL;DR data-speakable, FAQ 5+, Sources 5+, internal links 10+, external authority 5+, zero em-dash"
   },
-  "articles": [
+  "published_manually": [
     {
-      "slug": "additifs-alimentaires-dangereux-liste-2026",
+      "slug": "additifs-alimentaires-a-eviter-2026",
       "lang": "fr",
-      "scheduled_date": "2026-04-27",
-      "target_keyword": "additifs alimentaires a eviter",
-      "working_title": "Additifs alimentaires a eviter en 2026 : la liste noire des E-numeros",
-      "intent": "informational",
-      "author_pen_name": "Thomas Moreau",
-      "angle": "Cross-check EFSA reevaluation + ANSES warnings + banned-in-EU list. Position NutriDecrypte comme la reference francaise."
+      "published_at": "2026-04-22T07:48:00+02:00",
+      "author": "Thomas Moreau",
+      "words": 3257
     },
     {
       "slug": "nutri-score-limites-critique",
       "lang": "fr",
-      "scheduled_date": "2026-04-28",
-      "target_keyword": "nutri-score critique limites",
-      "working_title": "Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels exploitent",
-      "intent": "informational",
-      "author_pen_name": "Sarah Keller",
-      "angle": "Reconnaitre la valeur du Nutri-Score tout en montrant ses angles morts: ultra-transformation, additifs, portion, edulcorants, contexte alimentaire global."
+      "published_at": "2026-04-22T13:12:00+02:00",
+      "author": "Sarah Keller",
+      "words": 2940
     },
     {
       "slug": "ultra-transforme-nova-classification",
       "lang": "fr",
-      "scheduled_date": "2026-04-29",
-      "target_keyword": "ultra transforme nova",
-      "working_title": "Ultra-transformes : la classification NOVA expliquee (et pourquoi c'est plus important que le Nutri-Score)",
-      "intent": "informational",
-      "author_pen_name": "Sarah Keller",
-      "angle": "Expliquer NOVA groupes 1 a 4, chiffres ANSES sur la consommation francaise, lien avec maladies cardiovasculaires (Etude NutriNet-Sante)."
-    },
+      "published_at": "2026-04-22T17:30:00+02:00",
+      "author": "Sarah Keller",
+      "words": 3227
+    }
+  ],
+  "articles": [
     {
       "slug": "ultra-processed-food-what-you-should-know",
       "lang": "en",
