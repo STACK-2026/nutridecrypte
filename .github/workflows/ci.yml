@@ -1,0 +1,105 @@
+name: CI — blog-auto smoke test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'blog-auto/**'
+      - 'scripts/**'
+      - '.github/workflows/ci.yml'
+  pull_request:
+    paths:
+      - 'blog-auto/**'
+      - 'scripts/**'
+
+jobs:
+  smoke:
+    name: Smoke test (AST, ordering, import, JSON)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install minimal deps
+        run: python3 -m pip install --quiet requests python-dotenv
+      - name: Smoke test
+        run: |
+          python3 <<'PY'
+          import ast, json, sys, os, importlib.util
+          from pathlib import Path
+
+          errors = []
+          py_files, json_files = [], []
+          for d in ["blog-auto", "scripts"]:
+              if Path(d).is_dir():
+                  py_files += list(Path(d).glob("**/*.py"))
+                  json_files += list(Path(d).glob("**/*.json"))
+          # exclude vendored / log / artifact dirs
+          def skip(p): return any(s in p.parts for s in (".git","node_modules","logs","pending","dist",".astro","__pycache__"))
+          py_files = [p for p in py_files if not skip(p)]
+          json_files = [p for p in json_files if not skip(p)]
+
+          # 1. AST parse
+          for f in py_files:
+              try:
+                  tree = ast.parse(f.read_text(encoding="utf-8"))
+              except SyntaxError as e:
+                  errors.append(f"{f}: SyntaxError L{e.lineno}: {e.msg}")
+                  continue
+              # 2. Ordering: no top-level def/class AFTER `if __name__ == "__main__"`
+              guard_line = None
+              for node in tree.body:
+                  if (isinstance(node, ast.If)
+                      and isinstance(node.test, ast.Compare)
+                      and isinstance(node.test.left, ast.Name)
+                      and node.test.left.id == "__name__"):
+                      guard_line = node.lineno
+                      break
+              if guard_line:
+                  for node in tree.body:
+                      if node.lineno > guard_line and isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                          errors.append(
+                              f"{f}: top-level {type(node).__name__} '{node.name}' at L{node.lineno} "
+                              f"comes AFTER `if __name__` at L{guard_line}. "
+                              f"Move it BEFORE the guard or main() will crash with NameError."
+                          )
+
+          # 3. Module-load test (catches NameError at module level, like petfoodrate's SCRIPT_DIR bug)
+          os.environ.update({
+              "ANTHROPIC_API_KEY":"stub","MISTRAL_API_KEY":"stub","GITHUB_TOKEN":"stub",
+              "BING_URL_SUBMISSION_KEY":"stub","INDEXNOW_KEY":"stub","UNSPLASH_ACCESS_KEY":"stub",
+              "GOOGLE_API_KEY":"stub","OPENAI_API_KEY":"stub","RESEND_API_KEY":"stub",
+              "SUPABASE_URL":"https://stub.supabase.co","SUPABASE_KEY":"stub","SUPABASE_SERVICE_ROLE_KEY":"stub",
+              "GITHUB_REPOSITORY":"stub/stub","CF_API_TOKEN":"stub",
+          })
+          entry_names = {"publish.py","mistral_pipeline.py","enrich_product.py","serp_brief.py","discover_products.py","import_products.py","bing_submit.py"}
+          for f in py_files:
+              if f.name not in entry_names: continue
+              sys.path.insert(0, str(f.parent))
+              spec = importlib.util.spec_from_file_location(f"__smoke_{f.stem}_{f.parent.name}", f)
+              mod = importlib.util.module_from_spec(spec)
+              try:
+                  spec.loader.exec_module(mod)
+              except (NameError, SyntaxError) as e:
+                  errors.append(f"{f}: {type(e).__name__} at module-load: {e}")
+              except ImportError as e:
+                  if "requests" in str(e) or "python-dotenv" in str(e): pass
+                  else: errors.append(f"{f}: ImportError at module-load: {e}")
+              except SystemExit: pass
+              except Exception: pass
+              finally:
+                  sys.path.pop(0)
+
+          # 4. JSON validity
+          for f in json_files:
+              try: json.loads(f.read_text(encoding="utf-8"))
+              except json.JSONDecodeError as e:
+                  errors.append(f"{f}: invalid JSON: {e}")
+
+          if errors:
+              for e in errors: print(f"::error::{e}")
+              print(f"\n{len(errors)} smoke test failure(s).")
+              sys.exit(1)
+          print(f"OK: {len(py_files)} .py + {len(json_files)} .json passed.")
+          PY
