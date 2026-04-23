@@ -1,0 +1,25 @@
+name: Cross-project leak guardrail
+
+# Runs on every push + PR to prevent sibling STACK-2026 identifiers
+# (Supabase project refs, domains, brand names) from sneaking in.
+# Trigger story: 2026-04-23 , public/tracker.js shipped BébéDécrypte visitor
+# data to the PetFoodRate Supabase for ~24h because a file was copy-pasted
+# during scaffolding. This check makes sure that never happens again.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  scan:
+    name: Scan repo for cross-project references
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run guardrail
+        run: python3 scripts/check_cross_project_leaks.py
