@@ -52,3 +52,10 @@ jobs:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           workingDirectory: site
           command: pages deploy dist --project-name=nutridecrypte --branch=main
+
+      - name: Ping IndexNow
+        if: success()
+        env:
+          SITE_URL: https://nutridecrypte.com
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: python3 scripts/indexnow_ping.py || true
