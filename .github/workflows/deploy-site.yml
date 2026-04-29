@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     timeout-minutes: 20
     defaults:
       run:
@@ -52,6 +52,23 @@ jobs:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           workingDirectory: site
           command: pages deploy dist --project-name=nutridecrypte --branch=main
+
+      - name: Purge CF cache for SEO-critical files
+        # Activates once CF_PURGE_TOKEN secret is set (Phase 3 of deploy hardening).
+        # Until then this step gracefully no-ops -- safe to merge.
+        if: success()
+        env:
+          CF_PURGE_TOKEN: ${{ secrets.CF_PURGE_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          SITE_URL: https://nutridecrypte.com
+        run: |
+          if [ -z "$CF_PURGE_TOKEN" ] || [ -z "$CF_ZONE_ID" ]; then
+            echo "CF_PURGE_TOKEN or CF_ZONE_ID missing, skip (Phase 3 not yet wired)"; exit 0;
+          fi
+          curl -fsS -X POST "https://api.cloudflare.com/client/v4/zones/$CF_ZONE_ID/purge_cache" \
+            -H "Authorization: Bearer $CF_PURGE_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data "{\"files\":[\"$SITE_URL/robots.txt\",\"$SITE_URL/sitemap.xml\",\"$SITE_URL/sitemap-index.xml\",\"$SITE_URL/llms.txt\",\"$SITE_URL/llms-full.txt\",\"$SITE_URL/ai-sitemap.xml\"]}" || true
 
       - name: Ping IndexNow
         if: success()
