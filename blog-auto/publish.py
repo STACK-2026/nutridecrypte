@@ -182,13 +182,26 @@ def build_user_prompt(article: dict) -> str:
 # ============================================================
 def extract_frontmatter_fields(generated: str) -> tuple[str, str, str]:
     """Extract TITLE_TAG, META_DESCRIPTION, body from LLM output."""
-    title_match = re.search(r"^TITLE_TAG:\s*(.+)$", generated, re.MULTILINE)
-    meta_match = re.search(r"^META_DESCRIPTION:\s*(.+)$", generated, re.MULTILINE)
+    # Pre-clean: drop leading fences and conversational preambles before searching.
+    cleaned = generated.lstrip()
+    if cleaned.startswith("```"):
+        cleaned = re.sub(r"^```[a-z]*\n?", "", cleaned)
+    # Strip any leading lines before the first TITLE_TAG so the regex anchors hit.
+    idx = cleaned.find("TITLE_TAG:")
+    if idx > 0:
+        cleaned = cleaned[idx:]
+
+    title_match = re.search(r"^TITLE_TAG:\s*(.+)$", cleaned, re.MULTILINE)
+    if not title_match:
+        title_match = re.search(r"TITLE_TAG:\s*(.+)", cleaned)
+    meta_match = re.search(r"^META_DESCRIPTION:\s*(.+)$", cleaned, re.MULTILINE)
+    if not meta_match:
+        meta_match = re.search(r"META_DESCRIPTION:\s*(.+)", cleaned)
     title = title_match.group(1).strip() if title_match else ""
     meta = meta_match.group(1).strip() if meta_match else ""
 
     # Strip the header lines from body
-    body = generated
+    body = cleaned
     if title_match:
         body = re.sub(r"^TITLE_TAG:\s*.+\n?", "", body, count=1, flags=re.MULTILINE)
     if meta_match:
