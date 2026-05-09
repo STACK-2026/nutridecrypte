@@ -97,10 +97,11 @@ const definedTermJsonLd: Record<string, unknown> = {
 };
 
 const productCount = products.length;
-const inUseLabel = productCount > 0 ? ` , présent dans ${productCount} produit${productCount > 1 ? "s" : ""}` : "";
+const inUseLabel = productCount > 0 ? `Présent dans ${productCount} produit${productCount > 1 ? "s" : ""}.` : "";
 const title = `${name} (${additive.e_number}) , additif alimentaire à ${riskLabel[additive.risk_level || "unknown"].toLowerCase()} | NutriDécrypte`;
-const summaryRaw = additive.summary_fr || additive.summary_en || `Additif alimentaire ${additive.e_number} (${name}). Risque EFSA : ${riskLabel[additive.risk_level || "unknown"]}.`;
-const description = `${name} (${additive.e_number}) : ${summaryRaw}${inUseLabel}.`.replace(/\s+\./g, ".").replace(/\.\.+/g, ".").slice(0, 158);
+const summaryRaw = (additive.summary_fr || additive.summary_en || `Additif alimentaire ${additive.e_number} (${name}). Risque EFSA : ${riskLabel[additive.risk_level || "unknown"]}.`).trim();
+const summaryClean = summaryRaw.endsWith(".") ? summaryRaw : summaryRaw + ".";
+const description = `${name} (${additive.e_number}) : ${summaryClean}${inUseLabel ? " " + inUseLabel : ""}`.slice(0, 158);
 ---
 
 <BaseLayout

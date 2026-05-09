@@ -149,13 +149,12 @@ const scoreLabel = product.score_overall != null ? ` (${product.score_overall}/1
 const gradeLabel = product.grade ? `grade ${product.grade}${scoreLabel}` : "ungraded";
 
 const title = `${product.name}${brandPretty ? `, ${brandPretty}` : ""} , ${gradeLabel} | NutriDécrypte`;
-const descParts = [
-  `${product.name}${brandPretty ? ` (${brandPretty})` : ""}: ${gradeLabel}.`,
+const descMetrics = [
   `${additivesCount} additive${additivesCount !== 1 ? "s" : ""} detected`,
   novaLabel,
   nutriLabel,
-].filter(Boolean);
-const baseDesc = descParts.join(", ").replace(/, ([^,]*)$/, ". $1") + ". Independent verdict by NutriDécrypte (ANSES, EFSA, Open Food Facts).";
+].filter(Boolean).join(", ");
+const baseDesc = `${product.name}${brandPretty ? ` (${brandPretty})` : ""}: ${gradeLabel}. ${descMetrics}. Independent verdict by NutriDécrypte (ANSES, EFSA, Open Food Facts).`;
 const description = baseDesc.length > 158 ? baseDesc.slice(0, 155) + "..." : baseDesc;
 const canonicalUrl = siteConfig.url + `/product/${product.slug}/`;
 const ogImage = product.image_url || "/og/default.svg";
