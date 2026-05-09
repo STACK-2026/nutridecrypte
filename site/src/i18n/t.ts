@@ -19,10 +19,12 @@ export function t(tr: Translation, locale: Locale = DEFAULT_LOCALE): string {
 }
 
 // Utility: get the URL prefix for a locale (en = "", fr = "/fr")
+// Always returns a trailing slash for non-root paths to match canonical sitemap URLs (avoids 308 redirects).
 export function localeUrl(path: string, locale: Locale = DEFAULT_LOCALE): string {
-  if (locale === "en") return path;
+  const withSlash = (p: string) => (p === "/" || p.endsWith("/") ? p : p + "/");
+  if (locale === "en") return withSlash(path);
   if (path === "/") return "/fr/";
-  return "/fr" + (path.startsWith("/") ? path : "/" + path);
+  return withSlash("/fr" + (path.startsWith("/") ? path : "/" + path));
 }
 
 // Utility: detect current locale from Astro URL

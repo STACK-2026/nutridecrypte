@@ -54,7 +54,9 @@ const verdictFr = winner
   ? winner.name + " bat " + (loser as Product).name + " avec un score global de " + winner.score_overall + "/100 contre " + (loser as Product).score_overall + "/100. " + pickVerdict(winner, "fr")
   : a.name + " et " + b.name + " font match nul avec des scores globaux identiques.";
 
-const title = a.name + " vs " + b.name + " , side by side | NutriDecrypte";
+const aGrade = a.grade ? `(grade ${a.grade})` : "";
+const bGrade = b.grade ? `(grade ${b.grade})` : "";
+const title = `${a.name} ${aGrade} vs ${b.name} ${bGrade} , Nutri-Score, NOVA, additives | NutriDécrypte`.replace(/  +/g, " ");
 const description = verdictEn.slice(0, 155);
 const canonicalUrl = siteConfig.url + "/vs/" + a.slug + "-vs-" + b.slug + "/";
 

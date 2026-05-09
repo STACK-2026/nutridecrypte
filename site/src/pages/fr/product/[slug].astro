@@ -121,8 +121,22 @@ const breadcrumbJsonLd = {
   })),
 };
 
-const title = `${product.name} , note ${product.grade || "?"} | NutriDécrypte`;
-const description = verdictFr.slice(0, 155);
+const brandPretty = product.brand_slug ? product.brand_slug.replace(/-/g, " ") : "";
+const additivesCount = (product.additives_tags || []).length;
+const novaLabel = product.nova_group ? `NOVA ${product.nova_group}` : "";
+const nutriLabel = product.nutrition_grade ? `Nutri-Score ${product.nutrition_grade.toUpperCase()}` : "";
+const scoreLabel = product.score_overall != null ? ` (${product.score_overall}/100)` : "";
+const gradeLabel = product.grade ? `note ${product.grade}${scoreLabel}` : "non noté";
+
+const title = `${product.name}${brandPretty ? `, ${brandPretty}` : ""} , ${gradeLabel} | NutriDécrypte`;
+const descParts = [
+  `${product.name}${brandPretty ? ` (${brandPretty})` : ""} : ${gradeLabel}.`,
+  `${additivesCount} additif${additivesCount > 1 ? "s" : ""} détecté${additivesCount > 1 ? "s" : ""}`,
+  novaLabel,
+  nutriLabel,
+].filter(Boolean);
+const baseDesc = descParts.join(", ").replace(/, ([^,]*)$/, ". $1") + ". Verdict indépendant NutriDécrypte (ANSES, EFSA, Open Food Facts).";
+const description = baseDesc.length > 158 ? baseDesc.slice(0, 155) + "..." : baseDesc;
 const canonicalUrl = siteConfig.url + `/fr/product/${product.slug}/`;
 const ogImage = product.image_url || "/og/default.svg";
 ---

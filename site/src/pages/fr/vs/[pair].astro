@@ -50,7 +50,9 @@ const verdictFr = winner
   ? winner.name + " l'emporte sur " + (loser as Product).name + " avec un score global de " + winner.score_overall + " sur 100, contre " + (loser as Product).score_overall + " sur 100. " + pickVerdict(winner, "fr")
   : a.name + " et " + b.name + " font match nul avec des scores globaux identiques.";
 
-const title = a.name + " vs " + b.name + " : comparatif NutriDecrypte";
+const aGrade = a.grade ? `(note ${a.grade})` : "";
+const bGrade = b.grade ? `(note ${b.grade})` : "";
+const title = `${a.name} ${aGrade} vs ${b.name} ${bGrade} : Nutri-Score, NOVA, additifs | NutriDécrypte`.replace(/  +/g, " ");
 const description = verdictFr.slice(0, 155);
 const canonicalUrl = siteConfig.url + "/fr/vs/" + a.slug + "-vs-" + b.slug + "/";
 

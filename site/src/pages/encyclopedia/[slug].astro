@@ -24,14 +24,36 @@ export async function getStaticPaths() {
           })
         )
         .slice(0, 10);
+      // Related additives: same category, different slug, top 5
+      const related = a.category
+        ? additives.filter((x) => x.slug && x.slug !== a.slug && x.category === a.category).slice(0, 5)
+        : [];
       return {
         params: { slug: a.slug },
-        props: { additive: a, products: matches },
+        props: { additive: a, products: matches, related },
       };
     });
 }
 
-const { additive, products } = Astro.props as { additive: Additive; products: Product[] };
+const { additive, products, related } = Astro.props as { additive: Additive; products: Product[]; related: Additive[] };
+
+// Category-aware "common uses" copy (food technology context, not auto-generated boilerplate)
+const categoryUses: Record<string, string> = {
+  preservative: "preserving products against mould, yeast and bacterial growth, especially in soft drinks, sauces, pickles and sliced bread",
+  antioxidant: "preventing fats and oils from oxidising and going rancid, common in margarine, biscuits, snack foods and cured meat",
+  colour: "restoring or enhancing the colour lost during industrial processing, mainly in confectionery, sodas, sauces and convenience meals",
+  emulsifier: "binding water and oil together to keep texture stable in margarine, ice cream, mayonnaise, ready meals and ultra-processed pastries",
+  thickener: "increasing viscosity in dairy desserts, sauces, soups and plant-based drinks",
+  stabiliser: "preventing ingredients from separating during shelf life, common in dressings, dairy desserts, ready-meals and beverages",
+  sweetener: "replacing sugar in low-calorie drinks, dairy desserts, chewing gum and tabletop sweeteners",
+  "flavour enhancer": "amplifying savoury or umami taste in soups, snacks, instant noodles, sauces and processed meat",
+  acidulant: "adjusting the acidity to a target pH, used in sodas, candies, jams and dairy desserts",
+  "anti-caking agent": "stopping powders and granules from clumping, common in salt, spice mixes, grated cheese and powdered drinks",
+};
+const lcCategory = (additive.category || "").toLowerCase();
+const usesCopy = Object.keys(categoryUses).find((k) => lcCategory.includes(k))
+  ? categoryUses[Object.keys(categoryUses).find((k) => lcCategory.includes(k)) as string]
+  : "various technological roles in industrial food formulations";
 
 const riskColor: Record<string, string> = {
   low: "bg-emerald-50 text-emerald-800 border-emerald-200",
@@ -80,8 +102,11 @@ const definedTermJsonLd: Record<string, unknown> = {
   },
 };
 
-const title = `${additive.e_number} , ${name} | NutriDécrypte Encyclopedia`;
-const description = (additive.summary_en || additive.summary_fr || `Food additive ${additive.e_number}`).slice(0, 155);
+const productCount = products.length;
+const inUseLabel = productCount > 0 ? ` , found in ${productCount} product${productCount > 1 ? "s" : ""}` : "";
+const title = `${name} (${additive.e_number}) , ${riskLabel[additive.risk_level || "unknown"]} food additive | NutriDécrypte`;
+const summaryRaw = additive.summary_en || additive.summary_fr || `Food additive ${additive.e_number} (${name}). EFSA risk: ${riskLabel[additive.risk_level || "unknown"]}.`;
+const description = `${name} (${additive.e_number}): ${summaryRaw}${inUseLabel}.`.replace(/\s+\./g, ".").replace(/\.\.+/g, ".").slice(0, 158);
 ---
 
 <BaseLayout
@@ -193,6 +218,66 @@ const description = (additive.summary_en || additive.summary_fr || `Food additiv
         </div>
       </section>
     )}
+
+    <section class="mb-10 prose max-w-none">
+      <h2>Common uses in industrial food</h2>
+      <p>
+        {name} ({additive.e_number}) is used by food manufacturers for {usesCopy}.
+        It is most often listed in the ingredient panel as <strong>{additive.e_number}</strong>, <strong>{name}</strong>, or under one of its trade names.
+        On a NutriDécrypte product page, this additive contributes to the <em>additives axis</em> (20% of the overall A to E grade), and triggers a label warning when its EFSA risk level is medium or high.
+      </p>
+      <p>
+        If you want to limit your exposure to this additive, the simplest tactic is to read the ingredients list (not just the front-of-pack), and to favour products graded A or B in our <a href="/rankings/">independent catalog</a>. Less processed, NOVA-1 or NOVA-2 categories rarely contain it.
+      </p>
+    </section>
+
+    {related.length > 0 && (
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold mb-4">Related additives in the same family</h2>
+        <p class="text-stone-700 mb-4">
+          Other E-numbers classified as <strong>{additive.category}</strong> in the EU food additives registry. Their risk profile and behaviour on a label are often similar.
+        </p>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          {related.map((r) => (
+            <li>
+              <a href={`/encyclopedia/${r.slug}/`} class="flex items-center justify-between bg-white border border-stone-200 rounded-lg px-4 py-2 hover:border-teal-400 transition">
+                <span><strong>{r.e_number}</strong> , {r.name_en || r.name_fr || r.e_number}</span>
+                <span class={`text-xs font-semibold px-2 py-0.5 rounded-full border ${riskColor[r.risk_level || "unknown"]}`}>
+                  {riskLabel[r.risk_level || "unknown"]}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section class="mb-10 prose max-w-none">
+      <h2>Frequently asked questions</h2>
+      <h3>Is {additive.e_number} ({name}) safe?</h3>
+      <p>
+        EFSA classifies the risk level of {additive.e_number} as <strong>{riskLabel[additive.risk_level || "unknown"].toLowerCase()}</strong> in its latest review.
+        {additive.controversy ? " It is also flagged as controversial by independent toxicology reviewers, meaning the scientific consensus is contested." : ""}
+        {additive.banned_in && additive.banned_in.length ? ` Several jurisdictions have restricted or banned its use, including: ${additive.banned_in.join(", ")}.` : ""}
+        Always read the latest official opinion before drawing conclusions for your own diet, and consult a registered dietitian for medical questions.
+      </p>
+      <h3>What is {additive.e_number} typically used for?</h3>
+      <p>
+        Food manufacturers use {name} primarily for {usesCopy}. You will most often find it in ultra-processed foods (NOVA group 4) and rarely in unprocessed or minimally processed products (NOVA 1 or 2).
+      </p>
+      <h3>How can I avoid {additive.e_number} on a label?</h3>
+      <p>
+        Look for the code <strong>{additive.e_number}</strong> or its full name <strong>{name}</strong> in the ingredients list, usually printed in small font on the back of the pack. Cooking from raw ingredients, choosing NOVA-1 or NOVA-2 alternatives, and using the <a href="/rankings/">NutriDécrypte rankings</a> to filter by grade A or B are the three most reliable strategies.
+      </p>
+      {additive.efsa_opinion_url && (
+        <>
+          <h3>Where can I read the official EFSA opinion?</h3>
+          <p>
+            The European Food Safety Authority publishes its scientific opinion on {additive.e_number} at <a href={additive.efsa_opinion_url} target="_blank" rel="noopener noreferrer">{additive.efsa_opinion_url}</a>. ANSES, France's national agency, regularly updates its own positions on the same molecule.
+          </p>
+        </>
+      )}
+    </section>
 
     <footer class="mt-12 p-6 bg-teal-50 border border-teal-200 rounded-xl text-center">
       <p class="text-sm text-stone-700">
