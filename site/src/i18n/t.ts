@@ -27,6 +27,28 @@ export function localeUrl(path: string, locale: Locale = DEFAULT_LOCALE): string
   return withSlash("/fr" + (path.startsWith("/") ? path : "/" + path));
 }
 
+// Localized slugs , the FR site uses translated paths (classement, encyclopedie, comparer, marque)
+// to keep keywords in the URL. Use navUrl(key, locale) for nav/footer links instead of localeUrl(path, locale)
+// to avoid hardcoding /rankings vs /classement on every call site.
+const LOCALIZED_PATHS: Record<string, Record<Locale, string>> = {
+  rankings: { en: "/rankings", fr: "/classement" },
+  encyclopedia: { en: "/encyclopedia", fr: "/encyclopedie" },
+  compare: { en: "/compare", fr: "/comparer" },
+  methodology: { en: "/methodology", fr: "/methodology" },
+  about: { en: "/about", fr: "/about" },
+  blog: { en: "/blog", fr: "/blog" },
+  privacyPolicy: { en: "/privacy-policy", fr: "/privacy-policy" },
+  terms: { en: "/terms", fr: "/terms" },
+  cookiePolicy: { en: "/cookie-policy", fr: "/cookie-policy" },
+  affiliateDisclosure: { en: "/affiliate-disclosure", fr: "/divulgation-affiliation" },
+};
+
+export function navUrl(key: keyof typeof LOCALIZED_PATHS, locale: Locale = DEFAULT_LOCALE): string {
+  const map = LOCALIZED_PATHS[key];
+  if (!map) return localeUrl("/" + key, locale);
+  return localeUrl(map[locale], locale);
+}
+
 // Utility: detect current locale from Astro URL
 export function getLocale(url: URL | string): Locale {
   const pathname = typeof url === "string" ? url : url.pathname;

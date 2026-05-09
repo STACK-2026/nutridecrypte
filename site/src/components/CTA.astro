@@ -1,6 +1,6 @@
 ---
 import { siteConfig } from "../../site.config";
-import { tr, t, getLocale, localeUrl } from "../i18n/t";
+import { tr, t, getLocale, localeUrl, navUrl } from "../i18n/t";
 
 const locale = getLocale(Astro.url);
 ---
@@ -15,7 +15,7 @@ const locale = getLocale(Astro.url);
       {t(tr.finalCta.body, locale)}
     </p>
     <a
-      href={localeUrl("/rankings", locale)}
+      href={navUrl("rankings", locale)}
       class="inline-flex items-center gap-2 bg-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:scale-105 hover:shadow-lg"
       style={`color: ${siteConfig.colors.primary};`}
     >

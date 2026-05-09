@@ -1,5 +1,5 @@
 ---
-import { tr, t, getLocale, localeUrl } from "../i18n/t";
+import { tr, t, getLocale, localeUrl, navUrl } from "../i18n/t";
 const locale = getLocale(Astro.url);
 ---
 
@@ -31,7 +31,7 @@ const locale = getLocale(Astro.url);
         <button type="button" class="cookie-btn cookie-btn-secondary" data-cookie-essential>
           {t(tr.cookie.essential, locale)}
         </button>
-        <a href={localeUrl("/cookie-policy", locale)} class="cookie-link">
+        <a href={navUrl("cookiePolicy", locale)} class="cookie-link">
           {t(tr.cookie.policy, locale)}
         </a>
       </div>

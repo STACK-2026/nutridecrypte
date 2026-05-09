@@ -1,6 +1,6 @@
 ---
 import { siteConfig } from "../../../site.config";
-import { tr, t, getLocale, localeUrl } from "../../i18n/t";
+import { tr, t, getLocale, localeUrl, navUrl } from "../../i18n/t";
 import { getCollection } from "astro:content";
 import TextMorph from "../TextMorph.astro";
 import BlurText from "../BlurText.astro";
@@ -113,13 +113,13 @@ const stats = locale === "fr" ? [
     </p>
 
     <div class="nd-hero-ctas">
-      <a href={localeUrl("/rankings", locale)} class="btn-primary">
+      <a href={navUrl("rankings", locale)} class="btn-primary">
         {t(tr.hero.ctaPrimary, locale)}
         <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
         </svg>
       </a>
-      <a href={localeUrl("/methodology", locale)} class="btn-secondary">
+      <a href={navUrl("methodology", locale)} class="btn-secondary">
         {locale === "fr" ? "Voir la méthodologie" : "See the methodology"}
       </a>
     </div>
@@ -269,7 +269,7 @@ const stats = locale === "fr" ? [
       </div>
 
       <div class="nd-preview-footer">
-        <a href={localeUrl("/rankings", locale)} class="btn-primary">
+        <a href={navUrl("rankings", locale)} class="btn-primary">
           {locale === "fr" ? "Voir une vraie fiche" : "See a real product page"}
           <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
         </a>
@@ -287,7 +287,7 @@ const stats = locale === "fr" ? [
     </div>
     <div class="nd-features-grid">
       {siteConfig.features.map((feature, idx) => (
-        <a href={localeUrl("/methodology", locale)} class={`nd-feature-card scale-reveal`} style={`transition-delay:${idx * 90}ms`}>
+        <a href={navUrl("methodology", locale)} class={`nd-feature-card scale-reveal`} style={`transition-delay:${idx * 90}ms`}>
           <div class="nd-feature-icon" aria-hidden="true">
             <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
               {feature.icon === "zap" && <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>}
@@ -359,7 +359,7 @@ const stats = locale === "fr" ? [
         <p>{locale === "fr"
           ? "Les premiers articles arrivent très bientôt. L'équipe éditoriale prépare les enquêtes de lancement."
           : "First articles landing very soon. The editorial team is preparing the launch investigations."}</p>
-        <a href={localeUrl("/methodology", locale)} class="btn-secondary">
+        <a href={navUrl("methodology", locale)} class="btn-secondary">
           {locale === "fr" ? "En attendant, lis la méthodologie" : "In the meantime, read the methodology"}
         </a>
       </div>
@@ -379,7 +379,7 @@ const stats = locale === "fr" ? [
       </div>
     )}
     <div class="nd-blog-cta">
-      <a href={localeUrl("/blog", locale)} class="btn-secondary">
+      <a href={navUrl("blog", locale)} class="btn-secondary">
         {locale === "fr" ? "Tous les articles" : "All articles"}
       </a>
     </div>
@@ -416,11 +416,11 @@ const stats = locale === "fr" ? [
       <h2 class="nd-final-title">{t(tr.finalCta.title, locale)}</h2>
       <p class="nd-final-body">{t(tr.finalCta.body, locale)}</p>
       <div class="nd-final-ctas">
-        <a href={localeUrl("/rankings", locale)} class="btn-primary">
+        <a href={navUrl("rankings", locale)} class="btn-primary">
           {t(tr.finalCta.cta, locale)}
           <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 5l7 7-7 7"/></svg>
         </a>
-        <a href={localeUrl("/methodology", locale)} class="btn-secondary">
+        <a href={navUrl("methodology", locale)} class="btn-secondary">
           {locale === "fr" ? "Méthodologie complète" : "Full methodology"}
         </a>
       </div>

@@ -1,5 +1,5 @@
 ---
-import { tr, t, getLocale, localeUrl } from "../../i18n/t";
+import { tr, t, getLocale, localeUrl, navUrl } from "../../i18n/t";
 import BlurText from "../BlurText.astro";
 
 const locale = getLocale(Astro.url);
@@ -49,13 +49,13 @@ const stats = locale === "fr" ? [
       </p>
 
       <div class="nd-cta-actions">
-        <a href={localeUrl("/rankings", locale)} class="nd-cta-btn-primary">
+        <a href={navUrl("rankings", locale)} class="nd-cta-btn-primary">
           <span>{t(tr.finalCta.cta, locale)}</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 5l7 7-7 7" />
           </svg>
         </a>
-        <a href={localeUrl("/methodology", locale)} class="nd-cta-btn-ghost">
+        <a href={navUrl("methodology", locale)} class="nd-cta-btn-ghost">
           {locale === "fr" ? "Voir la méthodologie" : "Read the methodology"}
         </a>
       </div>

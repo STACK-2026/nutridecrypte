@@ -1,6 +1,6 @@
 ---
 import { siteConfig } from "../../site.config";
-import { tr, t, getLocale, localeUrl } from "../i18n/t";
+import { tr, t, getLocale, localeUrl, navUrl } from "../i18n/t";
 
 const locale = getLocale(Astro.url);
 const currentYear = new Date().getFullYear();
@@ -38,18 +38,18 @@ const currentYear = new Date().getFullYear();
       <div>
         <p class="col-title">{t(tr.footer.colProduct, locale)}</p>
         <ul>
-          <li><a href={localeUrl("/rankings", locale)}>{t(tr.footer.rankings, locale)}</a></li>
-          <li><a href={localeUrl("/compare", locale)}>{t(tr.footer.compare, locale)}</a></li>
-          <li><a href={localeUrl("/encyclopedia", locale)}>{t(tr.footer.encyclopedia, locale)}</a></li>
-          <li><a href={localeUrl("/methodology", locale)}>{t(tr.footer.methodology, locale)}</a></li>
+          <li><a href={navUrl("rankings", locale)}>{t(tr.footer.rankings, locale)}</a></li>
+          <li><a href={navUrl("compare", locale)}>{t(tr.footer.compare, locale)}</a></li>
+          <li><a href={navUrl("encyclopedia", locale)}>{t(tr.footer.encyclopedia, locale)}</a></li>
+          <li><a href={navUrl("methodology", locale)}>{t(tr.footer.methodology, locale)}</a></li>
         </ul>
       </div>
 
       <div>
         <p class="col-title">{t(tr.footer.colCompany, locale)}</p>
         <ul>
-          <li><a href={localeUrl("/about", locale)}>{t(tr.footer.about, locale)}</a></li>
-          <li><a href={localeUrl("/blog", locale)}>{t(tr.footer.blog, locale)}</a></li>
+          <li><a href={navUrl("about", locale)}>{t(tr.footer.about, locale)}</a></li>
+          <li><a href={navUrl("blog", locale)}>{t(tr.footer.blog, locale)}</a></li>
           <li><a href={`mailto:${siteConfig.legal.email}`}>{t(tr.footer.contact, locale)}</a></li>
         </ul>
 
@@ -71,11 +71,11 @@ const currentYear = new Date().getFullYear();
 
         <p class="col-title legal-title">{t(tr.footer.colLegal, locale)}</p>
         <ul>
-          <li><a href={localeUrl("/privacy-policy", locale)}>{t(tr.footer.privacy, locale)}</a></li>
-          <li><a href={localeUrl("/terms", locale)}>{t(tr.footer.terms, locale)}</a></li>
-          <li><a href={localeUrl("/cookie-policy", locale)}>{t(tr.footer.cookies, locale)}</a></li>
+          <li><a href={navUrl("privacyPolicy", locale)}>{t(tr.footer.privacy, locale)}</a></li>
+          <li><a href={navUrl("terms", locale)}>{t(tr.footer.terms, locale)}</a></li>
+          <li><a href={navUrl("cookiePolicy", locale)}>{t(tr.footer.cookies, locale)}</a></li>
           <li>
-            <a href={locale === "fr" ? "/fr/divulgation-affiliation/" : "/affiliate-disclosure/"}>
+            <a href={navUrl("affiliateDisclosure", locale)}>
               {locale === "fr" ? "Divulgation d'affiliation" : "Affiliate disclosure"}
             </a>
           </li>
