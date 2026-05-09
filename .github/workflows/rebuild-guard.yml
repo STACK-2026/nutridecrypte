@@ -29,13 +29,14 @@ jobs:
           if [ -n "$(git status --porcelain site/public/.rebuild-marker)" ]; then
             git add site/public/.rebuild-marker
             git commit -m "chore(rebuild-guard): daily marker $(date -u +%F)"
-            # Resist concurrent pushes: rebase on remote, retry up to 3 times.
-            for i in 1 2 3; do
+            # Resist concurrent pushes: rebase on remote, retry up to 5 times with jitter.
+            for i in 1 2 3 4 5; do
+              git fetch origin main || true
               git pull --rebase --autostash origin main || true
               if git push; then exit 0; fi
               echo "push attempt $i failed, retrying..."
-              sleep 3
+              sleep $((2 + RANDOM % 6))
             done
-            echo "push failed after 3 attempts" >&2
+            echo "push failed after 5 attempts" >&2
             exit 1
           fi
