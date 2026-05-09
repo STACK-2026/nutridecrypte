@@ -359,8 +359,26 @@ def main() -> int:
 
     # 3) Parse output
     title, meta, body = extract_frontmatter_fields(generated)
-    if not title or not body:
-        log.error("could not extract TITLE_TAG or body from generated content")
+
+    # Fallback when Mistral fix-issues drops TITLE_TAG/META_DESCRIPTION on long outputs (>40k chars):
+    # use the article plan's working_title and synthesize meta from the first paragraph
+    # rather than failing the whole publication. The body is what we paid for.
+    if not title:
+        fallback_title = article.get("working_title") or article.get("target_keyword") or slug.replace("-", " ").title()
+        log.warning(f"TITLE_TAG missing , falling back to working_title: {fallback_title!r}")
+        title = fallback_title
+    if not meta and body:
+        # Take the first non-empty, non-heading paragraph, clamp to 158 chars
+        for line in body.splitlines():
+            stripped = line.strip()
+            if not stripped or stripped.startswith(("#", "-", "*", "|", "```", "_", ">")):
+                continue
+            meta = stripped[:158].rstrip(".") + "."
+            log.warning(f"META_DESCRIPTION missing , synthesized from first paragraph: {meta[:60]!r}...")
+            break
+
+    if not body:
+        log.error("could not extract body from generated content (empty after parse)")
         (LOG_DIR / f"{slug}.raw.md").write_text(generated, encoding="utf-8")
         return 1
 
