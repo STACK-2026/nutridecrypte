@@ -16,27 +16,25 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Touch rebuild marker
-        run: |
-          mkdir -p site/public
-          date -u +"%Y-%m-%dT%H:%M:%SZ" > site/public/.rebuild-marker
-          echo "rebuild-guard $(date -u +%F)" >> site/public/.rebuild-marker
-
       - name: Commit and push marker
         run: |
           git config user.name "rebuild-guard[bot]"
           git config user.email "rebuild-guard@users.noreply.github.com"
-          if [ -n "$(git status --porcelain site/public/.rebuild-marker)" ]; then
+          # Reset-then-recreate pattern: never conflict on concurrent timestamp writes.
+          # Always re-anchors to origin/main on a real branch so push from detached HEAD impossible.
+          for i in 1 2 3 4 5; do
+            git rebase --abort 2>/dev/null || true
+            git fetch origin
+            git checkout -B main origin/main
+            mkdir -p site/public
+            date -u +"%Y-%m-%dT%H:%M:%SZ" > site/public/.rebuild-marker
+            echo "rebuild-guard $(date -u +%F)" >> site/public/.rebuild-marker
             git add site/public/.rebuild-marker
+            if git diff --cached --quiet; then echo "no changes" && exit 0; fi
             git commit -m "chore(rebuild-guard): daily marker $(date -u +%F)"
-            # Resist concurrent pushes: rebase on remote, retry up to 5 times with jitter.
-            for i in 1 2 3 4 5; do
-              git fetch origin main || true
-              git pull --rebase --autostash origin main || true
-              if git push; then exit 0; fi
-              echo "push attempt $i failed, retrying..."
-              sleep $((2 + RANDOM % 6))
-            done
-            echo "push failed after 5 attempts" >&2
-            exit 1
-          fi
+            if git push origin main; then exit 0; fi
+            echo "push attempt $i failed, retrying..."
+            sleep $((2 + RANDOM % 6))
+          done
+          echo "push failed after 5 attempts" >&2
+          exit 1
