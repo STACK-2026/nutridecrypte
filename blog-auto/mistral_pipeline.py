@@ -254,7 +254,11 @@ def generate_with_mistral_audit(system_prompt, user_prompt,
         return draft
 
     log.info("[2/3] Claude audit...")
-    audit = _audit_draft(draft)
+    try:
+        audit = _audit_draft(draft)
+    except Exception as e:
+        log.warning(f"  Audit step failed ({type(e).__name__}: {e}), keeping unaudited draft")
+        return draft
     verdict = audit.get("verdict", "UNKNOWN")
     issues = audit.get("issues", [])
     halls = audit.get("hallucinations", [])
@@ -263,9 +267,13 @@ def generate_with_mistral_audit(system_prompt, user_prompt,
 
     if verdict == "MAJOR" or (issues and len(issues) >= 2):
         log.info("[3/3] Mistral-large fix issues...")
-        fixed = _fix_issues(draft, audit)
-        fixed = _strip_md_fence(fixed)
-        return fixed
+        try:
+            fixed = _fix_issues(draft, audit)
+            fixed = _strip_md_fence(fixed)
+            return fixed
+        except Exception as e:
+            log.warning(f"  Fix step failed ({type(e).__name__}: {e}), keeping unfixed draft")
+            return draft
     elif verdict == "MINOR":
         log.info(f"  MINOR issues kept (not worth re-running):")
         for i in issues[:3]:

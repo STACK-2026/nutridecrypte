@@ -352,8 +352,8 @@ def main() -> int:
     try:
         generated = generate_with_mistral_audit(system_prompt, user_prompt)
     except Exception as e:
-        log.error(f"generation failed: {e}")
-        return 1
+        log.error(f"generation failed ({type(e).__name__}: {e}), skipping today")
+        return 0
     elapsed = time.time() - t0
     log.info(f"generated in {elapsed:.1f}s , {len(generated)} chars")
 
@@ -378,9 +378,9 @@ def main() -> int:
             break
 
     if not body:
-        log.error("could not extract body from generated content (empty after parse)")
+        log.error("could not extract body from generated content (empty after parse), skipping today")
         (LOG_DIR / f"{slug}.raw.md").write_text(generated, encoding="utf-8")
-        return 1
+        return 0
 
     author = pick_author(slug, article.get("author_pen_name"))
 
