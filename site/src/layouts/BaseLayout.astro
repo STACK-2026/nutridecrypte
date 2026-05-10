@@ -5,6 +5,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import CookieBanner from "../components/CookieBanner.astro";
 import Analytics from "../components/Analytics.astro";
+import GA4Tracker from "../components/GA4Tracker.astro";
 import EasterEggs from "../components/EasterEggs.astro";
 import { getLocale } from "../i18n/t";
 import { organizationSchema, websiteSchema } from "../lib/structured-data";
@@ -102,6 +103,7 @@ const frHref = alternates?.fr
 
     <!-- Analytics tracker (consent gated) -->
     <Analytics />
+    <GA4Tracker />
 
     <!-- Favicon + PWA -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
