@@ -253,27 +253,62 @@ def generate_with_mistral_audit(system_prompt, user_prompt,
         log.info("  Audit skipped (no audit or no ANTHROPIC_API_KEY)")
         return draft
 
-    log.info("[2/3] Claude audit...")
-    try:
-        audit = _audit_draft(draft)
-    except Exception as e:
-        log.warning(f"  Audit step failed ({type(e).__name__}: {e}), keeping unaudited draft")
-        return draft
-    verdict = audit.get("verdict", "UNKNOWN")
-    issues = audit.get("issues", [])
-    halls = audit.get("hallucinations", [])
-    wc = audit.get("word_count_body", 0)
-    log.info(f"  verdict={verdict} mots={wc} issues={len(issues)} hallucinations={len(halls)}")
-
-    if verdict == "MAJOR" or (issues and len(issues) >= 2):
-        log.info("[3/3] Mistral-large fix issues...")
+    # Audit-fix loop: up to MAX_FIX_PASSES iterations until CLEAN or no progress.
+    MAX_FIX_PASSES = 2
+    current = draft
+    for pass_idx in range(MAX_FIX_PASSES + 1):
         try:
-            fixed = _fix_issues(draft, audit)
-            fixed = _strip_md_fence(fixed)
-            return fixed
+            audit = _audit_draft(current)
         except Exception as e:
-            log.warning(f"  Fix step failed ({type(e).__name__}: {e}), keeping unfixed draft")
-            return draft
+            log.warning(f"  Audit step failed pass {pass_idx} ({type(e).__name__}: {e})")
+            break
+        verdict = audit.get("verdict", "UNKNOWN")
+        issues = audit.get("issues", [])
+        halls = audit.get("hallucinations", [])
+        wc = audit.get("word_count_body", 0)
+        log.info(f"  [pass {pass_idx}] verdict={verdict} mots={wc} issues={len(issues)} hallucinations={len(halls)}")
+        if verdict == "CLEAN" or (verdict == "MINOR" and pass_idx >= 1):
+            break
+        if pass_idx >= MAX_FIX_PASSES:
+            log.warning(f"  Hit MAX_FIX_PASSES={MAX_FIX_PASSES}, accepting current draft despite verdict={verdict}")
+            break
+        if not (verdict == "MAJOR" or (issues and len(issues) >= 2)):
+            break
+        log.info(f"  Mistral fix pass {pass_idx + 1}/{MAX_FIX_PASSES}...")
+        fixed = _fix_issues(current, audit)
+        fixed = _strip_md_fence(fixed)
+        # Safety net: fix pass must not strip TITLE_TAG / META_DESCRIPTION
+        if ("TITLE_TAG:" not in fixed or "META_DESCRIPTION:" not in fixed) \
+                and "TITLE_TAG:" in current and "META_DESCRIPTION:" in current:
+            log.warning("  fix pass stripped TITLE_TAG/META_DESCRIPTION, keeping previous draft")
+            break
+        current = fixed
+
+    # Hard pre-publish gate: validate critical SEO/structural requirements.
+    _validate_or_warn(current)
+    return current
+
+
+def _validate_or_warn(text: str):
+    """Log warnings for critical STACK-2026 quality gates after audit-fix loop."""
+    import re as _re
+    body = text.split("META_DESCRIPTION:", 1)[-1] if "META_DESCRIPTION:" in text else text
+    issues = []
+    words = len(_re.findall(r"\b\w+\b", body))
+    if words < 2500:
+        issues.append(f"WORDS_LOW={words}")
+    if not _re.search(r"^##+\s*(FAQ|Questions fr|Frequently asked|F\.A\.Q)", body, _re.IGNORECASE | _re.MULTILINE):
+        issues.append("MISSING_FAQ")
+    ext_links = len(_re.findall(r"\]\(https?://", body))
+    if ext_links < 5:
+        issues.append(f"EXT_LINKS_LOW={ext_links}")
+    if "—" in body or "–" in body:
+        issues.append("EM_DASH_PRESENT")
+    last_chunk = body.rstrip()[-40:]
+    if not _re.search(r"[\.\!\?\*\)\]]\s*$", last_chunk):
+        issues.append("LIKELY_TRUNCATED")
+    if issues:
+        log.warning(f"  POST-AUDIT QUALITY WARNINGS: {', '.join(issues)}")
     elif verdict == "MINOR":
         log.info(f"  MINOR issues kept (not worth re-running):")
         for i in issues[:3]:
