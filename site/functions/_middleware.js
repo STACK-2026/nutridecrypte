@@ -15,6 +15,14 @@ export async function onRequest(context) {
   const { request, next, env, waitUntil } = context;
   const url = new URL(request.url);
 
+  // ---- Canonical host: www → apex 301 ----
+  if (url.hostname === "www.nutridecrypte.com") {
+    return Response.redirect(
+      `https://nutridecrypte.com${url.pathname}${url.search}`,
+      301,
+    );
+  }
+
   // ---- FR auto-redirect on root path "/" ----
   if (url.pathname === "/" || url.pathname === "") {
     const acceptLanguage = request.headers.get("Accept-Language") || "";
