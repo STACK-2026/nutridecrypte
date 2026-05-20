@@ -1,0 +1,103 @@
+name: SEO guardrails
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  guardrails:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Detect site directory
+        id: detect
+        run: |
+          if [ -f "site/package.json" ]; then
+            echo "site_dir=site" >> $GITHUB_OUTPUT
+          elif [ -f "package.json" ]; then
+            echo "site_dir=." >> $GITHUB_OUTPUT
+          else
+            echo "site_dir=." >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install dependencies
+        working-directory: ${{ steps.detect.outputs.site_dir }}
+        run: npm install --include=optional --no-audit --no-fund
+
+      - name: Build site
+        working-directory: ${{ steps.detect.outputs.site_dir }}
+        run: npm run build
+        env:
+          ASTRO_TELEMETRY_DISABLED: "1"
+
+      - name: Guardrail 1 — No external font CDN in built HTML
+        working-directory: ${{ steps.detect.outputs.site_dir }}
+        run: |
+          if grep -rE "fonts\.googleapis\.com|fonts\.gstatic\.com|fonts\.bunny\.net" dist/ --include="*.html" 2>/dev/null; then
+            echo "::error::External font CDN detected in built HTML — must self-host via @fontsource"
+            exit 1
+          fi
+          echo "✅ No external font CDN"
+
+      - name: Guardrail 2 — Em-dash YMYL check (articles only)
+        working-directory: ${{ steps.detect.outputs.site_dir }}
+        run: |
+          # Em-dash unicode U+2014 (—) in article body — banned per YMYL pattern
+          # Only check src/content/articles/ or src/content/blog/ MDX files
+          em_count=0
+          for f in $(find src/content -name "*.mdx" -o -name "*.md" 2>/dev/null); do
+            # Skip if file has only frontmatter or no body
+            body=$(awk '/^---$/{c++; next} c>=2{print}' "$f" 2>/dev/null)
+            if echo "$body" | grep -q "—"; then
+              echo "::warning::Em-dash found in article: $f"
+              em_count=$((em_count + 1))
+            fi
+          done
+          if [ "$em_count" -gt 0 ]; then
+            echo "::error::$em_count article(s) contain em-dash (—) — replace with comma or period for YMYL clarity"
+            exit 1
+          fi
+          echo "✅ No em-dash in articles"
+
+      - name: Guardrail 3 — Homepage has JSON-LD schema
+        working-directory: ${{ steps.detect.outputs.site_dir }}
+        run: |
+          if ! grep -q 'application/ld+json' dist/index.html 2>/dev/null; then
+            echo "::error::Homepage missing JSON-LD schema"
+            exit 1
+          fi
+          # Check at least @type or @graph
+          if ! grep -qE '"@type"|"@graph"' dist/index.html; then
+            echo "::error::Homepage JSON-LD malformed (no @type or @graph)"
+            exit 1
+          fi
+          echo "✅ Homepage has structured data"
+
+      - name: Guardrail 4 — sitemap.xml or sitemap-index.xml exists
+        working-directory: ${{ steps.detect.outputs.site_dir }}
+        run: |
+          if [ ! -f "dist/sitemap.xml" ] && [ ! -f "dist/sitemap-index.xml" ]; then
+            echo "::error::No sitemap.xml or sitemap-index.xml in dist/"
+            exit 1
+          fi
+          echo "✅ Sitemap present"
+
+      - name: Guardrail 5 — robots.txt exists
+        working-directory: ${{ steps.detect.outputs.site_dir }}
+        run: |
+          if [ ! -f "dist/robots.txt" ]; then
+            echo "::error::No robots.txt in dist/"
+            exit 1
+          fi
+          echo "✅ robots.txt present"
