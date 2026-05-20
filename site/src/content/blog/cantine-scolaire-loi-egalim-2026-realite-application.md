@@ -1,6 +1,6 @@
 ---
 title: "Cantine scolaire et loi EGalim en 2026 : ce que la loi impose vraiment (et ce qu'elle ne dit pas)"
-description: "Loi EGalim 2026 en cantine scolaire : objectifs 50% durable 20% bio, menus végétariens, interdiction plastique. Réalité d'application, sanctions, leviers parents."
+description: "Loi EGalim 2026 cantine : 50% durable 20% bio, menus végétariens, interdiction plastique. Application réelle, sanctions, leviers parents."
 date: 2026-05-14T08:00:00+02:00
 lastReviewed: 2026-05-14
 author: "Thomas Moreau"

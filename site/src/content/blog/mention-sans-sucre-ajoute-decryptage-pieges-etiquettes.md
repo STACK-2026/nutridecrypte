@@ -1,6 +1,6 @@
 ---
 title: "Mention 'sans sucre ajouté' : ce qui se cache vraiment derrière l'étiquette en 2026"
-description: "Décryptage de la mention 'sans sucre ajouté' en 2026 : réglementation EU 1924/2006, pièges des jus concentrés, édulcorants en substitut, impact réel sur la glycémie. Avis diététique."
+description: "Mention 'sans sucre ajouté' 2026 : règlement EU 1924/2006, pièges jus concentrés, édulcorants substitut, impact glycémie. Avis diététique."
 date: 2026-05-14T07:30:00+02:00
 lastReviewed: 2026-05-14
 author: "Thomas Moreau"
