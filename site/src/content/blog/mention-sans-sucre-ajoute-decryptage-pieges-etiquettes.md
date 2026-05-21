@@ -1,17 +1,26 @@
 ---
-title: "Mention 'sans sucre ajouté' : ce qui se cache vraiment derrière l'étiquette en 2026"
-description: "Mention 'sans sucre ajouté' 2026 : règlement EU 1924/2006, pièges jus concentrés, édulcorants substitut, impact glycémie. Avis diététique."
-date: 2026-05-14T07:30:00+02:00
-lastReviewed: 2026-05-14
-author: "Thomas Moreau"
-reviewedBy: "Sarah Keller, diététicienne-nutritionniste"
-category: "etiquetage"
-tags: ["sans sucre ajouté", "étiquetage", "édulcorants", "EFSA", "ANSES"]
-image: "https://images.unsplash.com/photo-1610630515824-c0ea0eb13b9d?w=1600&q=80"
-imageAlt: "Étiquette d'un produit avec la mention 'sans sucre ajouté' analysée à la loupe"
-lang: fr
-keywords: "sans sucre ajouté décryptage, mention sans sucre ajouté piège, édulcorants sans sucre"
+author: Thomas Moreau
+category: etiquetage
+date: 2026-05-14 07:30:00+02:00
+description: 'Mention ''sans sucre ajouté'' 2026 : règlement EU 1924/2006, pièges
+  jus concentrés, édulcorants substitut, impact glycémie. Avis diététique.'
 draft: false
+image: https://images.unsplash.com/photo-1610630515824-c0ea0eb13b9d?w=1600&q=80
+imageAlt: Étiquette d'un produit avec la mention 'sans sucre ajouté' analysée à la
+  loupe
+keywords: sans sucre ajouté décryptage, mention sans sucre ajouté piège, édulcorants
+  sans sucre
+lang: fr
+lastReviewed: 2026-05-14
+reviewedBy: Sarah Keller, diététicienne-nutritionniste
+tags:
+- sans sucre ajouté
+- étiquetage
+- édulcorants
+- EFSA
+- ANSES
+title: 'Mention ''sans sucre ajouté'' : ce qui se cache vraiment derrière l''étiquette
+  en 2026'
 ---
 
 La mention « sans sucre ajouté » est devenue l'un des arguments marketing les plus efficaces du rayon. On la trouve sur des compotes, des yaourts, des biscuits pour bébés, des céréales du petit-déjeuner, des barres protéinées, des sodas et même certains alcools. En 2024, plus de 40 % des nouveaux produits lancés en grande distribution en France portaient une allégation liée au sucre, selon les données de l'observatoire Mintel cité par l'ANSES. Le problème : cette mention raconte une moitié de l'histoire seulement. Un jus de fruits « sans sucre ajouté » peut contenir 11 g de sucres naturels par 100 ml, soit autant qu'un cola classique. Une compote « sans sucre ajouté » à base de concentré de pomme peut avoir un index glycémique supérieur à celui d'un yaourt sucré.
@@ -190,3 +199,12 @@ Ceux qui combinent trois caractéristiques : une matrice alimentaire peu transfo
 - [Ultra-transformés : la classification NOVA expliquée](/fr/blog/ultra-transforme-nova-classification/)
 - [Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts des industriels](/fr/blog/nutri-score-limites-critique/)
 - [Méthodologie complète du score NutriDécrypte](/fr/methodology/)
+
+---
+
+## Articles connexes
+
+- [Additifs alimentaires à éviter en 2026 : la liste noire des E-numéros](/additifs-alimentaires-a-eviter-2026/)
+- [Cantine scolaire et loi EGalim en 2026 : ce que la loi impose vraiment (et ce qu'elle ne dit pas)](/cantine-scolaire-loi-egalim-2026-realite-application/)
+- [Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels exploitent](/nutri-score-limites-critique/)
+- [Sucres cachés : les 67 noms différents que l'industrie utilise pour masquer le sucre](/sucres-caches-etiquettes-noms-differents/)

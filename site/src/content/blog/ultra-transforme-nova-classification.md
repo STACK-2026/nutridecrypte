@@ -1,17 +1,25 @@
 ---
-title: "Ultra-transformés : la classification NOVA expliquée (et pourquoi c'est plus important que le Nutri-Score)"
-description: "NOVA classe chaque aliment en 4 groupes selon sa transformation. Les NOVA 4 pèsent 33 % de nos calories et sont liés à 32 maladies chroniques."
-date: 2026-04-22T17:30:00+02:00
-lastReviewed: 2026-04-22
-author: "Sarah Keller"
-reviewedBy: "Lucie Bernard, responsable éditoriale"
-category: "ultra-transforme"
-tags: ["NOVA", "ultra-transformé", "santé", "INSERM", "NutriNet"]
-image: "https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=1600&q=80"
-imageAlt: "Rayons de produits ultra-transformés dans un supermarché"
-lang: fr
-keywords: "ultra transforme, nova classification, nova 4, ultra processed food, aliment ultra transforme sante"
+author: Sarah Keller
+category: ultra-transforme
+date: 2026-04-22 17:30:00+02:00
+description: NOVA classe chaque aliment en 4 groupes selon sa transformation. Les
+  NOVA 4 pèsent 33 % de nos calories et sont liés à 32 maladies chroniques.
 draft: false
+image: https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=1600&q=80
+imageAlt: Rayons de produits ultra-transformés dans un supermarché
+keywords: ultra transforme, nova classification, nova 4, ultra processed food, aliment
+  ultra transforme sante
+lang: fr
+lastReviewed: 2026-04-22
+reviewedBy: Lucie Bernard, responsable éditoriale
+tags:
+- NOVA
+- ultra-transformé
+- santé
+- INSERM
+- NutriNet
+title: 'Ultra-transformés : la classification NOVA expliquée (et pourquoi c''est plus
+  important que le Nutri-Score)'
 ---
 
 En France, 33 % des calories consommées par un adulte proviennent d'aliments ultra-transformés, selon les dernières données de la cohorte NutriNet-Santé. Chez les enfants et les adolescents, ce chiffre monte à 46 %. Ces aliments NOVA 4 se définissent non pas par leurs macronutriments mais par leur mode de production : ingrédients fractionnés, additifs cosmétiques, procédés industriels absents d'une cuisine domestique. Et pour la première fois depuis les travaux fondateurs d'Ancel Keys sur les graisses dans les années 1970, la communauté nutritionnelle internationale est en train de se mettre d'accord sur un point : le degré de transformation d'un aliment compte autant que sa composition en macronutriments.
@@ -175,3 +183,10 @@ Une inquiétude clinique réelle avec la montée des concepts nutritionnels (Nut
 - [Méthodologie complète du score NutriDécrypte](/fr/methodology/)
 - [Base des 400 additifs E décryptés](/fr/encyclopedie/)
 - [Classement complet des produits notés](/fr/classement/)
+
+---
+
+## Articles connexes
+
+- [Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels exploitent](/nutri-score-limites-critique/)
+- [Additifs alimentaires à éviter en 2026 : la liste noire des E-numéros](/additifs-alimentaires-a-eviter-2026/)

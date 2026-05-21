@@ -1,17 +1,26 @@
 ---
-title: "Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels exploitent"
-description: "Le Nutri-Score est un bon outil, mais pas le seul. Les 5 angles morts documentés : ultra-transformation, édulcorants, portion, reformulation, contexte global."
-date: 2026-04-22T13:12:00+02:00
-lastReviewed: 2026-04-22
-author: "Sarah Keller"
-reviewedBy: "Lucie Bernard, responsable éditoriale"
-category: "nutri-score"
-tags: ["Nutri-Score", "critique", "ultra-transformé", "NOVA", "ANSES"]
-image: "https://images.unsplash.com/photo-1604671801908-6f0c6a092c05?w=1600&q=80"
-imageAlt: "Produits de supermarché affichant différents niveaux de Nutri-Score"
-lang: fr
-keywords: "nutri-score critique, nutri-score limites, nutri-score angles morts, ultra-transformé nutri-score"
+author: Sarah Keller
+category: nutri-score
+date: 2026-04-22 13:12:00+02:00
+description: 'Le Nutri-Score est un bon outil, mais pas le seul. Les 5 angles morts
+  documentés : ultra-transformation, édulcorants, portion, reformulation, contexte
+  global.'
 draft: false
+image: https://images.unsplash.com/photo-1604671801908-6f0c6a092c05?w=1600&q=80
+imageAlt: Produits de supermarché affichant différents niveaux de Nutri-Score
+keywords: nutri-score critique, nutri-score limites, nutri-score angles morts, ultra-transformé
+  nutri-score
+lang: fr
+lastReviewed: 2026-04-22
+reviewedBy: Lucie Bernard, responsable éditoriale
+tags:
+- Nutri-Score
+- critique
+- ultra-transformé
+- NOVA
+- ANSES
+title: 'Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels
+  exploitent'
 ---
 
 Depuis sa mise en place officielle en 2017 et sa validation européenne en 2020, le Nutri-Score a changé la donne au supermarché français. Un simple logo, cinq couleurs, une lettre de A à E : l'outil est lisible, comparable, et s'appuie sur une modélisation scientifique solide de Santé publique France. Près de 70 % des industriels français l'affichent volontairement sur leur emballage en 2026, selon les relevés de [Santé publique France](https://www.santepubliquefrance.fr). Les études d'impact, notamment celles publiées dans le [BMJ Open](https://bmjopen.bmj.com/content/12/10/e061979) et dans l'European Journal of Clinical Nutrition, montrent que les choix des consommateurs se sont effectivement orientés vers des produits mieux notés depuis son déploiement.
@@ -152,3 +161,12 @@ En clinique, la méfiance contre le Nutri-Score vient souvent d'une expérience 
 - [Méthodologie complète du score NutriDécrypte](/fr/methodology/)
 - [Base des 400 additifs E décryptés](/fr/encyclopedie/)
 - [Classement complet des produits notés](/fr/classement/)
+
+---
+
+## Articles connexes
+
+- [Ultra-transformés : la classification NOVA expliquée (et pourquoi c'est plus important que le Nutri-Score)](/ultra-transforme-nova-classification/)
+- [Additifs alimentaires à éviter en 2026 : la liste noire des E-numéros](/additifs-alimentaires-a-eviter-2026/)
+- [Cantine scolaire et loi EGalim en 2026 : ce que la loi impose vraiment (et ce qu'elle ne dit pas)](/cantine-scolaire-loi-egalim-2026-realite-application/)
+- [Mention 'sans sucre ajouté' : ce qui se cache vraiment derrière l'étiquette en 2026](/mention-sans-sucre-ajoute-decryptage-pieges-etiquettes/)

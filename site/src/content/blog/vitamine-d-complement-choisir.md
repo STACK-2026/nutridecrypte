@@ -1,17 +1,22 @@
 ---
-title: "Vitamine D : D3 vs D2, IU vs microgrammes, dosage ANSES 2026, les 8 pieges a eviter"
-description: "Tu as acheté un flacon de vitamine D en pharmacie ou en ligne, mais tu hésites : D3 ou D2 ? 10 µg ou 50 µg ? En gouttes ou en gélules ? Avec **77% des Françai."
-date: 2026-05-12T07:27:19+00:00
-lastReviewed: 2026-05-12
-author: "Sarah Keller"
-reviewedBy: "NutriDecrypte Editorial"
-category: "guide"
-tags: ["complement vitamine d choisir"]
-image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80"
-imageAlt: "Illustration Vitamine D : D3 vs D2, IU vs microgrammes, dosage ANSES 2026, les 8 pieges a evi"
-lang: fr
-keywords: "complement vitamine d choisir"
+author: Sarah Keller
+category: guide
+date: 2026-05-12 07:27:19+00:00
+description: 'Tu as acheté un flacon de vitamine D en pharmacie ou en ligne, mais
+  tu hésites : D3 ou D2 ? 10 µg ou 50 µg ? En gouttes ou en gélules ? Avec **77% des
+  Françai.'
 draft: false
+image: https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80
+imageAlt: 'Illustration Vitamine D : D3 vs D2, IU vs microgrammes, dosage ANSES 2026,
+  les 8 pieges a evi'
+keywords: complement vitamine d choisir
+lang: fr
+lastReviewed: 2026-05-12
+reviewedBy: NutriDecrypte Editorial
+tags:
+- complement vitamine d choisir
+title: 'Vitamine D : D3 vs D2, IU vs microgrammes, dosage ANSES 2026, les 8 pieges
+  a eviter'
 ---
 
 **TL;DR**
@@ -562,3 +567,12 @@ NutriDecrypte est là pour t’aider à **reprendre le contrôle de ta santé** 
 12. **European Journal of Clinical Nutrition** - *Vitamin D supplementation guidelines* (2017)
     → [Lien vers les guidelines](https://www.nature.com/articles/ejcn2016260)
     *Ces guidelines européennes fournissent des recommandations pratiques pour la supplémentation en vitamine D, adaptées aux différents groupes de population.*
+
+---
+
+## Articles connexes
+
+- [Meilleur magnésium 2026 : bisglycinate vs citrate vs oxyde (classement honnête)](/magnesium-complement-meilleur-2026/)
+- [Oméga-3 : EPA vs DHA vs ALA, quel complément choisir en 2026 ?](/omega-3-complement-epa-dha-differences/)
+- [Collagène : est-ce que les compléments marchent vraiment ? Ce que dit la science en 2026](/collagene-complement-efficace-science/)
+- [Label AB, Bio européen, Demeter, Nature et Progrès : les 7 labels bio décryptés](/bio-label-ab-europeen-vraiment-different/)

@@ -1,17 +1,25 @@
 ---
-title: "Additifs alimentaires à éviter en 2026 : la liste noire des E-numéros"
-description: "15 additifs à bannir de ton caddie en 2026. Avis ANSES, décisions EFSA, pays qui les ont déjà interdits. Rayon par rayon, le verdict complet."
-date: 2026-04-22T07:48:00+02:00
-lastReviewed: 2026-04-22
-author: "Thomas Moreau"
-reviewedBy: "Sarah Keller, diététicienne-nutritionniste"
-category: "additifs"
-tags: ["additifs alimentaires", "E-numéros", "EFSA", "ANSES", "ultra-transformé"]
-image: "https://images.unsplash.com/photo-1607301405390-d831c242f59b?w=1600&q=80"
-imageAlt: "Étiquette d'un produit ultra-transformé avec une longue liste d'additifs E"
-lang: fr
-keywords: "additifs alimentaires à éviter, E-numéros dangereux, liste noire additifs, additifs cancérigènes"
+author: Thomas Moreau
+category: additifs
+date: 2026-04-22 07:48:00+02:00
+description: 15 additifs à bannir de ton caddie en 2026. Avis ANSES, décisions EFSA,
+  pays qui les ont déjà interdits. Rayon par rayon, le verdict complet.
 draft: false
+image: https://images.unsplash.com/photo-1607301405390-d831c242f59b?w=1600&q=80
+imageAlt: Étiquette d'un produit ultra-transformé avec une longue liste d'additifs
+  E
+keywords: additifs alimentaires à éviter, E-numéros dangereux, liste noire additifs,
+  additifs cancérigènes
+lang: fr
+lastReviewed: 2026-04-22
+reviewedBy: Sarah Keller, diététicienne-nutritionniste
+tags:
+- additifs alimentaires
+- E-numéros
+- EFSA
+- ANSES
+- ultra-transformé
+title: 'Additifs alimentaires à éviter en 2026 : la liste noire des E-numéros'
 ---
 
 Sur les 400 et quelques additifs autorisés dans l'Union européenne, une quinzaine concentrent à eux seuls la majorité des alertes scientifiques récentes. Le dioxyde de titane (E171) a été interdit dans l'alimentaire européen en 2022. L'aspartame (E951) a été classé « possiblement cancérogène pour l'humain » par le CIRC de l'OMS en juillet 2023. Les nitrites (E249, E250) sont dans le viseur de l'ANSES depuis son avis de juillet 2022 et la loi française leur impose une réduction progressive des doses jusqu'en 2027. Les édulcorants intenses, les colorants azoïques, les émulsifiants à large spectre : chaque mois apporte une nouvelle étude qui re-situe un E-numéro dans la zone rouge.
@@ -192,3 +200,12 @@ Les enfants sont plus exposés proportionnellement parce qu'ils pèsent moins (l
 - [Méthodologie complète du score NutriDécrypte](/fr/methodology/)
 - [Base des 400 additifs E décryptés](/fr/encyclopedie/)
 - [Classement complet des produits notés](/fr/classement/)
+
+---
+
+## Articles connexes
+
+- [Mention 'sans sucre ajouté' : ce qui se cache vraiment derrière l'étiquette en 2026](/mention-sans-sucre-ajoute-decryptage-pieges-etiquettes/)
+- [Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels exploitent](/nutri-score-limites-critique/)
+- [Cantine scolaire et loi EGalim en 2026 : ce que la loi impose vraiment (et ce qu'elle ne dit pas)](/cantine-scolaire-loi-egalim-2026-realite-application/)
+- [Ultra-transformés : la classification NOVA expliquée (et pourquoi c'est plus important que le Nutri-Score)](/ultra-transforme-nova-classification/)

@@ -1,17 +1,21 @@
 ---
-title: "Misleading health claims on food: what EU Regulation 1924 actually allows (and what it does not)"
-description: "How 'natural', 'rich in', 'source of' are regulated in the EU. Real product examples (Activia, Cerelac), FDA comparison, and what consumers must verify."
-date: 2026-05-21T11:00:00+02:00
-lastReviewed: 2026-05-21
-author: "Camille Roux"
-reviewedBy: "NutriDecrypte Editorial"
-category: "guide"
-tags: ["misleading health claims food"]
-image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&q=80"
-imageAlt: "Supermarket shelf with packaged food products displaying health and nutrition claims"
-lang: en
-keywords: "misleading health claims food"
+author: Camille Roux
+category: guide
+date: 2026-05-21 11:00:00+02:00
+description: How 'natural', 'rich in', 'source of' are regulated in the EU. Real product
+  examples (Activia, Cerelac), FDA comparison, and what consumers must verify.
 draft: false
+image: https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&q=80
+imageAlt: Supermarket shelf with packaged food products displaying health and nutrition
+  claims
+keywords: misleading health claims food
+lang: en
+lastReviewed: 2026-05-21
+reviewedBy: NutriDecrypte Editorial
+tags:
+- misleading health claims food
+title: 'Misleading health claims on food: what EU Regulation 1924 actually allows
+  (and what it does not)'
 ---
 
 **TL;DR**
@@ -251,3 +255,11 @@ EU Regulation 1924/2006 is **one of the strictest food labelling frameworks in t
 The practical conclusion: **labels are a tool, not the truth**. Read the ingredient list. Check the NOVA classification. Search the EU Register if a claim seems too strong. Be especially sceptical of products targeting children, pregnant women, athletes, and anyone seeking health gains beyond a balanced diet. The strongest health predictor remains a simple one: minimally processed, plant-rich, varied. No regulation needed.
 
 NutriDecrypte cross-references EU authorised claims, NOVA classification, and more than 230 product data points to give an honest, evidence-based score on each food product. Because the front of the pack is only half the story.
+
+---
+
+## Related articles
+
+- [How to read a European food label: the definitive 2026 decoder](/how-to-read-food-label-europe/)
+- [Ultra-Processed Food: NOVA Classification Explained & Why It Matters](/ultra-processed-food-what-you-should-know/)
+- [E-numbers banned in the EU but allowed in the US: the full 2026 list](/e-numbers-banned-eu-safe-us/)

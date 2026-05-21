@@ -1,17 +1,21 @@
 ---
-title: "Sucres cachés : les 67 noms différents que l'industrie utilise pour masquer le sucre"
-description: "Dextrose, maltodextrine, concentré de jus de pomme, sirop d'agave : la liste exhaustive des 67 noms du sucre caché. Données ANSES, OMS, INSERM."
-date: 2026-05-21T08:00:00+02:00
-lastReviewed: 2026-05-21
-author: "Thomas Moreau"
-reviewedBy: "NutriDecrypte Editorial"
-category: "decryptage"
-tags: ["sucres caches etiquette noms"]
-image: "https://images.unsplash.com/photo-1581281863883-2469417a1668?w=1200&q=80"
-imageAlt: "Illustration : décryptage des sucres cachés sur les étiquettes alimentaires industrielles"
-lang: fr
-keywords: "sucres caches etiquette noms"
+author: Thomas Moreau
+category: decryptage
+date: 2026-05-21 08:00:00+02:00
+description: 'Dextrose, maltodextrine, concentré de jus de pomme, sirop d''agave :
+  la liste exhaustive des 67 noms du sucre caché. Données ANSES, OMS, INSERM.'
 draft: false
+image: https://images.unsplash.com/photo-1581281863883-2469417a1668?w=1200&q=80
+imageAlt: 'Illustration : décryptage des sucres cachés sur les étiquettes alimentaires
+  industrielles'
+keywords: sucres caches etiquette noms
+lang: fr
+lastReviewed: 2026-05-21
+reviewedBy: NutriDecrypte Editorial
+tags:
+- sucres caches etiquette noms
+title: 'Sucres cachés : les 67 noms différents que l''industrie utilise pour masquer
+  le sucre'
 ---
 
 **TL;DR**
@@ -285,3 +289,9 @@ Pas de placement de produit, pas de marketing, pas d'algorithme opaque. L'app es
 - [INSERM, Cohorte NutriNet-Santé](https://www.inserm.fr/dossier/nutrition/)
 - [Open Food Facts, base ouverte](https://fr.openfoodfacts.org/)
 - [Règlement (UE) n°1169/2011](https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32011R1169)
+
+---
+
+## Articles connexes
+
+- [Mention 'sans sucre ajouté' : ce qui se cache vraiment derrière l'étiquette en 2026](/mention-sans-sucre-ajoute-decryptage-pieges-etiquettes/)

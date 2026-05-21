@@ -1,17 +1,21 @@
 ---
-title: "Ultra-Processed Food: NOVA Classification Explained & Why It Matters"
-description: "Ultra-processed foods now dominate diets, with 57% of UK calorie intake linked to health risks. Discover the NOVA classification, European regulations, and how "
-date: 2026-04-30T05:42:54+00:00
-lastReviewed: 2026-04-30
-author: "Camille Roux"
-reviewedBy: "NutriDecrypte Editorial"
-category: "guide"
-tags: ["ultra processed food"]
-image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80"
-imageAlt: "Illustration Ultra-Processed Food: NOVA Classification Explained & Why It Matters"
-lang: en
-keywords: "ultra processed food"
+author: Camille Roux
+category: guide
+date: 2026-04-30 05:42:54+00:00
+description: 'Ultra-processed foods now dominate diets, with 57% of UK calorie intake
+  linked to health risks. Discover the NOVA classification, European regulations,
+  and how '
 draft: false
+image: https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80
+imageAlt: 'Illustration Ultra-Processed Food: NOVA Classification Explained & Why
+  It Matters'
+keywords: ultra processed food
+lang: en
+lastReviewed: 2026-04-30
+reviewedBy: NutriDecrypte Editorial
+tags:
+- ultra processed food
+title: 'Ultra-Processed Food: NOVA Classification Explained & Why It Matters'
 ---
 
 ---
@@ -647,3 +651,10 @@ You don't need to be a policymaker to **make a difference**. Here's how you can 
 16. WWF (2023) - "Deforestation and soy production" - [wwf.org](https://www.worldwildlife.org/threats/deforestation-and-forest-degradation)
 17. Journal of Exposure Science & Environmental Epidemiology (2021) - "Phthalates in microwaveable foods" - [DOI: 10.1038/s41370-021-00333-4](https://doi.org/10.1038/s41370-021-00333-4)
 18. Appetite (2023) - "Replacing UPFs with whole foods reduces cravings" - [DOI: 10.1016/j.appet.2
+
+---
+
+## Related articles
+
+- [How to read a European food label: the definitive 2026 decoder](/how-to-read-food-label-europe/)
+- [Misleading health claims on food: what EU Regulation 1924 actually allows (and what it does not)](/misleading-health-claims-eu-rules/)

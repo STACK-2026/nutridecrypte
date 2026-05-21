@@ -1,17 +1,19 @@
 ---
-title: "E-numbers banned in the EU but allowed in the US: the full 2026 list"
-description: "Titanium dioxide (E171), BHA (E320), brominated vegetable oil, Red 3: the complete 2026 list of additives banned in Europe but still legal in US food."
-date: 2026-05-21T08:00:00+02:00
-lastReviewed: 2026-05-21
-author: "Camille Roux"
-reviewedBy: "NutriDecrypte Editorial"
-category: "decryptage"
-tags: ["e numbers banned EU allowed US"]
-image: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=1200&q=80"
-imageAlt: "Illustration: food additives and label decryption between EU and US regulations"
-lang: en
-keywords: "e numbers banned EU allowed US"
+author: Camille Roux
+category: decryptage
+date: 2026-05-21 08:00:00+02:00
+description: 'Titanium dioxide (E171), BHA (E320), brominated vegetable oil, Red 3:
+  the complete 2026 list of additives banned in Europe but still legal in US food.'
 draft: false
+image: https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=1200&q=80
+imageAlt: 'Illustration: food additives and label decryption between EU and US regulations'
+keywords: e numbers banned EU allowed US
+lang: en
+lastReviewed: 2026-05-21
+reviewedBy: NutriDecrypte Editorial
+tags:
+- e numbers banned EU allowed US
+title: 'E-numbers banned in the EU but allowed in the US: the full 2026 list'
 ---
 
 **TL;DR**
@@ -263,3 +265,9 @@ Curious whether your favorite imported snack contains an additive Europe outlawe
 - [FDA Red 3 revocation, January 2025](https://www.fda.gov/food/hfp-constituent-updates/fda-revokes-authorization-use-red-no-3-food-and-ingested-drugs)
 - [IARC Monographs Volume 40 (BHA, BHT)](https://monographs.iarc.who.int/)
 - [California Food Safety Act AB 418, 2023](https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240AB418)
+
+---
+
+## Related articles
+
+- [Misleading health claims on food: what EU Regulation 1924 actually allows (and what it does not)](/misleading-health-claims-eu-rules/)

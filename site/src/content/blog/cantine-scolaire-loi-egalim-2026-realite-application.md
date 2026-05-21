@@ -1,17 +1,25 @@
 ---
-title: "Cantine scolaire et loi EGalim en 2026 : ce que la loi impose vraiment (et ce qu'elle ne dit pas)"
-description: "Loi EGalim 2026 cantine : 50% durable 20% bio, menus végétariens, interdiction plastique. Application réelle, sanctions, leviers parents."
-date: 2026-05-14T08:00:00+02:00
-lastReviewed: 2026-05-14
-author: "Thomas Moreau"
-reviewedBy: "Sarah Keller, diététicienne-nutritionniste"
-category: "restauration-collective"
-tags: ["EGalim", "cantine scolaire", "restauration collective", "bio", "ANSES"]
-image: "https://images.unsplash.com/photo-1577562829275-2bd49b3ddfc6?w=1600&q=80"
-imageAlt: "Plateau repas dans une cantine scolaire française avec menu équilibré"
-lang: fr
-keywords: "cantine scolaire loi EGalim 2026, cantine 50% durable bio, menu cantine enfants"
+author: Thomas Moreau
+category: restauration-collective
+date: 2026-05-14 08:00:00+02:00
+description: 'Loi EGalim 2026 cantine : 50% durable 20% bio, menus végétariens, interdiction
+  plastique. Application réelle, sanctions, leviers parents.'
 draft: false
+image: https://images.unsplash.com/photo-1577562829275-2bd49b3ddfc6?w=1600&q=80
+imageAlt: Plateau repas dans une cantine scolaire française avec menu équilibré
+keywords: cantine scolaire loi EGalim 2026, cantine 50% durable bio, menu cantine
+  enfants
+lang: fr
+lastReviewed: 2026-05-14
+reviewedBy: Sarah Keller, diététicienne-nutritionniste
+tags:
+- EGalim
+- cantine scolaire
+- restauration collective
+- bio
+- ANSES
+title: 'Cantine scolaire et loi EGalim en 2026 : ce que la loi impose vraiment (et
+  ce qu''elle ne dit pas)'
 ---
 
 Sept millions d'enfants déjeunent chaque jour dans une cantine scolaire en France, de la maternelle au lycée. Depuis le 1er janvier 2022, la loi EGalim impose à toutes ces cantines, publiques comme privées, des règles précises sur l'origine et la qualité des produits servis : au moins 50 % de produits durables et de qualité, dont 20 % de bio, deux menus végétariens par semaine, et la fin progressive du plastique. Quatre ans plus tard, en 2026, l'application sur le terrain reste très inégale. Le rapport de la Cour des comptes de janvier 2024 a chiffré : 12 % seulement des cantines auditées atteignaient l'objectif des 50 % durable, 27 % celui des 20 % bio. Pour les parents qui veulent comprendre ce que mange leur enfant à midi, le cadre légal est précis mais la réalité varie d'une commune à l'autre.
@@ -167,3 +175,12 @@ Adressez d'abord une demande écrite au directeur d'école et copie au maire. En
 - [ANSES : avis sur les protéines végétales et la restauration collective](https://www.anses.fr)
 - [Cour des comptes : rapport sur la restauration collective scolaire (janvier 2024)](https://www.ccomptes.fr)
 - [CADA : Commission d'accès aux documents administratifs](https://www.cada.fr)
+
+---
+
+## Articles connexes
+
+- [Additifs alimentaires à éviter en 2026 : la liste noire des E-numéros](/additifs-alimentaires-a-eviter-2026/)
+- [Mention 'sans sucre ajouté' : ce qui se cache vraiment derrière l'étiquette en 2026](/mention-sans-sucre-ajoute-decryptage-pieges-etiquettes/)
+- [Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels exploitent](/nutri-score-limites-critique/)
+- [Label AB, Bio européen, Demeter, Nature et Progrès : les 7 labels bio décryptés](/bio-label-ab-europeen-vraiment-different/)

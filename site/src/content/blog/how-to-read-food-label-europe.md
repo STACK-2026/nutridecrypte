@@ -1,17 +1,19 @@
 ---
-title: "How to read a European food label: the definitive 2026 decoder"
-description: "Decode European food labels in 2026: Regulation 1169/2011 INCO, Nutri-Score, NOVA classification, allergens, QUID rules, and 5 industry traps to spot."
-date: 2026-05-21T09:00:00+02:00
-lastReviewed: 2026-05-21
-author: "Camille Roux"
-reviewedBy: "NutriDecrypte Editorial"
-category: "guide"
-tags: ["how to read a food label"]
-image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&q=80"
-imageAlt: "Illustration how to read a European food label in 2026"
-lang: en
-keywords: "how to read a food label"
+author: Camille Roux
+category: guide
+date: 2026-05-21 09:00:00+02:00
+description: 'Decode European food labels in 2026: Regulation 1169/2011 INCO, Nutri-Score,
+  NOVA classification, allergens, QUID rules, and 5 industry traps to spot.'
 draft: false
+image: https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&q=80
+imageAlt: Illustration how to read a European food label in 2026
+keywords: how to read a food label
+lang: en
+lastReviewed: 2026-05-21
+reviewedBy: NutriDecrypte Editorial
+tags:
+- how to read a food label
+title: 'How to read a European food label: the definitive 2026 decoder'
 ---
 
 **TL;DR**
@@ -385,3 +387,10 @@ The labels tell you what is in the product (ingredient list), how it is balanced
 **NutriDecrypte fills these gaps**. By analyzing **230+ data points per product** across **13 official sources** (EFSA, ANSES, INSERM, ECHA, WHO, INRAE, IARC, Sante Publique France, Food Standards Agency, FDA, JECFA, USDA, EU regulatory database), we give you the complete picture: Nutri-Score, NOVA classification, additive risk profile, allergens, origin transparency, and our independent NutriDecrypte score.
 
 Download **NutriDecrypte** for free on App Store and Google Play, or browse the database at **nutridecrypte.fr**. Become a label-reading expert in one tap.
+
+---
+
+## Related articles
+
+- [Ultra-Processed Food: NOVA Classification Explained & Why It Matters](/ultra-processed-food-what-you-should-know/)
+- [Misleading health claims on food: what EU Regulation 1924 actually allows (and what it does not)](/misleading-health-claims-eu-rules/)

@@ -1,17 +1,19 @@
 ---
-title: "Dioxyde de titane (E171) en 2026 : où en est-on vraiment ?"
-description: "Interdit dans l'alimentaire UE depuis 2022, le E171 reste dans tes médicaments et dentifrices. Etat des lieux 2026, chiffres ANSES, batailles juridiques."
-date: 2026-05-21T09:00:00+02:00
-lastReviewed: 2026-05-21
-author: "Thomas Moreau"
-reviewedBy: "NutriDecrypte Editorial"
-category: "guide"
-tags: ["dioxyde de titane e171 interdit"]
-image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1200&q=80"
-imageAlt: "Illustration dioxyde de titane E171 interdit en 2026"
-lang: fr
-keywords: "dioxyde de titane e171 interdit"
+author: Thomas Moreau
+category: guide
+date: 2026-05-21 09:00:00+02:00
+description: Interdit dans l'alimentaire UE depuis 2022, le E171 reste dans tes médicaments
+  et dentifrices. Etat des lieux 2026, chiffres ANSES, batailles juridiques.
 draft: false
+image: https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1200&q=80
+imageAlt: Illustration dioxyde de titane E171 interdit en 2026
+keywords: dioxyde de titane e171 interdit
+lang: fr
+lastReviewed: 2026-05-21
+reviewedBy: NutriDecrypte Editorial
+tags:
+- dioxyde de titane e171 interdit
+title: 'Dioxyde de titane (E171) en 2026 : où en est-on vraiment ?'
 ---
 
 **TL;DR**
@@ -348,3 +350,12 @@ La bataille reglementaire continue, avec des recours industriels devant les trib
 **NutriDecrypte** te permet de scanner instantanement n'importe quel produit (alimentaire, medicament OTC, complement, dentifrice, cosmetique) et de detecter la presence de E171, avec un score base sur **230+ donnees produit** issues de **13 sources officielles** (ANSES, EFSA, ANSM, INRAE, EFSA, ECHA, OMS, INSERM, Sante Publique France, INCA 4, JECFA, base ANSM, base ECHA REACH). Plus de marketing trompeur, plus d'etiquettes ambigues : juste les faits, base sur la science.
 
 Telecharge gratuitement **NutriDecrypte** sur App Store et Google Play, ou consulte la base en ligne sur **nutridecrypte.fr**.
+
+---
+
+## Articles connexes
+
+- [Meilleur magnésium 2026 : bisglycinate vs citrate vs oxyde (classement honnête)](/magnesium-complement-meilleur-2026/)
+- [Label AB, Bio européen, Demeter, Nature et Progrès : les 7 labels bio décryptés](/bio-label-ab-europeen-vraiment-different/)
+- [Oméga-3 : EPA vs DHA vs ALA, quel complément choisir en 2026 ?](/omega-3-complement-epa-dha-differences/)
+- [Cereales petit-dejeuner : le top 10 du pire, le top 10 du meilleur (notes NutriDecrypte)](/petit-dejeuner-industriel-pire-meilleur/)

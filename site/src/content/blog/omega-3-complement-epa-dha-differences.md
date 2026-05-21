@@ -1,17 +1,20 @@
 ---
-title: "Oméga-3 : EPA vs DHA vs ALA, quel complément choisir en 2026 ?"
-description: "EPA, DHA, ALA : comprendre les oméga-3 et choisir son complément. Triglycérides vs ethyl esters, indice TOTOX, huile de poisson vs algues. Données EFSA."
-date: 2026-05-21T08:00:00+02:00
-lastReviewed: 2026-05-21
-author: "Sarah Keller"
-reviewedBy: "NutriDecrypte Editorial"
-category: "guide"
-tags: ["complement omega 3 EPA DHA"]
-image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1200&q=80"
-imageAlt: "Illustration : capsules d'oméga-3, huile de poisson et algues pour comparer EPA et DHA"
-lang: fr
-keywords: "complement omega 3 EPA DHA"
+author: Sarah Keller
+category: guide
+date: 2026-05-21 08:00:00+02:00
+description: 'EPA, DHA, ALA : comprendre les oméga-3 et choisir son complément. Triglycérides
+  vs ethyl esters, indice TOTOX, huile de poisson vs algues. Données EFSA.'
 draft: false
+image: https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1200&q=80
+imageAlt: 'Illustration : capsules d''oméga-3, huile de poisson et algues pour comparer
+  EPA et DHA'
+keywords: complement omega 3 EPA DHA
+lang: fr
+lastReviewed: 2026-05-21
+reviewedBy: NutriDecrypte Editorial
+tags:
+- complement omega 3 EPA DHA
+title: 'Oméga-3 : EPA vs DHA vs ALA, quel complément choisir en 2026 ?'
 ---
 
 **TL;DR**
@@ -275,3 +278,12 @@ L'oméga-3 reste **l'un des compléments les mieux documentés scientifiquement*
 - [GOED Voluntary Monograph, Global Organization for EPA and DHA Omega-3](https://goedomega3.com/)
 - [IFOS, International Fish Oil Standards](https://certifications.nutrasource.ca/ifos)
 - [American Heart Association, Omega-3 Fatty Acids and Cardiovascular Disease (2019)](https://www.ahajournals.org/doi/10.1161/CIR.0000000000000709)
+
+---
+
+## Articles connexes
+
+- [Meilleur magnésium 2026 : bisglycinate vs citrate vs oxyde (classement honnête)](/magnesium-complement-meilleur-2026/)
+- [Vitamine D : D3 vs D2, IU vs microgrammes, dosage ANSES 2026, les 8 pieges a eviter](/vitamine-d-complement-choisir/)
+- [Collagène : est-ce que les compléments marchent vraiment ? Ce que dit la science en 2026](/collagene-complement-efficace-science/)
+- [Label AB, Bio européen, Demeter, Nature et Progrès : les 7 labels bio décryptés](/bio-label-ab-europeen-vraiment-different/)
