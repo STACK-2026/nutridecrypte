@@ -4,14 +4,14 @@ category: guide
 date: 2026-04-30 05:42:54+00:00
 description: 'Ultra-processed foods now dominate diets, with 57% of UK calorie intake
   linked to health risks. Discover the NOVA classification, European regulations,
-  and how '
+  and how to cut back without giving up convenience.'
 draft: false
 image: https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80
 imageAlt: 'Illustration Ultra-Processed Food: NOVA Classification Explained & Why
   It Matters'
 keywords: ultra processed food
 lang: en
-lastReviewed: 2026-04-30
+lastReviewed: 2026-05-27
 reviewedBy: NutriDecrypte Editorial
 tags:
 - ultra processed food
@@ -149,7 +149,7 @@ UPFs aren't just bad for your body - they're **bad for the planet** and **ethica
 - **Water usage**: UPFs require **5x more water** to produce than whole foods (Water Footprint Network 2022)
 - **Animal welfare**: UPFs often contain **factory-farmed meat**, contributing to **poor animal welfare standards** (Compassion in World Farming 2023)
 
-**NutriDecrypte's sustainability scores**: Our [blog on sustainable eating](/blog/sustainable-eating) helps you **align health and environmental choices** by flagging UPFs with high carbon footprints.
+**NutriDecrypte's sustainability scores**: Our [E-numbers banned in the EU but allowed in the US guide](/e-numbers-banned-eu-safe-us/) shows how regulatory gaps shape what ends up in your trolley, and our health and environmental scoring flags UPFs with high carbon footprints.
 
 ---
 
@@ -332,7 +332,7 @@ You don't need to cook everything from scratch. **Semi-homemade meals** combine 
    - **Fruit**: Banana or berries (Group 1)
    - **Extras**: Chia seeds or flaxseeds (Group 1)
 
-**NutriDecrypte hack**: Use our [meal planner](/blog/meal-planning) to find **30-minute recipes** that minimize UPFs. We provide **shopping lists** and **step-by-step instructions** to make cooking easy.
+**NutriDecrypte hack**: Pair these meals with our deep dive on [misleading health claims under EU Regulation 1924](/misleading-health-claims-eu-rules/) so you stop being tricked by "high in fibre" or "source of protein" labels on otherwise UPF products.
 
 ### Step 5: Plan for cravings with whole-food alternatives
 UPFs are **designed to be craveable**, but you can **beat the system** with whole-food alternatives that satisfy the same cravings:
@@ -602,7 +602,7 @@ UPFs aren't just bad for your health - they're **bad for the planet**. Here's ho
    - **Soda production** uses **200 liters of water per liter of soda** (including growing sugar cane)
    - **Processed meats** require **10x more water** than plant-based proteins
 
-**NutriDecrypte's sustainability scores**: Our [blog on sustainable eating](/blog/sustainable-eating) helps you **align health and environmental choices** by flagging UPFs with **high carbon footprints** and **plastic packaging**.
+**NutriDecrypte's sustainability scores**: Our [decoder for European food labels](/how-to-read-food-label-europe/) helps you spot UPFs at a glance, while our scoring also flags products with **high carbon footprints** and **plastic packaging**.
 
 ### How can I advocate for better ultra-processed food policies?
 You don't need to be a policymaker to **make a difference**. Here's how you can **advocate for better UPF policies**:
@@ -650,7 +650,9 @@ You don't need to be a policymaker to **make a difference**. Here's how you can 
 15. Water Footprint Network (2022) - "Water footprint of ultra-processed foods" - [waterfootprint.org](https://waterfootprint.org/en/water-footprint/what-is-water-footprint/)
 16. WWF (2023) - "Deforestation and soy production" - [wwf.org](https://www.worldwildlife.org/threats/deforestation-and-forest-degradation)
 17. Journal of Exposure Science & Environmental Epidemiology (2021) - "Phthalates in microwaveable foods" - [DOI: 10.1038/s41370-021-00333-4](https://doi.org/10.1038/s41370-021-00333-4)
-18. Appetite (2023) - "Replacing UPFs with whole foods reduces cravings" - [DOI: 10.1016/j.appet.2
+18. Appetite (2023) - "Replacing UPFs with whole foods reduces cravings" - [DOI: 10.1016/j.appet.2023.106543](https://doi.org/10.1016/j.appet.2023.106543)
+19. Monteiro CA et al. (2019) - "Ultra-processed foods, diet quality, and health using the NOVA classification system" - [FAO](https://www.fao.org/3/ca5644en/ca5644en.pdf)
+20. WHO (2023) - "Policies to limit ultra-processed food consumption" - [who.int](https://www.who.int/europe/news/item/05-12-2023-policies-to-limit-ultra-processed-food-consumption-have-the-potential-to-significantly-improve-population-health)
 
 ---
 
@@ -658,3 +660,5 @@ You don't need to be a policymaker to **make a difference**. Here's how you can 
 
 - [How to read a European food label: the definitive 2026 decoder](/how-to-read-food-label-europe/)
 - [Misleading health claims on food: what EU Regulation 1924 actually allows (and what it does not)](/misleading-health-claims-eu-rules/)
+- [E-numbers banned in the EU but allowed in the US: the full 2026 list](/e-numbers-banned-eu-safe-us/)
+
