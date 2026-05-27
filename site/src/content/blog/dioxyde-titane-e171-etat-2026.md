@@ -316,7 +316,7 @@ Trois methodes :
 - **Demander au pharmacien** : il a acces a la base de donnees ANSM et peut te dire instantanement si un generique alternatif sans E171 existe
 - **Utiliser la base ANSM** (base de donnees publique des medicaments, base-donnees-publique.medicaments.gouv.fr) : recherche par nom de specialite, rubrique composition
 
-Pour les generiques courants (paracetamol, ibuprofene), des versions sans E171 existent souvent. N'hesite pas a en faire la demande explicite.
+Pour les generiques courants (paracetamol, ibuprofene), des versions sans E171 existent souvent.  a en faire la demande explicite.
 
 ### 4. Le dentifrice avec E171 est-il dangereux ?
 
