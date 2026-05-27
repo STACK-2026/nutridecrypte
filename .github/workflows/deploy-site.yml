@@ -67,6 +67,7 @@ jobs:
         env:
           PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
           PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
+          PUBLIC_AMAZON_TAG: ${{ secrets.PUBLIC_AMAZON_TAG }}
         run: npm run build
 
       - name: Deploy to Cloudflare Pages
