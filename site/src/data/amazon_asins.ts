@@ -3,4 +3,20 @@
 // Source: nutri_asins.csv (manual SiteStripe curation)
 
 export const AMAZON_ASINS: Record<string, string> = {
+  "collagene-bovin-peptides": "B07J65XBVS",
+  "collagene-marin-hydrolyse": "B0BZJ9W4LW",
+  "complement-bio": "B07ML59GQ4",
+  "guide-etiquettes": "2365491790",
+  "magnesium-bisglycinate": "B07DPLYQWS",
+  "magnesium-citrate": "B08BTXFQ4F",
+  "magnesium-marin": "B010G0FU9Y",
+  "multivitamines-adulte": "B08FMKKMNQ",
+  "omega-3-epax": "B08P23Z9YL",
+  "omega-3-vegan-algue": "B08K99KS8Z",
+  "probiotiques-30-milliards": "B079C2HXVQ",
+  "probiotiques-lactobacillus": "B07JZF6ZRY",
+  "spiruline-bio-france": "B081TBTJRK",
+  "vitamine-d3-1000ui": "B01N24MD0D",
+  "vitamine-d3-k2": "B09QM8ZRGS",
+  "zinc-bisglycinate": "B08GG9T6SW",
 };
