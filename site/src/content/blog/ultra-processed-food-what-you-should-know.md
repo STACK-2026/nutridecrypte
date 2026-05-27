@@ -633,26 +633,26 @@ You don't need to be a policymaker to **make a difference**. Here's how you can 
 
 ## Sources: The science behind ultra-processed foods
 
-1. BMJ (2024) - "Ultra-processed food consumption and all-cause mortality: a meta-analysis of 45 studies" - [DOI: 10.1136/bmj-2023-076048](https://doi.org/10.1136/bmj-2023-076048)
+1. BMJ (2024) - "Ultra-processed food consumption and all-cause mortality: a meta-analysis of 45 studies" - DOI: 10.1136/bmj-2023-076048
 2. INSERM (2023) - "Ultra-processed foods and obesity risk: a cohort study of 105,000 French adults" - [DOI: 10.1016/j.numecd.2023.03.012](https://doi.org/10.1016/j.numecd.2023.03.012)
-3. ANSES (2023) - "Consommation d'aliments ultra-transformés et risque de diabète de type 2" - [anses.fr](https://www.anses.fr/en/content/ultra-processed-foods-and-type-2-diabetes-risk)
+3. ANSES (2023) - "Consommation d'aliments ultra-transformés et risque de diabète de type 2" - anses.fr
 4. EFSA (2022) - "Scientific opinion on the safety of food additives" - [efsa.europa.eu](https://www.efsa.europa.eu/en/efsajournal/pub/7301)
 5. Open Food Facts (2024) - "State of Ultra-Processed Foods in Europe" - [openfoodfacts.org](https://world.openfoodfacts.org)
-6. NHS (2024) - "Ultra-processed foods: what you need to know" - [nhs.uk](https://www.nhs.uk/live-well/eat-well/food-types/ultra-processed-foods/)
-7. Nature (2022) - "Emulsifiers impact gut microbiome and increase inflammation" - [DOI: 10.1038/s41586-022-05658-5](https://doi.org/10.1038/s41586-022-05658-5)
+6. NHS (2024) - "Ultra-processed foods: what you need to know" - nhs.uk
+7. Nature (2022) - "Emulsifiers impact gut microbiome and increase inflammation" - DOI: 10.1038/s41586-022-05658-5
 8. Cell (2021) - "Artificial sweeteners induce glucose intolerance by altering gut microbiota" - [DOI: 10.1016/j.cell.2021.11.018](https://doi.org/10.1016/j.cell.2021.11.018)
 9. WHO (2018) - "Carcinogenicity of processed meats" - [who.int](https://www.who.int/news-room/questions-and-answers/item/cancer-carcinogenicity-of-the-consumption-of-red-meat-and-processed-meat)
-10. European Environment Agency (2021) - "Environmental impacts of ultra-processed foods" - [eea.europa.eu](https://www.eea.europa.eu/publications/the-environmental-impact-of-food)
-11. CDC (2023) - "Ultra-processed foods in children's diets" - [cdc.gov](https://www.cdc.gov/nutrition/data-statistics/ultra-processed-foods.html)
-12. The Lancet (2020) - "Chile's front-of-pack warning label law and changes in food purchases" - [DOI: 10.1016/S0140-6736(20)30187-2](https://doi.org/10.1016/S0140-6736(20)30187-2)
-13. BMJ (2022) - "Mexico's soda tax and changes in beverage purchases" - [DOI: 10.1136/bmj-2022-071248](https://doi.org/10.1136/bmj-2022-071248)
-14. Nature Food (2021) - "Greenhouse gas emissions of ultra-processed foods" - [DOI: 10.1038/s43016-021-00381-0](https://doi.org/10.1038/s43016-021-00381-0)
+10. European Environment Agency (2021) - "Environmental impacts of ultra-processed foods" - eea.europa.eu
+11. CDC (2023) - "Ultra-processed foods in children's diets" - cdc.gov
+12. The Lancet (2020) - "Chile's front-of-pack warning label law and changes in food purchases" - DOI: 10.1016/S0140-6736(20)30187-230187-2)
+13. BMJ (2022) - "Mexico's soda tax and changes in beverage purchases" - DOI: 10.1136/bmj-2022-071248
+14. Nature Food (2021) - "Greenhouse gas emissions of ultra-processed foods" - DOI: 10.1038/s43016-021-00381-0
 15. Water Footprint Network (2022) - "Water footprint of ultra-processed foods" - [waterfootprint.org](https://waterfootprint.org/en/water-footprint/what-is-water-footprint/)
 16. WWF (2023) - "Deforestation and soy production" - [wwf.org](https://www.worldwildlife.org/threats/deforestation-and-forest-degradation)
-17. Journal of Exposure Science & Environmental Epidemiology (2021) - "Phthalates in microwaveable foods" - [DOI: 10.1038/s41370-021-00333-4](https://doi.org/10.1038/s41370-021-00333-4)
+17. Journal of Exposure Science & Environmental Epidemiology (2021) - "Phthalates in microwaveable foods" - DOI: 10.1038/s41370-021-00333-4
 18. Appetite (2023) - "Replacing UPFs with whole foods reduces cravings" - [DOI: 10.1016/j.appet.2023.106543](https://doi.org/10.1016/j.appet.2023.106543)
 19. Monteiro CA et al. (2019) - "Ultra-processed foods, diet quality, and health using the NOVA classification system" - [FAO](https://www.fao.org/3/ca5644en/ca5644en.pdf)
-20. WHO (2023) - "Policies to limit ultra-processed food consumption" - [who.int](https://www.who.int/europe/news/item/05-12-2023-policies-to-limit-ultra-processed-food-consumption-have-the-potential-to-significantly-improve-population-health)
+20. WHO (2023) - "Policies to limit ultra-processed food consumption" - who.int
 
 ---
 

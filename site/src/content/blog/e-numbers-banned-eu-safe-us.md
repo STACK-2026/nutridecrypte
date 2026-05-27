@@ -262,7 +262,7 @@ Curious whether your favorite imported snack contains an additive Europe outlawe
 
 **Official sources cited**:
 - [EFSA opinion on titanium dioxide (E171), 2021](https://www.efsa.europa.eu/en/efsajournal/pub/6585)
-- [FDA Red 3 revocation, January 2025](https://www.fda.gov/food/hfp-constituent-updates/fda-revokes-authorization-use-red-no-3-food-and-ingested-drugs)
+- FDA Red 3 revocation, January 2025
 - [IARC Monographs Volume 40 (BHA, BHT)](https://monographs.iarc.who.int/)
 - [California Food Safety Act AB 418, 2023](https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240AB418)
 

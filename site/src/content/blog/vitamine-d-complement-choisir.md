@@ -521,11 +521,11 @@ NutriDecrypte est là pour t’aider à **reprendre le contrôle de ta santé** 
 ## Sources
 
 1. **ANSES** - *Apports en vitamine D : actualisation des références nutritionnelles* (2023)
-   → [Lien vers le rapport](https://www.anses.fr/fr/content/vitamine-d-actualisation-des-references-nutritionnelles)
+   → Lien vers le rapport
    *Ce rapport présente les nouvelles recommandations de l’ANSES pour les apports en vitamine D, basées sur les dernières données scientifiques.*
 
 2. **INSERM** - *Vitamine D : rôle, carences et supplémentation* (2022)
-   → [Lien vers l’étude](https://www.inserm.fr/dossier/vitamine-d/)
+   → Lien vers l’étude
    *Ce dossier de l’INSERM résume les connaissances actuelles sur la vitamine D, ses fonctions, les risques de carence et les stratégies de supplémentation.*
 
 3. **EFSA** - *Scientific Opinion on the Tolerable Upper Intake Level for vitamin D* (2012, mis à jour 2021)
@@ -533,7 +533,7 @@ NutriDecrypte est là pour t’aider à **reprendre le contrôle de ta santé** 
    *Cet avis scientifique de l’EFSA établit la limite maximale de sécurité pour les apports en vitamine D, afin d’éviter les risques de surdosage.*
 
 4. **Santé Publique France** - *Enquête ESTEBAN : statut en vitamine D de la population française* (2019)
-   → [Lien vers l’enquête](https://www.santepubliquefrance.fr/maladies-et-traumatismes/maladies-liees-au-mode-de-vie/deficience-en-vitamine-d/documents/rapport-synthese/enquete-esteban-2014-2016.-chapitre-deficience-en-vitamine-d)
+   → Lien vers l’enquête
    *Cette enquête nationale révèle que 77% des adultes français ont un taux de vitamine D insuffisant, avec des disparités selon l’âge, le sexe et la région.*
 
 5. **Open Food Facts** - *Base de données des compléments alimentaires*
@@ -549,7 +549,7 @@ NutriDecrypte est là pour t’aider à **reprendre le contrôle de ta santé** 
    *Cette étude explore les facteurs influençant l’absorption des vitamines liposolubles, dont la vitamine D, et souligne l’importance de les prendre avec un repas gras.*
 
 8. **OMS** - *Vitamin D for health: a global perspective* (2013)
-   → [Lien vers le rapport](https://www.who.int/nutrition/publications/micronutrients/guidelines/vit_d/en/)
+   → Lien vers le rapport
    *Ce rapport de l’OMS fait le point sur les recommandations mondiales en matière de vitamine D, ses sources et ses bienfaits pour la santé.*
 
 9. **Nutrients** - *Vitamin D2 vs. D3: A Comparative Analysis of Efficacy and Safety* (2020)

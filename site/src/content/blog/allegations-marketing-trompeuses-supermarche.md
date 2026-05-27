@@ -559,20 +559,20 @@ Les allégations nutritionnelles trompeuses ne sont pas seulement un problème i
 ## Sources
 
 1. **Règlement UE 1924/2006** sur les allégations nutritionnelles et de santé : [eur-lex.europa.eu](https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX%3A32006R1924).
-2. **ANSES** (2023) - Étude sur l'impact des allégations nutritionnelles : [anses.fr](https://www.anses.fr/fr/content/all%C3%A9gations-nutritionnelles-et-de-sant%C3%A9).
-3. **UFC-Que Choisir** (2023) - Enquête sur les allégations trompeuses : [quechoisir.org](https://www.quechoisir.org/enquete-allegations-nutritionnelles-n202305).
+2. **ANSES** (2023) - Étude sur l'impact des allégations nutritionnelles : anses.fr.
+3. **UFC-Que Choisir** (2023) - Enquête sur les allégations trompeuses : quechoisir.org.
 4. **EFSA** (2021) - Avis sur les additifs alimentaires : [efsa.europa.eu](https://www.efsa.europa.eu/fr/topics/topic/food-additives).
-5. **INSERM** (2022) - Impact des édulcorants sur la santé : [inserm.fr](https://www.inserm.fr/dossier/edulcorants/).
+5. **INSERM** (2022) - Impact des édulcorants sur la santé : inserm.fr.
 6. **OMS** (2023) - Recommandations sur la consommation de sel : [who.int](https://www.who.int/fr/news-room/fact-sheets/detail/salt-reduction).
 7. **Open Food Facts** - Base de données des produits alimentaires : [openfoodfacts.org](https://fr.openfoodfacts.org).
 8. **Nielsen** (2024) - Temps moyen passé en supermarché : [nielsen.com](https://www.nielsen.com/fr/fr/insights/2024/le-temps-passe-en-magasin-en-france/).
 9. **DGCCRF** - Guide des allégations nutritionnelles : [economie.gouv.fr](https://www.economie.gouv.fr/dgccrf/Publications/Vie-pratique/Fiches-pratiques/Allegations-nutritionnelles-et-de-sante).
-10. **Santé Publique France** (2023) - Recommandations nutritionnelles : [santepubliquefrance.fr](https://www.santepubliquefrance.fr/maladies-et-traumatismes/maladies-et-infections-respiratoires/coronavirus-covid-19/documents/depliant-affiche/recommandations-relative-a-l-alimentation-et-a-l-activite-physique-pendant-l-epidemie-de-covid-19).
+10. **Santé Publique France** (2023) - Recommandations nutritionnelles : santepubliquefrance.fr.
 11. **60 Millions de Consommateurs** (2021) - Enquête sur les jambons "sans conservateurs" : [60millions-mag.com](https://www.60millions-mag.com/).
 12. **ADEME** (2022) - Rapport sur les emballages plastiques : [ademe.fr](https://www.ademe.fr/expertises/dechets/passer-a-laction/reduire-ses-dechets/reduire-ses-dechets-plastiques).
 13. **AFDIAG** - Guide des produits sans gluten : [afdiag.fr](https://www.afdiag.fr/).
-14. **INSERM** (2020) - Étude sur le glutamate et l'hyperphagie : [inserm.fr](https://www.inserm.fr/actualite/glutamate-et-hyperphagie-nouvelle-etude-revele-mecanisme-cle/).
-15. **ANSES** (2022) - Étude sur les produits bio et le Nutri-Score : [anses.fr](https://www.anses.fr/fr/content/qualit%C3%A9-nutritionnelle-des-produits-bio).
+14. **INSERM** (2020) - Étude sur le glutamate et l'hyperphagie : inserm.fr.
+15. **ANSES** (2022) - Étude sur les produits bio et le Nutri-Score : anses.fr.
 
 ---
 

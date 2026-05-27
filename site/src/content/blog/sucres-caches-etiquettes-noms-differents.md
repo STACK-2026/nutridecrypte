@@ -285,7 +285,7 @@ Pas de placement de produit, pas de marketing, pas d'algorithme opaque. L'app es
 
 **Sources officielles citées** :
 - [ANSES, rapport INCA 3 (2017)](https://www.anses.fr/fr/system/files/NUT2014SA0234Ra.pdf)
-- [OMS, Lignes directrices sur la consommation de sucres (2015)](https://www.who.int/fr/publications/i/item/9789241549028)
+- OMS, Lignes directrices sur la consommation de sucres (2015)
 - [INSERM, Cohorte NutriNet-Santé](https://www.inserm.fr/dossier/nutrition/)
 - [Open Food Facts, base ouverte](https://fr.openfoodfacts.org/)
 - [Règlement (UE) n°1169/2011](https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32011R1169)

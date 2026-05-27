@@ -170,7 +170,7 @@ Adressez d'abord une demande écrite au directeur d'école et copie au maire. En
 - [Légifrance : Loi EGalim 1 du 30 octobre 2018 (n° 2018-938)](https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000037547946)
 - [Légifrance : Loi EGalim 2 du 18 octobre 2021 (n° 2021-1357)](https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000044220645)
 - [Ministère de l'Agriculture : plateforme officielle ma-cantine](https://ma-cantine.agriculture.gouv.fr)
-- [Ministère de l'Agriculture : bilan EGalim restauration collective](https://agriculture.gouv.fr/egalim-restauration-collective-50-de-produits-durables-et-de-qualite-dont-20-de-bio)
+- Ministère de l'Agriculture : bilan EGalim restauration collective
 - [Ministère de l'Éducation nationale : restauration scolaire](https://www.education.gouv.fr/la-restauration-scolaire-7449)
 - [ANSES : avis sur les protéines végétales et la restauration collective](https://www.anses.fr)
 - [Cour des comptes : rapport sur la restauration collective scolaire (janvier 2024)](https://www.ccomptes.fr)

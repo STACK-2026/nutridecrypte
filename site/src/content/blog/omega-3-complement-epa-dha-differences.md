@@ -276,7 +276,7 @@ L'oméga-3 reste **l'un des compléments les mieux documentés scientifiquement*
 - [EFSA, Scientific Opinion on the Tolerable Upper Intake Level of EPA, DHA and DPA (2012)](https://www.efsa.europa.eu/en/efsajournal/pub/2815)
 - [ANSES, Apports nutritionnels conseillés en acides gras (2011)](https://www.anses.fr/fr/system/files/NUT2006sa0359Ra.pdf)
 - [GOED Voluntary Monograph, Global Organization for EPA and DHA Omega-3](https://goedomega3.com/)
-- [IFOS, International Fish Oil Standards](https://certifications.nutrasource.ca/ifos)
+- IFOS, International Fish Oil Standards
 - [American Heart Association, Omega-3 Fatty Acids and Cardiovascular Disease (2019)](https://www.ahajournals.org/doi/10.1161/CIR.0000000000000709)
 
 ---

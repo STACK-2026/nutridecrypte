@@ -65,7 +65,7 @@ Sur le plan nutritionnel, la réalité est très différente. Un concentré de j
 - aucune fibre car la matrice cellulosique du fruit a été détruite lors du pressage et de la concentration ;
 - une fraction négligeable de vitamines, qui sont dégradées par la chaleur de concentration.
 
-D'un point de vue métabolique, du jus concentré de pomme se comporte dans l'organisme exactement comme du sucre ajouté. Le pic glycémique est comparable, la charge en fructose hépatique est identique. Le pédiatre Robert Lustig (UCSF) a popularisé cette équivalence depuis 2013, et l'[OMS, dans sa ligne directrice sur les sucres libres de 2015](https://www.who.int/fr/publications/i/item/9789241549028) (mise à jour partielle 2022), classe explicitement les sucres présents dans les jus concentrés et les sirops de fruits dans la catégorie « sucres libres », c'est-à-dire ceux dont elle recommande de limiter l'apport à moins de 10 % de l'apport énergétique total (idéalement moins de 5 %).
+D'un point de vue métabolique, du jus concentré de pomme se comporte dans l'organisme exactement comme du sucre ajouté. Le pic glycémique est comparable, la charge en fructose hépatique est identique. Le pédiatre Robert Lustig (UCSF) a popularisé cette équivalence depuis 2013, et l'OMS, dans sa ligne directrice sur les sucres libres de 2015 (mise à jour partielle 2022), classe explicitement les sucres présents dans les jus concentrés et les sirops de fruits dans la catégorie « sucres libres », c'est-à-dire ceux dont elle recommande de limiter l'apport à moins de 10 % de l'apport énergétique total (idéalement moins de 5 %).
 
 Concrètement, où traque-t-on ce piège ? Dans les compotes pour enfants « sans sucre ajouté » dont la liste d'ingrédients commence par « pomme, jus de pomme concentré ». Dans les barres céréalières « source de fibres » qui contiennent du sirop de datte. Dans les yaourts aux fruits « 0 % sucres ajoutés » dont l'arôme provient d'un mélange concentré pomme-passion. Dans les jus de fruits multivitaminés vendus en bouteilles d'un litre.
 
@@ -182,7 +182,7 @@ Ceux qui combinent trois caractéristiques : une matrice alimentaire peu transfo
 ## Sources
 
 1. [Règlement CE n°1924/2006 sur les allégations nutritionnelles et de santé](https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX%3A32006R1924) , annexe sur les conditions d'emploi des allégations « sans sucre » et « sans sucre ajouté ».
-2. [OMS, ligne directrice sur les sucres libres pour adultes et enfants](https://www.who.int/fr/publications/i/item/9789241549028) , recommandation de limiter les sucres libres à 10 % de l'apport énergétique total, idéalement à 5 %.
+2. OMS, ligne directrice sur les sucres libres pour adultes et enfants , recommandation de limiter les sucres libres à 10 % de l'apport énergétique total, idéalement à 5 %.
 3. [ANSES, avis sur l'alimentation des nourrissons et jeunes enfants](https://www.anses.fr) , recommandations 2024 sur la consommation de jus et purées de fruits chez les moins de 3 ans.
 4. [Table Ciqual de composition nutritionnelle ANSES](https://ciqual.anses.fr) , données officielles sur les teneurs en sucres des concentrés et purées de fruits.
 5. [Centre international de recherche sur le cancer (CIRC), classification de l'aspartame](https://www.iarc.who.int/fr/) , communiqué juillet 2023 classant l'aspartame en groupe 2B.
