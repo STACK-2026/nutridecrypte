@@ -60,7 +60,7 @@ const currentYear = new Date().getFullYear();
               : "Get the verdicts that matter, weekly"}
           </p>
           <form class="nl-form" data-newsletter-form>
-            <input type="email" name="email" required placeholder={locale === "fr" ? "ton@email.com" : "your@email.com"} class="nl-input" />
+            <input type="email" aria-label="Email" name="email" required placeholder={locale === "fr" ? "ton@email.com" : "your@email.com"} class="nl-input" />
             <button type="submit" class="nl-btn">
               {locale === "fr" ? "S'abonner" : "Subscribe"}
             </button>
