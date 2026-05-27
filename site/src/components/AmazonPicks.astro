@@ -1,6 +1,15 @@
 ---
-import { buildAmazonSearchUrl, AMAZON_TAG } from "../lib/affiliate";
+import { buildAmazonSearchUrl, buildAmazonAsinUrl, AMAZON_TAG } from "../lib/affiliate";
 import { AMAZON_PICKS, getPicksByTopic, inferTopicFromSlug, type AmazonPick } from "../data/amazon_picks";
+import { AMAZON_ASINS } from "../data/amazon_asins";
+
+function resolveUrl(key: string | undefined, query: string): string | null {
+  if (key && AMAZON_ASINS[key]) {
+    const asinUrl = buildAmazonAsinUrl(AMAZON_ASINS[key]);
+    if (asinUrl) return asinUrl;
+  }
+  return buildAmazonSearchUrl({ query });
+}
 
 interface Props {
   topic?: AmazonPick["topic"];
@@ -22,7 +31,7 @@ if (items.length === 0) {
 
 type Item = { label: string; href: string; highlight?: string };
 const rendered: Item[] = items.flatMap((p) => {
-  const url = buildAmazonSearchUrl({ query: p.query });
+  const url = resolveUrl(p.key, p.query);
   if (!url) return [];
   return [{ label: p.label, href: url, highlight: p.highlight }];
 });

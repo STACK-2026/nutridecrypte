@@ -9,33 +9,36 @@ export interface AmazonPick {
   label: string;
   topic: "magnesium" | "collagene" | "vitamine-d" | "omega-3" | "probiotiques" | "additifs" | "general" | "bio";
   highlight?: string;
+  /** Optional curation key matching `nutri_asins.csv`. When the ASIN map has
+   *  a value for this key, link points to /dp/<ASIN>; search URL otherwise. */
+  key?: string;
 }
 
 export const AMAZON_PICKS: AmazonPick[] = [
   // Magnesium
-  { query: "magnesium bisglycinate", label: "Magnésium bisglycinate", topic: "magnesium", highlight: "Forme premium" },
-  { query: "magnesium citrate", label: "Magnésium citrate", topic: "magnesium" },
-  { query: "magnesium marin", label: "Magnésium marin", topic: "magnesium", highlight: "Multi-formes" },
+  { key: "magnesium-bisglycinate", query: "magnesium bisglycinate", label: "Magnésium bisglycinate", topic: "magnesium", highlight: "Forme premium" },
+  { key: "magnesium-citrate", query: "magnesium citrate", label: "Magnésium citrate", topic: "magnesium" },
+  { key: "magnesium-marin", query: "magnesium marin", label: "Magnésium marin", topic: "magnesium", highlight: "Multi-formes" },
   // Collagène
-  { query: "collagene marin hydrolysé", label: "Collagène marin hydrolysé", topic: "collagene", highlight: "Type I+III" },
-  { query: "collagene bovin peptides", label: "Collagène bovin peptides", topic: "collagene" },
+  { key: "collagene-marin-hydrolyse", query: "collagene marin hydrolysé", label: "Collagène marin hydrolysé", topic: "collagene", highlight: "Type I+III" },
+  { key: "collagene-bovin-peptides", query: "collagene bovin peptides", label: "Collagène bovin peptides", topic: "collagene" },
   // Vitamine D
-  { query: "vitamine d3 k2", label: "Vitamine D3 + K2", topic: "vitamine-d", highlight: "Synergie" },
-  { query: "vitamine d3 1000 ui", label: "Vitamine D3 1000 UI", topic: "vitamine-d" },
+  { key: "vitamine-d3-k2", query: "vitamine d3 k2", label: "Vitamine D3 + K2", topic: "vitamine-d", highlight: "Synergie" },
+  { key: "vitamine-d3-1000ui", query: "vitamine d3 1000 ui", label: "Vitamine D3 1000 UI", topic: "vitamine-d" },
   // Omega 3
-  { query: "omega 3 epax certifie", label: "Oméga-3 EPAX", topic: "omega-3", highlight: "Norvégien certifié" },
-  { query: "omega 3 vegan algue", label: "Oméga-3 vegan (algues)", topic: "omega-3" },
+  { key: "omega-3-epax", query: "omega 3 epax certifie", label: "Oméga-3 EPAX", topic: "omega-3", highlight: "Norvégien certifié" },
+  { key: "omega-3-vegan-algue", query: "omega 3 vegan algue", label: "Oméga-3 vegan (algues)", topic: "omega-3" },
   // Probiotiques
-  { query: "probiotiques 30 milliards souches", label: "Probiotiques multi-souches", topic: "probiotiques", highlight: "30+ milliards UFC" },
-  { query: "probiotiques lactobacillus rhamnosus", label: "Probiotiques Lactobacillus", topic: "probiotiques" },
+  { key: "probiotiques-30-milliards", query: "probiotiques 30 milliards souches", label: "Probiotiques multi-souches", topic: "probiotiques", highlight: "30+ milliards UFC" },
+  { key: "probiotiques-lactobacillus", query: "probiotiques lactobacillus rhamnosus", label: "Probiotiques Lactobacillus", topic: "probiotiques" },
   // Bio / label AB
-  { query: "complement alimentaire bio", label: "Compléments bio (label AB)", topic: "bio", highlight: "Certifiés AB" },
-  { query: "spiruline bio france", label: "Spiruline bio française", topic: "bio" },
+  { key: "complement-bio", query: "complement alimentaire bio", label: "Compléments bio (label AB)", topic: "bio", highlight: "Certifiés AB" },
+  { key: "spiruline-bio-france", query: "spiruline bio france", label: "Spiruline bio française", topic: "bio" },
   // Additifs / décryptage
-  { query: "guide decryptage etiquettes alimentaires", label: "Lire les étiquettes alimentaires", topic: "additifs" },
+  { key: "guide-etiquettes", query: "guide decryptage etiquettes alimentaires", label: "Lire les étiquettes alimentaires", topic: "additifs" },
   // General
-  { query: "multivitamines adulte", label: "Multivitamines adulte", topic: "general" },
-  { query: "zinc bisglycinate", label: "Zinc bisglycinate", topic: "general", highlight: "Bonne biodispo" },
+  { key: "multivitamines-adulte", query: "multivitamines adulte", label: "Multivitamines adulte", topic: "general" },
+  { key: "zinc-bisglycinate", query: "zinc bisglycinate", label: "Zinc bisglycinate", topic: "general", highlight: "Bonne biodispo" },
 ];
 
 export function getPicksByTopic(
