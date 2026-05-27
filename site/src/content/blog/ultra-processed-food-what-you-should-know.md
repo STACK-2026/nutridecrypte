@@ -2,9 +2,9 @@
 author: Camille Roux
 category: guide
 date: 2026-04-30 05:42:54+00:00
-description: 'Ultra-processed foods now dominate diets, with 57% of UK calorie intake
+description: "Ultra-processed foods now dominate diets, with 57% of UK calorie intake
   linked to health risks. Discover the NOVA classification, European regulations,
-  and how to cut back without giving up convenience.'
+…"
 draft: false
 image: https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80
 imageAlt: 'Illustration Ultra-Processed Food: NOVA Classification Explained & Why

@@ -2,9 +2,9 @@
 author: Sarah Keller
 category: nutri-score
 date: 2026-04-22 13:12:00+02:00
-description: 'Le Nutri-Score est un bon outil, mais pas le seul. Les 5 angles morts
+description: "Le Nutri-Score est un bon outil, mais pas le seul. Les 5 angles morts
   documentés : ultra-transformation, édulcorants, portion, reformulation, contexte
-  global.'
+…"
 draft: false
 image: https://images.unsplash.com/photo-1604671801908-6f0c6a092c05?w=1600&q=80
 imageAlt: Produits de supermarché affichant différents niveaux de Nutri-Score

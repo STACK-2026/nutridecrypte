@@ -3,6 +3,7 @@
 
 User-agent: *
 Allow: /
+Disallow: /go/
 
 # AI crawlers , whitelist explicite
 User-agent: GPTBot

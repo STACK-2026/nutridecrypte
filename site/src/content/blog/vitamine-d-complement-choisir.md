@@ -2,9 +2,9 @@
 author: Sarah Keller
 category: guide
 date: 2026-05-12 07:27:19+00:00
-description: 'Tu as acheté un flacon de vitamine D en pharmacie ou en ligne, mais
+description: "Tu as acheté un flacon de vitamine D en pharmacie ou en ligne, mais
   tu hésites : D3 ou D2 ? 10 µg ou 50 µg ? En gouttes ou en gélules ? Avec **77% des
-  Françai.'
+…"
 draft: false
 image: https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80
 imageAlt: 'Illustration Vitamine D : D3 vs D2, IU vs microgrammes, dosage ANSES 2026,

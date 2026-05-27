@@ -1,17 +1,10 @@
-// Awin affiliate configuration for NutriDécrypte.
-// Monetization: food, supplements, and organic brands. No partner validated yet (Phase 0).
-// When a merchant is approved, add its config to MERCHANTS and extend routeMerchant().
+// Amazon Partenaires France configuration for NutriDecrypte.
+// Single-merchant launch (2026-05-27). Tag nutridecrypte-21, amazon.fr only.
 
-export const AWIN_PUBLISHER_ID = "";
+export const AMAZON_TAG = import.meta.env.PUBLIC_AMAZON_TAG ?? "";
+export const AMAZON_DOMAIN = "https://www.amazon.fr";
 
-export const MERCHANTS = {
-  // placeholder, awaiting validation
-} as const;
-
-export type MerchantKey = keyof typeof MERCHANTS;
-
-// Supermarket distributor brands (own-label lines not sold by affiliate partners).
-// Kept lowercase. Match is case-insensitive, exact trim.
+// French supermarket distributor brands (own-label not sold on Amazon).
 const FR_DISTRIBUTOR_BRANDS = new Set<string>([
   "auchan",
   "carrefour",
@@ -31,16 +24,34 @@ const FR_DISTRIBUTOR_BRANDS = new Set<string>([
   "franprix",
 ]);
 
-export function isDistributorBrand(brand: string): boolean {
+export function isDistributorBrand(brand: string | null | undefined): boolean {
   if (!brand) return false;
   return FR_DISTRIBUTOR_BRANDS.has(brand.trim().toLowerCase());
 }
 
-export function isMonetizableCountry(country: string | undefined): boolean {
-  if (!country) return true;
-  return ["FR", "BE", "CH", "EU", "INTL"].includes(country.toUpperCase());
+export function buildGoPath(slug: string): string {
+  return `/go/${encodeURIComponent(slug)}`;
 }
 
-export function buildGoPath(productId: string): string {
-  return `/go/${productId}`;
+// amazon.fr search URL with our affiliate tag.
+export function buildAmazonSearchUrl(opts: { query: string; tag?: string }): string | null {
+  const tag = opts.tag ?? AMAZON_TAG;
+  if (!tag) return null;
+  const q = (opts.query ?? "").trim();
+  if (!q) return null;
+  const params = new URLSearchParams({
+    k: q,
+    tag,
+    linkCode: "osi",
+    ref: "as_li_ss_tl",
+  });
+  return `${AMAZON_DOMAIN}/s?${params.toString()}`;
+}
+
+// amazon.fr direct ASIN URL with tag.
+export function buildAmazonAsinUrl(asin: string, tag?: string): string | null {
+  const t = tag ?? AMAZON_TAG;
+  if (!t || !asin) return null;
+  if (!/^[A-Z0-9]{10}$/.test(asin)) return null;
+  return `${AMAZON_DOMAIN}/dp/${asin}?tag=${encodeURIComponent(t)}&linkCode=osi&ref=as_li_ss_tl`;
 }

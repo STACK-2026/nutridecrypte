@@ -238,6 +238,10 @@ export const tr = {
       en: "NutriDécrypte is an independent editorial rating service, not a medical practice. Grades are informational only. For any nutritional condition, always consult a registered dietitian or physician.",
       fr: "NutriDécrypte est un service éditorial de notation indépendant, pas un cabinet médical. Les notes sont informatives. Pour toute condition nutritionnelle, consulte un diététicien diplômé ou ton médecin.",
     },
+    amazonNotice: {
+      en: "NutriDécrypte participates in the Amazon EU Associates Programme, an affiliate advertising programme designed to provide a means for sites to earn fees by linking to Amazon.fr.",
+      fr: "NutriDécrypte participe au Programme Partenaires d'Amazon EU, un programme d'affiliation conçu pour permettre à des sites de percevoir une rémunération grâce à la création de liens vers Amazon.fr.",
+    },
   },
 
   // Cookie banner

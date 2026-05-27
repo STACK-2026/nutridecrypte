@@ -2,8 +2,8 @@
 author: Thomas Moreau
 category: guide
 date: 2026-05-21 10:30:00+02:00
-description: 'Cahier des charges comparé, pesticides autorisés (cuivre, soufre), limites
-  du bio, verdict pour le consommateur. Sources : règlement UE 2018/848, ANSES, INRAE.'
+description: "Cahier des charges comparé, pesticides autorisés (cuivre, soufre), limites
+  du bio, verdict pour le consommateur. Sources : règlement UE 2018/848, ANSES…"
 draft: false
 image: https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&q=80
 imageAlt: Étal de fruits et légumes bio en supermarché avec étiquettes labels

@@ -1,6 +1,7 @@
 ---
 import BlogLayout from "../../../layouts/BlogLayout.astro";
 import { getCollection, render } from "astro:content";
+import AmazonPicks from "../../../components/AmazonPicks.astro";
 
 export async function getStaticPaths() {
   const now = new Date();
@@ -30,4 +31,5 @@ const { Content } = await render(post);
   reviewedBy={post.data.reviewedBy}
 >
   <Content />
+  <AmazonPicks slug={`fr-blog-${post.id}`} count={4} />
 </BlogLayout>
