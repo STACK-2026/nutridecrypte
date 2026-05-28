@@ -28,6 +28,16 @@
       "published_at": "2026-04-22T17:30:00+02:00",
       "author": "Sarah Keller",
       "words": 3227
+    },
+    {
+      "slug": "edulcorants-artificiels-aspartame-sucralose-decryptage-2026",
+      "lang": "fr",
+      "published_at": "2026-05-28",
+      "author": "Thomas Moreau",
+      "words": 4476,
+      "done": true,
+      "cluster": "additifs",
+      "angle": "OMS 2023 aspartame Groupe 2B, recommandation OMS contre edulcorants (mai 2023), sucralose chlores a la cuisson (Nature 2023), erythritol thrombose (Nature Medicine 2023), exposition reelle Francais (INCA 4)."
     }
   ],
   "articles": [
