@@ -173,6 +173,18 @@
       "intent": "informational",
       "author_pen_name": "Camille Roux",
       "angle": "How 'natural', 'rich in', 'source of' are regulated. Cross with FDA US for context."
+    },
+    {
+      "slug": "nitrites-nitrates-charcuterie-jambon-e250-decryptage-2026",
+      "lang": "fr",
+      "scheduled_date": "2026-05-29",
+      "target_keyword": "nitrites nitrates charcuterie jambon danger",
+      "working_title": "Nitrites et nitrates dans la charcuterie (E249-E252) : ce que dit vraiment la science en 2026",
+      "intent": "informational",
+      "author_pen_name": "Thomas Moreau",
+      "angle": "Rapport ANSES 2022 confirmant le lien dose-effet nitrites/cancer colorectal, classification CIRC 2015 viandes transformees Groupe 1, loi du 26 mars 2024 sur la trajectoire de reduction, plan d'action sante.gouv.fr, jambons sans nitrites = nitrates de legumes meme effet. Verdict NutriDecrypte sans complaisance.",
+      "done": true,
+      "published_at": "2026-05-29"
     }
   ]
 }
