@@ -8,7 +8,7 @@ export const siteConfig = {
   name: "NutriDécrypte",
   tagline: "On décrypte ce que les étiquettes cachent",
   description:
-    "NutriDécrypte note chaque complément et aliment de A à E. Additifs, ultra-transformation, allégations trompeuses, Nutri-Score, NOVA. Indépendant, gratuit, sources officielles (ANSES, EFSA, Open Food Facts).",
+    "NutriDécrypte note chaque complément et aliment de A à E. Additifs, ultra-transformation, allégations trompeuses, Nutri-Score, NOVA.",
   url: "https://nutridecrypte.com",
   appUrl: "https://nutridecrypte.com",
   locale: "en-US",
