@@ -11,6 +11,8 @@ import {
   type Product,
 } from "../../../lib/data";
 import { siteConfig } from "../../../../site.config";
+import FaqSection from "../../../components/FaqSection.astro";
+import { buildCategoryFaq, jsonLdFaq } from "../../../utils/seo";
 
 export async function getStaticPaths() {
   const all = await getAllProducts(1000);
@@ -67,6 +69,14 @@ const pct = (g: string) => Math.round(((dist[g] || 0) / totalDist) * 100);
 const title = `${categoryPretty} , ${products.length} produits notés A à E | NutriDécrypte`;
 const description = `Classement indépendant A à E de ${products.length} produits ${categoryPretty.toLowerCase()}. Top 10 meilleurs et pires, basé sur Nutri-Score, NOVA, additifs EFSA et allégations.`;
 const canonicalUrl = siteConfig.url + `/fr/categorie/${slugCat}/`;
+
+const faq = buildCategoryFaq(
+  categoryPretty,
+  products.length,
+  hub?.avg_score ?? null,
+  sorted[0] ? { name: sorted[0].name, grade: sorted[0].grade } : null,
+  "fr"
+);
 ---
 
 <BaseLayout
@@ -74,7 +84,7 @@ const canonicalUrl = siteConfig.url + `/fr/categorie/${slugCat}/`;
   description={description}
   canonicalUrl={canonicalUrl}
   alternates={{ en: `/category/${slugCat}/`, fr: `/fr/categorie/${slugCat}/` }}
-  jsonLd={[collectionJsonLd, breadcrumbJsonLd]}
+  jsonLd={[collectionJsonLd, breadcrumbJsonLd, jsonLdFaq(faq)]}
 >
   <section class="max-w-6xl mx-auto px-4 py-12">
     <Breadcrumbs items={breadcrumbs} />
@@ -187,5 +197,7 @@ const canonicalUrl = siteConfig.url + `/fr/categorie/${slugCat}/`;
     <footer class="mt-12 text-sm text-stone-600 text-center">
       <a href={`/category/${slugCat}/`} class="text-teal-700 underline">English version</a>
     </footer>
+
+    <FaqSection faq={faq} locale="fr" />
   </section>
 </BaseLayout>

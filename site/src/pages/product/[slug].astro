@@ -4,6 +4,8 @@ import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import GradeReveal from "../../components/GradeReveal.astro";
 import LabelScanLine from "../../components/LabelScanLine.astro";
 import Glossaire from "../../components/Glossaire.astro";
+import FaqSection from "../../components/FaqSection.astro";
+import { buildProductFaq, jsonLdFaq } from "../../utils/seo";
 import {
   getAllProducts,
   getProductsByCategory,
@@ -158,6 +160,8 @@ const baseDesc = `${product.name}${brandPretty ? ` (${brandPretty})` : ""}: ${gr
 const description = baseDesc.length > 158 ? baseDesc.slice(0, 155) + "..." : baseDesc;
 const canonicalUrl = siteConfig.url + `/product/${product.slug}/`;
 const ogImage = product.image_url || "/og/default.svg";
+
+const faq = buildProductFaq(product, "en");
 ---
 
 <BaseLayout
@@ -166,7 +170,7 @@ const ogImage = product.image_url || "/og/default.svg";
   canonicalUrl={canonicalUrl}
   ogImage={ogImage}
   alternates={{ en: `/product/${product.slug}/`, fr: `/fr/product/${product.slug}/` }}
-  jsonLd={[productJsonLd, breadcrumbJsonLd]}
+  jsonLd={[productJsonLd, breadcrumbJsonLd, jsonLdFaq(faq)]}
 >
   <article class="max-w-5xl mx-auto px-4 py-12">
     <Breadcrumbs items={breadcrumbs} />
@@ -375,5 +379,7 @@ const ogImage = product.image_url || "/og/default.svg";
         <a href={`/fr/product/${product.slug}/`} class="text-teal-800 underline">français</a>.
       </p>
     </footer>
+
+    <FaqSection faq={faq} locale="en" />
   </article>
 </BaseLayout>
