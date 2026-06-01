@@ -244,6 +244,10 @@
 .stagger-children.in-view > *:nth-child(8) { transition-delay: 560ms; opacity: 1; transform: none; }
 .stagger-children.in-view > *:nth-child(9) { transition-delay: 640ms; opacity: 1; transform: none; }
 .stagger-children.in-view > *:nth-child(10) { transition-delay: 720ms; opacity: 1; transform: none; }
+/* Catch-all so containers with MORE than 10 children reveal every child instead
+   of leaving the rest stuck at opacity:0. The nth-child rules above keep the
+   staggered entrance for the first 10; any child beyond that simply fades in. */
+.stagger-children.in-view > * { opacity: 1; transform: none; }
 
 /* --- Typing cursor for hero --- */
 @keyframes blink {
