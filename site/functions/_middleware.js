@@ -59,6 +59,8 @@ export async function onRequest(context) {
     if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_KEY) return response;
 
     const payload = {
+      // STACK-2026 shared collector: tag every row with the originating site.
+      site: "nutridecrypte",
       path: path.slice(0, 500),
       referrer: (request.headers.get("referer") || "").slice(0, 500) || null,
       user_agent: ua.slice(0, 500),
