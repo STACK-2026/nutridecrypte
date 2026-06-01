@@ -43,7 +43,7 @@ export async function onRequestPost({ request, env }) {
       "Content-Type": "application/json",
       Prefer: "return=minimal",
     },
-    body: JSON.stringify({ type, target, page, session_id: sid }),
+    body: JSON.stringify({ type, target, page, session_id: sid, site: "nutridecrypte" }),
   });
 
   if (!r.ok) {

@@ -34,6 +34,7 @@ export async function onRequestPost({ request, env }) {
       locale: body.locale ? String(body.locale).slice(0, 16) : null,
       event_type: body.event_type ? String(body.event_type).slice(0, 60) : "page_view",
       event_data: Object.keys(eventData).length ? eventData : null,
+      site: "nutridecrypte",
     };
 
     await fetch(`${env.SUPABASE_URL}/rest/v1/page_views`, {

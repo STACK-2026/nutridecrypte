@@ -16,7 +16,8 @@
     "@astrojs/sitemap": "^3.3.1",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/plus-jakarta-sans": "^5.2.8",
-    "astro": "^6.1.5"
+    "astro": "^6.1.5",
+    "postgres": "^3.4.9"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.4",

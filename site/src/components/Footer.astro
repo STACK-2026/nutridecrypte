@@ -302,7 +302,7 @@ document.querySelectorAll("[data-newsletter-form]").forEach(form => {
     }
 
     try {
-      const resp = await fetch(`${supabaseUrl}/rest/v1/newsletter_subscribers`, {
+      const resp = await fetch(`${supabaseUrl}/rest/v1/subscribers`, {
         method: "POST",
         headers: {
           apikey: supabaseKey,
@@ -310,7 +310,7 @@ document.querySelectorAll("[data-newsletter-form]").forEach(form => {
           "Content-Type": "application/json",
           Prefer: "return=minimal",
         },
-        body: JSON.stringify({ email, locale, source: "footer" }),
+        body: JSON.stringify({ email, source: "footer", site: "nutridecrypte" }),
       });
       if (resp.ok) {
         notice.textContent = locale === "fr" ? "Merci ! Tu reçois les prochaines analyses." : "Thanks! You are on the list.";

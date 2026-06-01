@@ -1,7 +1,8 @@
-// NutriDecrypte , build-time data fetcher from Supabase.
+// NutriDecrypte , build-time data fetcher from the VPS Postgres (Tier-2 migration 2026-06-01).
 // Used by getStaticPaths() to pre-render product / brand / category pages.
+// Was Supabase REST; now reads the shared VPS Postgres via src/lib/db.ts (DATABASE_URL + CF tunnel).
 
-import { supabaseFetch, supabaseConfigured } from "./supabase";
+import { db, dbConfigured } from "./db";
 
 export interface Product {
   id: number;
@@ -72,47 +73,43 @@ const DEFAULT_LIMIT = 1000;
 // Products
 // ============================================================
 export async function getAllProducts(limit = DEFAULT_LIMIT): Promise<Product[]> {
-  if (!supabaseConfigured()) return [];
-  const rows = await supabaseFetch<Product[]>(`/rest/v1/products?select=*&order=score_overall.desc&limit=${limit}`);
-  return rows || [];
+  if (!dbConfigured()) return [];
+  const rows = await db()<Product[]>`select * from products order by score_overall desc nulls last limit ${limit}`;
+  return rows as unknown as Product[];
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
-  if (!supabaseConfigured()) return null;
-  const rows = await supabaseFetch<Product[]>(
-    `/rest/v1/products?select=*&slug=eq.${encodeURIComponent(slug)}&limit=1`
-  );
-  return rows && rows.length ? rows[0] : null;
+  if (!dbConfigured()) return null;
+  const rows = await db()<Product[]>`select * from products where slug = ${slug} limit 1`;
+  return rows.length ? (rows[0] as unknown as Product) : null;
 }
 
 export async function getProductsByBrand(brandSlug: string): Promise<Product[]> {
-  const rows = await supabaseFetch<Product[]>(
-    `/rest/v1/products?select=*&brand_slug=eq.${encodeURIComponent(brandSlug)}&order=score_overall.desc&limit=200`
-  );
-  return rows || [];
+  if (!dbConfigured()) return [];
+  const rows = await db()<Product[]>`select * from products where brand_slug = ${brandSlug} order by score_overall desc nulls last limit 200`;
+  return rows as unknown as Product[];
 }
 
 export async function getProductsByCategory(categoryTag: string, limit = 50): Promise<Product[]> {
-  // categories is an array column; use cs (contains) operator
-  const rows = await supabaseFetch<Product[]>(
-    `/rest/v1/products?select=*&categories=cs.{${encodeURIComponent(categoryTag)}}&order=score_overall.desc&limit=${limit}`
-  );
-  return rows || [];
+  if (!dbConfigured()) return [];
+  // categories is a text[] column; array containment
+  const rows = await db()<Product[]>`select * from products where ${categoryTag} = any(categories) order by score_overall desc nulls last limit ${limit}`;
+  return rows as unknown as Product[];
 }
 
 // ============================================================
 // Brands
 // ============================================================
 export async function getAllBrands(limit = 500): Promise<Brand[]> {
-  const rows = await supabaseFetch<Brand[]>(`/rest/v1/brands?select=*&order=slug.asc&limit=${limit}`);
-  return rows || [];
+  if (!dbConfigured()) return [];
+  const rows = await db()<Brand[]>`select * from brands order by slug asc limit ${limit}`;
+  return rows as unknown as Brand[];
 }
 
 export async function getBrandBySlug(slug: string): Promise<Brand | null> {
-  const rows = await supabaseFetch<Brand[]>(
-    `/rest/v1/brands?select=*&slug=eq.${encodeURIComponent(slug)}&limit=1`
-  );
-  return rows && rows.length ? rows[0] : null;
+  if (!dbConfigured()) return null;
+  const rows = await db()<Brand[]>`select * from brands where slug = ${slug} limit 1`;
+  return rows.length ? (rows[0] as unknown as Brand) : null;
 }
 
 // ============================================================
@@ -160,15 +157,15 @@ export function deriveCategories(products: Product[], minProducts = 3): Category
 // Additives
 // ============================================================
 export async function getAllAdditives(): Promise<Additive[]> {
-  const rows = await supabaseFetch<Additive[]>(`/rest/v1/additives?select=*&order=e_number.asc`);
-  return rows || [];
+  if (!dbConfigured()) return [];
+  const rows = await db()<Additive[]>`select * from additives order by e_number asc`;
+  return rows as unknown as Additive[];
 }
 
 export async function getAdditiveBySlug(slug: string): Promise<Additive | null> {
-  const rows = await supabaseFetch<Additive[]>(
-    `/rest/v1/additives?select=*&slug=eq.${encodeURIComponent(slug)}&limit=1`
-  );
-  return rows && rows.length ? rows[0] : null;
+  if (!dbConfigured()) return null;
+  const rows = await db()<Additive[]>`select * from additives where slug = ${slug} limit 1`;
+  return rows.length ? (rows[0] as unknown as Additive) : null;
 }
 
 // ============================================================
