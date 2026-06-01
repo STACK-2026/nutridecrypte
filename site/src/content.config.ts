@@ -17,6 +17,10 @@ const blog = defineCollection({
     lang: z.enum(["en", "fr"]).default("en"),
     lastReviewed: z.coerce.date().optional(),
     reviewedBy: z.string().optional(),
+    // Answer-first summary (CTR / featured snippet / AI citation) + FAQ (FAQPage
+    // schema + visible accordion). Optional: existing articles are unaffected.
+    tldr: z.string().optional(),
+    faq: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
   }),
 });
 

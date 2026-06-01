@@ -19,6 +19,8 @@ interface Props {
   keywords?: string;
   lastReviewed?: Date;
   reviewedBy?: string;
+  tldr?: string;
+  faq?: { q: string; a: string }[];
 }
 
 const {
@@ -34,6 +36,8 @@ const {
   keywords,
   lastReviewed,
   reviewedBy,
+  tldr,
+  faq = [],
 } = Astro.props;
 
 const dateStr = date.toISOString().split("T")[0];
@@ -64,6 +68,31 @@ const jsonLd = [
   }),
   jsonLdBreadcrumbs(breadcrumbs),
 ];
+
+// FAQPage schema (rich result eligibility) when the article ships an FAQ.
+if (faq.length > 0) {
+  jsonLd.push({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  });
+}
+
+// Speakable (GEO / voice + AI-answer surfaces) targeting the answer-first
+// summary and the H1.
+jsonLd.push({
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  url: articleUrl,
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: [".article-tldr", "h1"],
+  },
+});
 ---
 
 <BaseLayout
@@ -125,8 +154,66 @@ const jsonLd = [
       </figure>
     )}
 
+    {tldr && (
+      <aside class="article-tldr">
+        <p class="article-tldr-label">{locale === "fr" ? "En bref" : "In short"}</p>
+        <p>{tldr}</p>
+      </aside>
+    )}
+
     <div class="prose max-w-none">
       <slot />
     </div>
+
+    {faq.length > 0 && (
+      <section class="article-faq" aria-labelledby="faq-heading">
+        <h2 id="faq-heading">{locale === "fr" ? "Questions fréquentes" : "Frequently asked questions"}</h2>
+        {faq.map((f) => (
+          <details class="article-faq-item">
+            <summary>{f.q}</summary>
+            <div class="article-faq-answer"><p>{f.a}</p></div>
+          </details>
+        ))}
+      </section>
+    )}
   </article>
 </BaseLayout>
+
+<style>
+  .article-tldr {
+    max-width: 48rem;
+    margin: 0 auto 2rem;
+    padding: 1.1rem 1.25rem;
+    background: rgb(15 118 110 / 0.06);
+    border: 1px solid rgb(15 118 110 / 0.2);
+    border-left: 4px solid var(--color-primary, #0f766e);
+    border-radius: 0.6rem;
+  }
+  .article-tldr-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-primary-dark, #115e59);
+    margin: 0 0 0.35rem;
+  }
+  .article-tldr p:last-child { margin: 0; line-height: 1.55; }
+  .article-faq { max-width: 48rem; margin: 2.5rem auto 0; }
+  .article-faq h2 { margin-bottom: 1rem; }
+  .article-faq-item {
+    border: 1px solid rgb(0 0 0 / 0.1);
+    border-radius: 0.6rem;
+    margin-bottom: 0.6rem;
+    background: #fff;
+  }
+  .article-faq-item summary {
+    cursor: pointer;
+    padding: 0.85rem 1rem;
+    font-weight: 600;
+    list-style: none;
+  }
+  .article-faq-item summary::-webkit-details-marker { display: none; }
+  .article-faq-item summary::after { content: "+"; float: right; color: var(--color-primary, #0f766e); font-weight: 800; }
+  .article-faq-item[open] summary::after { content: "\2212"; }
+  .article-faq-answer { padding: 0 1rem 1rem; line-height: 1.6; }
+</style>

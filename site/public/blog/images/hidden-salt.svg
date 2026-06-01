@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Sel caché trop de sodium">
+<defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0b2e2a"/><stop offset="100%" stop-color="#0f766e"/></linearGradient>
+<pattern id="dots" width="64" height="64" patternUnits="userSpaceOnUse"><circle cx="12" cy="12" r="3" fill="#ffffff" opacity="0.05"/></pattern></defs>
+<rect width="1200" height="675" fill="url(#bg)"/><rect width="1200" height="675" fill="url(#dots)"/>
+<text x="90" y="150" fill="#99f6e4" font-family="Inter, system-ui, sans-serif" font-size="26" font-weight="700" letter-spacing="3">DECODAGE · NUTRIDECRYPTE</text>
+<text x="90" y="250" fill="#ffffff" font-family="Inter, system-ui, sans-serif" font-size="60" font-weight="800">Sel caché</text>
+<text x="90" y="322" fill="#ffffff" font-family="Inter, system-ui, sans-serif" font-size="60" font-weight="800">trop de sodium</text>
+<text x="90" y="386" fill="#5eead4" font-family="Inter, system-ui, sans-serif" font-size="29" font-weight="600">Le repérer sur l'étiquette et le réduire</text>
+<g transform="translate(900,360)" fill="none" stroke="#5eead4" stroke-width="6">
+<circle cx="120" cy="120" r="92" opacity="0.85"/><path d="M120 60 a60 60 0 0 1 0 120" stroke="#99f6e4" stroke-width="10"/>
+<circle cx="120" cy="120" r="14" fill="#5eead4" stroke="none"/></g></svg>
