@@ -1,7 +1,12 @@
 ---
-// Visible FAQ accordion. Pairs with jsonLdFaq() in the page head so the FAQPage
-// schema is backed by on-page content (Google requirement) and the answers are
-// Speakable (data-speakable) for GEO / voice surfaces.
+// Visible FAQ accordion, paired with jsonLdFaq() in the page head so the FAQPage
+// schema is backed by on-page content (Google requirement) and answers are
+// Speakable (data-speakable) for GEO / AI-answer surfaces.
+//
+// Distinctive micro-interactions: a vertical accent rail that grows on open, a
+// plus-to-minus morphing indicator that rotates, a blur-in answer reveal, a
+// staggered scroll-reveal, and a hover text nudge. SEO-safe (content stays in
+// the DOM via <details>); no-JS = fully visible; honours prefers-reduced-motion.
 interface Props {
   faq: Array<{ question: string; answer: string }>;
   locale?: "fr" | "en";
@@ -13,32 +18,131 @@ const title = heading || (locale === "fr" ? "Questions fréquentes" : "Frequentl
 {faq && faq.length > 0 && (
   <section class="nd-faq" aria-labelledby="nd-faq-title">
     <h2 id="nd-faq-title">{title}</h2>
-    {faq.map((item) => (
-      <details class="nd-faq-item">
-        <summary data-speakable>{item.question}</summary>
-        <div class="nd-faq-answer"><p data-speakable>{item.answer}</p></div>
-      </details>
-    ))}
+    <div class="nd-faq-list">
+      {faq.map((item) => (
+        <details class="nd-faq-item">
+          <summary>
+            <span class="nd-faq-rail" aria-hidden="true"></span>
+            <span class="nd-faq-q" data-speakable>{item.question}</span>
+            <span class="nd-faq-ind" aria-hidden="true"><i></i><i></i></span>
+          </summary>
+          <div class="nd-faq-answer"><p data-speakable>{item.answer}</p></div>
+        </details>
+      ))}
+    </div>
   </section>
 )}
 
 <style>
-  .nd-faq { max-width: 48rem; margin: 3rem auto 0; }
-  .nd-faq h2 { margin-bottom: 1rem; font-size: 1.5rem; font-weight: 800; }
+  .nd-faq { max-width: 48rem; margin: 3rem auto 0; padding: 0 1rem; }
+  .nd-faq > h2 { margin-bottom: 1.1rem; font-size: 1.45rem; font-weight: 800; }
+  .nd-faq-list { display: flex; flex-direction: column; gap: 0.6rem; }
+
   .nd-faq-item {
+    position: relative;
+    overflow: hidden;
     border: 1px solid rgb(0 0 0 / 0.1);
-    border-radius: 0.6rem;
-    margin-bottom: 0.6rem;
+    border-radius: 0.7rem;
     background: #fff;
+    transition: border-color 260ms ease, box-shadow 260ms ease;
   }
+  .nd-faq-item[open] { border-color: color-mix(in srgb, var(--color-primary, #0f766e) 45%, rgb(0 0 0 / 0.1)); box-shadow: 0 8px 24px -16px color-mix(in srgb, var(--color-primary, #0f766e) 60%, transparent); }
+
   .nd-faq-item summary {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 1rem 0.9rem 1.15rem;
     cursor: pointer;
-    padding: 0.85rem 1rem;
-    font-weight: 600;
     list-style: none;
+    user-select: none;
   }
   .nd-faq-item summary::-webkit-details-marker { display: none; }
-  .nd-faq-item summary::after { content: "+"; float: right; color: var(--color-primary, #0f766e); font-weight: 800; }
-  .nd-faq-item[open] summary::after { content: "\2212"; }
-  .nd-faq-answer { padding: 0 1rem 1rem; line-height: 1.6; color: #44403c; }
+
+  .nd-faq-rail {
+    position: absolute;
+    left: 0; top: 8px; bottom: 8px;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--color-primary, #0f766e);
+    transform: scaleY(0);
+    transform-origin: top center;
+    transition: transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .nd-faq-item summary:hover .nd-faq-rail { transform: scaleY(0.35); }
+  .nd-faq-item[open] .nd-faq-rail { transform: scaleY(1); }
+
+  .nd-faq-q {
+    flex: 1;
+    font-weight: 600;
+    color: #1c1917;
+    line-height: 1.4;
+    transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1), color 240ms ease;
+  }
+  .nd-faq-item summary:hover .nd-faq-q { transform: translateX(4px); }
+  .nd-faq-item[open] .nd-faq-q { color: var(--color-primary, #0f766e); }
+
+  .nd-faq-ind {
+    position: relative;
+    flex-shrink: 0;
+    width: 20px; height: 20px;
+    color: #78716c;
+    transition: transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1), color 240ms ease;
+  }
+  .nd-faq-ind i { position: absolute; background: currentColor; border-radius: 2px; }
+  .nd-faq-ind i:first-child { top: 50%; left: 1px; right: 1px; height: 2px; margin-top: -1px; }
+  .nd-faq-ind i:last-child { left: 50%; top: 1px; bottom: 1px; width: 2px; margin-left: -1px; transition: transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .nd-faq-item[open] .nd-faq-ind { transform: rotate(180deg); color: var(--color-primary, #0f766e); }
+  .nd-faq-item[open] .nd-faq-ind i:last-child { transform: scaleY(0); }
+
+  .nd-faq-answer { padding: 0 1.15rem 1.05rem 1.15rem; color: #44403c; line-height: 1.65; }
+  .nd-faq-answer p { margin: 0; }
+  .nd-faq-item[open] .nd-faq-answer { animation: ndFaqReveal 400ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  @keyframes ndFaqReveal {
+    from { opacity: 0; transform: translateY(-8px); filter: blur(6px); }
+    to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+  }
+
+  .nd-faq.armed .nd-faq-item {
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(3px);
+  }
+  .nd-faq.armed .nd-faq-item.in {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+    transition: opacity 600ms ease, transform 600ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 600ms ease;
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nd-faq-rail, .nd-faq-q, .nd-faq-ind, .nd-faq-ind i,
+    .nd-faq-item, .nd-faq.armed .nd-faq-item { transition: none !important; }
+    .nd-faq-item[open] .nd-faq-answer { animation: none; }
+    .nd-faq.armed .nd-faq-item { opacity: 1; transform: none; filter: none; }
+    .nd-faq-item[open] .nd-faq-rail { transform: scaleY(1); }
+    .nd-faq-item[open] .nd-faq-ind i:last-child { transform: scaleY(0); }
+  }
 </style>
+
+<script is:inline>
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var sections = document.querySelectorAll(".nd-faq");
+    if (!sections.length) return;
+    sections.forEach(function (sec) {
+      var items = sec.querySelectorAll(".nd-faq-item");
+      if (reduce || !("IntersectionObserver" in window)) return;
+      sec.classList.add("armed");
+      items.forEach(function (el, i) { el.style.setProperty("--i", i); });
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+      items.forEach(function (el) { io.observe(el); });
+    });
+  })();
+</script>
