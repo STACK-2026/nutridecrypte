@@ -31,6 +31,7 @@ const { Content } = await render(post);
   reviewedBy={post.data.reviewedBy}
   tldr={post.data.tldr}
   faq={post.data.faq}
+  body={post.body}
 >
   <Content />
   <AmazonPicks slug={`fr-blog-${post.id}`} count={4} />

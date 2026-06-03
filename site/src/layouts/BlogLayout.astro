@@ -21,6 +21,75 @@ interface Props {
   reviewedBy?: string;
   tldr?: string;
   faq?: { q: string; a: string }[];
+  body?: string;
+}
+
+// Parse a FAQ written as a markdown section in the article body (## FAQ ...)
+// with each question as a ### / #### heading and the answer as the text up to
+// the next heading. Returns {q,a} pairs so we can still emit FAQPage JSON-LD
+// even when the frontmatter `faq` array is empty (the engine writes FAQs in the
+// body, not the frontmatter). This does NOT render anything visible; the body
+// slot already shows the FAQ.
+function cleanMd(s: string): string {
+  return s
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1") // [text](url) -> text
+    .replace(/\*\*/g, "")
+    .replace(/\*/g, "")
+    .replace(/`/g, "")
+    .replace(/[—–]/g, "-") // em/en dash -> hyphen
+    .replace(/^\s*[-*]\s+/gm, "") // strip list bullets
+    .replace(/^#{1,6}\s*/gm, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function parseBodyFaq(md?: string): { q: string; a: string }[] {
+  if (!md) return [];
+  const lines = md.split("\n");
+  const faqRe = /faq|questions?\s+fr[eé]quent|foire aux questions|frequently asked questions/i;
+  let i = 0;
+  // Find the FAQ section heading (## or higher level "## ").
+  for (; i < lines.length; i++) {
+    const m = lines[i].match(/^(#{2,3})\s+(.*)$/);
+    if (m && faqRe.test(m[2])) break;
+  }
+  if (i >= lines.length) return [];
+  const sectionLevel = (lines[i].match(/^(#+)/) as RegExpMatchArray)[1].length;
+  i++;
+  const out: { q: string; a: string }[] = [];
+  let curQ: string | null = null;
+  let curA: string[] = [];
+  const flush = () => {
+    if (curQ) {
+      const q = cleanMd(curQ.replace(/^\d+[.)]\s*/, ""));
+      const a = cleanMd(curA.join("\n"));
+      if (q && a) out.push({ q, a });
+    }
+    curQ = null;
+    curA = [];
+  };
+  for (; i < lines.length; i++) {
+    const line = lines[i];
+    const heading = line.match(/^(#+)\s+(.*)$/);
+    if (heading) {
+      const level = heading[1].length;
+      if (level <= sectionLevel) {
+        // End of the FAQ section.
+        flush();
+        break;
+      }
+      // A question heading.
+      flush();
+      curQ = heading[2];
+      continue;
+    }
+    if (curQ !== null) {
+      if (line.trim() === "---") continue;
+      curA.push(line);
+    }
+  }
+  flush();
+  return out;
 }
 
 const {
@@ -38,6 +107,7 @@ const {
   reviewedBy,
   tldr,
   faq = [],
+  body,
 } = Astro.props;
 
 const dateStr = date.toISOString().split("T")[0];
@@ -70,11 +140,15 @@ const jsonLd = [
 ];
 
 // FAQPage schema (rich result eligibility) when the article ships an FAQ.
-if (faq.length > 0) {
+// Prefer the frontmatter `faq` array; otherwise fall back to a FAQ section
+// written in the markdown body (## FAQ ...). Visible FAQ is unchanged.
+const bodyFaq = faq.length > 0 ? [] : parseBodyFaq(body);
+const faqForSchema = faq.length > 0 ? faq : bodyFaq;
+if (faqForSchema.length >= 2) {
   jsonLd.push({
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faq.map((f) => ({
+    mainEntity: faqForSchema.map((f) => ({
       "@type": "Question",
       name: f.q,
       acceptedAnswer: { "@type": "Answer", text: f.a },
