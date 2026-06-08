@@ -63,12 +63,54 @@ jobs:
           PY
 
 
-      - name: Build
+      - name: Install cloudflared (if missing)
+        run: |
+          if command -v cloudflared >/dev/null 2>&1; then echo "cloudflared: $(command -v cloudflared)"; exit 0; fi
+          OS=$(uname -s | tr '[:upper:]' '[:lower:]'); ARCH=$(uname -m)
+          case "$ARCH" in x86_64) A=amd64;; arm64|aarch64) A=arm64;; *) A=amd64;; esac
+          mkdir -p "$RUNNER_TEMP/bin"
+          if [ "$OS" = "darwin" ]; then
+            curl -fsSL -o "$RUNNER_TEMP/cf.tgz" "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-$A.tgz"
+            tar xzf "$RUNNER_TEMP/cf.tgz" -C "$RUNNER_TEMP/bin"
+          else
+            curl -fsSL -o "$RUNNER_TEMP/bin/cloudflared" "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-$A"
+          fi
+          chmod +x "$RUNNER_TEMP/bin/cloudflared"
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+
+      - name: Open DB tunnel (VPS Postgres via Cloudflare Access)
+        env:
+          CF_ID: ${{ secrets.VPS_PG_CF_ACCESS_CLIENT_ID }}
+          CF_SECRET: ${{ secrets.VPS_PG_CF_ACCESS_CLIENT_SECRET }}
+          PG_PORT: '5432'
+        run: |
+          if [ -z "$CF_ID" ] || [ -z "$CF_SECRET" ]; then echo "::error::VPS CF Access service token secrets missing"; exit 1; fi
+          nohup cloudflared access tcp --hostname pg.augustinfoucheres.com --url 127.0.0.1:$PG_PORT \
+            --service-token-id "$CF_ID" --service-token-secret "$CF_SECRET" > "$RUNNER_TEMP/cfd.log" 2>&1 &
+          echo "tunnel pid $!"
+          ok=0
+          for i in $(seq 1 30); do (exec 3<>/dev/tcp/127.0.0.1/$PG_PORT) 2>/dev/null && { ok=1; exec 3>&- 3<&-; break; }; sleep 1; done
+          if [ "$ok" != 1 ]; then echo "::error::DB tunnel port $PG_PORT never opened"; tail -20 "$RUNNER_TEMP/cfd.log" || true; exit 1; fi
+          echo "tunnel up on 127.0.0.1:$PG_PORT"
+
+      - name: Build (with VPS DATABASE_URL)
         env:
           PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
           PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
           PUBLIC_AMAZON_TAG: ${{ secrets.PUBLIC_AMAZON_TAG }}
-        run: npm run build
+          DB_URL_SECRET: ${{ secrets.VPS_PG_NUTRIDECRYPTE_URL }}
+          PG_PORT: '5432'
+        run: |
+          if [ -z "$DB_URL_SECRET" ]; then echo "::error::VPS_PG_NUTRIDECRYPTE_URL missing -- refusing degraded build"; exit 1; fi
+          export DATABASE_URL=$(printf '%s' "$DB_URL_SECRET" | sed "s#:5432/#:${PG_PORT}/#")
+          npm run build
+
+      - name: Guard - refuse degraded build
+        run: |
+          N=$(find dist -name '*.html' | wc -l | tr -d ' ')
+          echo "dist html pages: $N"
+          if [ "$N" -lt 2000 ]; then echo "::error::Degraded build ($N html < 2000) -- VPS read failed, NOT deploying"; exit 1; fi
+          echo "build healthy ($N pages)"
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
