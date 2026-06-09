@@ -7,6 +7,8 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "guard:content": "bash ../scripts/guard_content.sh",
+    "prebuild": "npm run guard:content",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
