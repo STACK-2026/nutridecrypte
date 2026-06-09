@@ -243,9 +243,9 @@
       "intent": "informational",
       "author_pen_name": "Camille Roux",
       "angle": "Trancher le débat scientifique sur cet épaississant ultra-courant",
-      "done": false,
-      "published": false,
-      "published_at": null,
+      "done": true,
+      "published": true,
+      "published_at": "2026-06-09",
       "reconciled": false
     },
     {
