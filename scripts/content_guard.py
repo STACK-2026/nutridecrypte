@@ -158,16 +158,25 @@ def analyze(path: Path, fix: bool, check_links: bool):
         if tval is not None and len(tval) > TITLE_MAX:
             issues.append(("TITLE_LONG", f"title {len(tval)}c > {TITLE_MAX} (flag-only)"))
         dm, dval, dq = fm_field(fm_inner, "description")
-        if dval is not None and len(dval) > DESC_MAX:
-            issues.append(("DESC_LONG", f"description {len(dval)}c > {DESC_MAX}"))
-            if fix:
-                clamped = clamp_value(dval, DESC_MAX)
+        if dval is not None:
+            new_val = dval
+            # bug-#3 residue: `''` inside a DOUBLE-quoted description is a literal
+            # double apostrophe (renders "d''un") — never intentional in double
+            # quotes; it comes from a clamp that re-emitted single-quote source
+            # without decoding. Collapse it. (In single-quote source fm_field has
+            # already decoded '' -> ', so this only catches the artifact.)
+            if dq == '"' and "''" in new_val:
+                new_val = new_val.replace("''", "'")
+                issues.append(("DESC_QUOTE_ARTIFACT", "double-quoted description contains '' (renders d''un)"))
+            if len(new_val) > DESC_MAX:
+                issues.append(("DESC_LONG", f"description {len(new_val)}c > {DESC_MAX}"))
+                new_val = clamp_value(new_val, DESC_MAX)
+            if fix and new_val != dval:
                 # re-emit as a double-quoted YAML scalar (valid for any source
-                # quote style: bare, single ' ', or double " ") so apostrophes,
-                # colons and question marks survive the clamp safely.
-                esc = clamped.replace("\\", "\\\\").replace('"', '\\"')
+                # quote style) so apostrophes, colons and question marks survive.
+                esc = new_val.replace("\\", "\\\\").replace('"', '\\"')
                 fm_inner = fm_inner[:dm.start()] + f'{dm.group(1)}"{esc}"' + fm_inner[dm.end():]
-                fixes.append(f"clamped description {len(dval)}->{len(clamped)}c")
+                fixes.append(f"normalized description -> {len(new_val)}c")
 
     # ---- 4. body-level H1 (=> double H1 with template title) ----
     h1s = re.findall(r"(?m)^#[ \t]+\S", body)
@@ -243,7 +252,7 @@ def main():
         elif pp.exists():
             files.append(pp)
     # blocking = anything except the flag-only TITLE_LONG / TITLE_TRUNCATED?
-    NON_BLOCKING = {"TITLE_LONG"}
+    NON_BLOCKING = {"TITLE_LONG", "DESC_QUOTE_ARTIFACT"}
 
     total_block = 0
     total_fixed = 0
