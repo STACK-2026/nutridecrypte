@@ -257,9 +257,9 @@
       "intent": "informational",
       "author_pen_name": "Thomas Moreau",
       "angle": "Identifier les produits concernés et le vrai niveau de risque",
-      "done": false,
-      "published": false,
-      "published_at": null,
+      "done": true,
+      "published": true,
+      "published_at": "2026-06-10",
       "reconciled": false
     },
     {
