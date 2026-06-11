@@ -15,10 +15,15 @@ publish.py for months):
      the title as H1) (decryptebot 09/06).
   5. mojibake (Ã©, â€™, Â, ðŸ...).
   6. em-dash / en-dash in body (parc YMYL rule) — backstop.
-  7. (optional, --check-links) dead internal/external links.
+  7. ACCENT_LOW: a French body shipped with near-zero diacritics (ASCII-folded).
+     Always-on, language-aware (never fires on EN/ES/PT). Root leak on 11/06
+     (adapte-toi/Stanford at density 0.0). Blocking; re-accent with
+     reaccent_gemini.py (not auto-fixable here).
+  8. (optional, --check-links) dead internal/external links.
 
-Accents (ASCII-folded French) are delegated to scripts/check_accents.py which
-is already deployed parc-wide; --with-accents shells out to it.
+ACCENT_LOW is now a native, always-on check. --with-accents ADDITIONALLY shells
+out to scripts/check_accents.py (its high-frequency folded-word signal) for the
+whole --site dir; keep it for belt-and-suspenders in CI.
 
 Modes:
   --check   exit 1 if any blocking defect is found (use in CI / seo-guardrails).
@@ -55,6 +60,53 @@ ARTIFACT_RE = re.compile("|".join(ARTIFACT_PATTERNS), re.IGNORECASE)
 
 MOJIBAKE_RE = re.compile(r"Ã[©¨ª«¢ ]|â€™|â€|â€|â€“|â€”|Â[  ]|Ã©|ðŸ|Ã¯Â¿Â½")
 EM_EN_RE = re.compile(r"[–—]")
+
+# ---- accent guard: deaccented (ASCII-folded) French detector, always-on ----
+# Native, language-aware version of check_accents.py's density signal. A FAIL on
+# its own (no MIN_HITS wordlist needed): a French body with near-zero diacritics
+# is the recurring leak (adapte-toi/Stanford 11/06 shipped at density 0.0). Made
+# language-aware so it NEVER fires on the parc's English/Spanish/Portuguese
+# articles (their FR accent density is legitimately ~0).
+ACCENTS = set("éèàêôîûçùâëïüœæÉÈÀÊÔÎÛÇÙÂËÏÜ")
+MIN_ACCENT_DENSITY = 8       # accented chars / 1000 prose chars; healthy FR = 25-45
+MIN_FOLDED_HITS = 4          # folded-FR words to confirm the body is French
+MIN_PROSE_LEN = 500          # below this the body is too short to judge
+# French words that are almost ALWAYS accented; their appearance in ASCII-folded
+# form (with the accented form ABSENT) is the language-safe signal for "this is
+# deaccented French". Chosen to NOT collide with English/Spanish/Italian/Portuguese
+# (no Latin homographs like "experience"/"education"/"difference"). A folded body
+# in another language scores ~0 here, so the gate never misfires on EN/ES/IT/PT.
+FOLDED_FR = [
+    ("securite", "sécurité"), ("methode", "méthode"), ("donnees", "données"),
+    ("fiscalite", "fiscalité"), ("autorite", "autorité"), ("qualite", "qualité"),
+    ("propriete", "propriété"), ("societe", "société"), ("epargne", "épargne"),
+    ("prelevement", "prélèvement"), ("interet", "intérêt"), ("considere", "considéré"),
+    ("integre", "intégré"), ("realise", "réalisé"), ("verifie", "vérifié"),
+    ("decede", "décédé"), ("deces", "décès"), ("heritier", "héritier"),
+    ("procedure", "procédure"), ("remunere", "rémunéré"), ("numerique", "numérique"),
+    ("strategie", "stratégie"), ("eligibilite", "éligibilité"),
+    ("responsabilite", "responsabilité"), ("necessite", "nécessité"),
+    ("possibilite", "possibilité"), ("activite", "activité"), ("etude", "étude"),
+    ("etape", "étape"), ("evenement", "événement"), ("etranger", "étranger"),
+    ("egalement", "également"), ("deja", "déjà"), ("tres", "très"),
+    ("apres", "après"), ("etablissement", "établissement"), ("controle", "contrôle"),
+    ("numero", "numéro"), ("reel", "réel"), ("reseau", "réseau"),
+    ("requete", "requête"), ("francais", "français"), ("generale", "générale"),
+    ("reference", "référence"), ("frequence", "fréquence"), ("specificite", "spécificité"),
+    ("anneee", "année"), ("annee", "année"), ("regulier", "régulier"),
+    ("complementaire", "complémentaire"), ("preference", "préférence"),
+]
+
+
+def prose_only(body: str) -> str:
+    """Body stripped of fenced/inline code, URLs and markdown link targets
+    (these are never accented and would dilute the density signal)."""
+    t = re.sub(r"```.*?```", " ", body, flags=re.S)
+    t = re.sub(r"`[^`]*`", " ", t)
+    t = re.sub(r"https?://\S+", " ", t)
+    t = re.sub(r"\]\([^)]*\)", " ", t)
+    return t
+
 
 FM_RE = re.compile(r"^(---\s*\n)(.*?)(\n---\s*\n)", re.S)
 
@@ -198,6 +250,24 @@ def analyze(path: Path, fix: bool, check_links: bool):
             body = body.replace(" — ", ", ").replace("—", ", ")
             body = body.replace(" – ", "-").replace("–", "-")
             fixes.append("normalized em/en-dashes")
+
+    # ---- 7. deaccented French body (language-safe accent density gate) ----
+    # Two signals, both required: (a) accent density below floor, AND (b) several
+    # normally-accented French words present in folded form (their accented form
+    # absent). (b) makes it French-specific so EN/ES/IT/PT never trip the gate.
+    # Not auto-fixable (re-accent needs reaccent_gemini.py) -> blocking FAIL.
+    prose = prose_only(body)
+    if len(prose) >= MIN_PROSE_LEN:
+        acc = sum(1 for c in prose if c in ACCENTS)
+        density = acc * 1000 / len(prose)
+        if density < MIN_ACCENT_DENSITY:
+            low = prose.lower()
+            folded = sum(1 for ascii_f, acc_f in FOLDED_FR
+                         if re.search(rf"\b{ascii_f}\b", low) and acc_f not in low)
+            if folded >= MIN_FOLDED_HITS:
+                issues.append(("ACCENT_LOW",
+                    f"French body, accent density {density:.1f}/1000 < {MIN_ACCENT_DENSITY} "
+                    f"({folded} folded-FR words) — ASCII-folded, run reaccent_gemini.py"))
 
     # reassemble
     if head is not None:
