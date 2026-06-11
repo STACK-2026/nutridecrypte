@@ -271,9 +271,9 @@
       "intent": "informational",
       "author_pen_name": "Sarah Keller",
       "angle": "Décrypter pourquoi cet ingrédient est pire que le sucre pour la glycémie",
-      "done": false,
-      "published": false,
-      "published_at": null,
+      "done": true,
+      "published": true,
+      "published_at": "2026-06-11",
       "reconciled": false
     },
     {
