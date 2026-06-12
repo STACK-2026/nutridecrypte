@@ -245,7 +245,7 @@ Souvent oui pour couvrir le besoin de base, mais attention au cumul. Beaucoup de
 - EFSA, Scientific Opinion on Dietary Reference Values for zinc : [https://www.efsa.europa.eu/en/efsajournal/pub/3844](https://www.efsa.europa.eu/en/efsajournal/pub/3844)
 - EFSA, Tolerable Upper Intake Level for zinc (25 mg/jour) : [https://www.efsa.europa.eu/en/efsajournal/pub/2024](https://www.efsa.europa.eu/en/efsajournal/pub/2024)
 - EFSA, Registre des allégations de santé autorisées (zinc et immunité, peau, fertilité) : [https://www.efsa.europa.eu/en/topics/topic/health-claims](https://www.efsa.europa.eu/en/topics/topic/health-claims)
-- INSERM, Micronutriments et système immunitaire : [https://www.inserm.fr/dossier/systeme-immunitaire/](https://www.inserm.fr/dossier/systeme-immunitaire/)
+- INSERM, L'immunologie à toutes les échelles (système immunitaire) : [https://www.inserm.fr/reportage/immunologie-toutes-echelles/](https://www.inserm.fr/reportage/immunologie-toutes-echelles/)
 - Santé publique France, Recommandations alimentaires et micronutriments : [https://www.santepubliquefrance.fr/](https://www.santepubliquefrance.fr/)
 
 ---
