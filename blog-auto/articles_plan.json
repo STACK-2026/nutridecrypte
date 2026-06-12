@@ -285,9 +285,9 @@
       "intent": "commercial_investigation",
       "author_pen_name": "Camille Roux",
       "angle": "Comparer les formes de zinc et démasquer les dosages marketing",
-      "done": false,
-      "published": false,
-      "published_at": null,
+      "done": true,
+      "published": true,
+      "published_at": "2026-06-12",
       "reconciled": false
     },
     {
