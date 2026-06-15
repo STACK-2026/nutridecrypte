@@ -82,7 +82,7 @@ const description = `Independent A to E ranking of ${products.length} food and s
         ))}
         <span class="text-sm text-stone-400 mx-2">|</span>
         <select id="category-filter" class="px-3 py-1.5 rounded-lg text-sm border border-stone-300 bg-white">
-          <option value="all">All categories</option>
+          <option value="all">All catégories</option>
           {topCategories.map((c) => (
             <option value={c.slug}>{c.slug.replace(/-/g, " ")}</option>
           ))}
