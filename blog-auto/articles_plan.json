@@ -299,9 +299,9 @@
       "intent": "informational",
       "author_pen_name": "Thomas Moreau",
       "angle": "Cartographier les sources cachées et les profils sensibles",
-      "done": false,
-      "published": false,
-      "published_at": null,
+      "done": true,
+      "published": true,
+      "published_at": "2026-06-15",
       "reconciled": false
     },
     {
