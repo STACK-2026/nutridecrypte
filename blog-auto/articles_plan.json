@@ -313,9 +313,9 @@
       "intent": "informational",
       "author_pen_name": "Sarah Keller",
       "angle": "Statut réglementaire et preuves de toxicité décryptés",
-      "done": false,
-      "published": false,
-      "published_at": null,
+      "done": true,
+      "published": true,
+      "published_at": "2026-06-16",
       "reconciled": false
     },
     {
