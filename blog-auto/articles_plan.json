@@ -341,10 +341,10 @@
       "intent": "commercial_investigation",
       "author_pen_name": "Thomas Moreau",
       "angle": "Séparer les souches prouvées du marketing du microbiote",
-      "done": false,
-      "published": false,
-      "published_at": null,
-      "reconciled": false
+      "done": true,
+      "published": true,
+      "published_at": "2026-06-18",
+      "reconciled": true
     },
     {
       "slug": "huiles-de-graines-tournesol-colza-sante",
