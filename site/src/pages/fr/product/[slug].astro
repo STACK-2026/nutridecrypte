@@ -5,7 +5,7 @@ import GradeReveal from "../../../components/GradeReveal.astro";
 import LabelScanLine from "../../../components/LabelScanLine.astro";
 import Glossaire from "../../../components/Glossaire.astro";
 import FaqSection from "../../../components/FaqSection.astro";
-import { buildProductFaq, jsonLdFaq, formatHumanDate, isoDate } from "../../../utils/seo";
+import { buildProductFaq, jsonLdFaq, jsonLdDataset, formatHumanDate, isoDate } from "../../../utils/seo";
 import {
   getAllProducts,
   getProductsByCategory,
@@ -128,6 +128,29 @@ const breadcrumbJsonLd = {
   })),
 };
 
+// Dataset first-party de cette fiche produit. Chaque metrique ci-dessous est
+// deja affichee sur la page (note + score dans l'en-tete, les cinq axes dans
+// "Détail du score"). Aucun chiffre non visible n'est ajoute.
+const datasetVariables: string[] = [];
+if (product.grade) datasetVariables.push("NutriDécrypte Grade (A-E)");
+if (product.score_overall != null) datasetVariables.push("NutriDécrypte Score");
+if (product.score_nutri != null) datasetVariables.push("Nutri-Score axis");
+if (product.score_nova != null) datasetVariables.push("NOVA axis");
+if (product.score_additives != null) datasetVariables.push("EFSA additive risk axis");
+if (product.score_claims != null) datasetVariables.push("Marketing claims axis");
+if (product.score_density != null) datasetVariables.push("Nutritional density axis");
+
+const productDatasetJsonLd = datasetVariables.length
+  ? jsonLdDataset({
+      name: `Note NutriDécrypte pour ${product.name}`,
+      description: `Note indépendante de A à E${product.score_overall != null ? ` (${product.score_overall}/100)` : ""} pour ${product.name}, calculée avec la méthode publique NutriDécrypte à 5 axes (Nutri-Score, NOVA, additifs EFSA, allégations marketing, densité nutritionnelle).`,
+      url: siteConfig.url + `/fr/product/${product.slug}/`,
+      dateModified: productUpdatedIso,
+      variableMeasured: datasetVariables,
+      keywords: ["nutrition", "additifs alimentaires", "Nutri-Score", "NOVA"],
+    })
+  : null;
+
 const brandPretty = product.brand_slug ? product.brand_slug.replace(/-/g, " ") : "";
 const additivesCount = (product.additives_tags || []).length;
 const novaLabel = product.nova_group ? `NOVA ${product.nova_group}` : "";
@@ -155,7 +178,7 @@ const faq = buildProductFaq(product, "fr");
   canonicalUrl={canonicalUrl}
   ogImage={ogImage}
   alternates={{ en: `/product/${product.slug}/`, fr: `/fr/product/${product.slug}/` }}
-  jsonLd={[productJsonLd, breadcrumbJsonLd, jsonLdFaq(faq)]}
+  jsonLd={[productJsonLd, breadcrumbJsonLd, jsonLdFaq(faq), ...(productDatasetJsonLd ? [productDatasetJsonLd] : [])]}
 >
   <article class="max-w-5xl mx-auto px-4 py-12">
     <Breadcrumbs items={breadcrumbs} />

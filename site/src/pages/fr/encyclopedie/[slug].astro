@@ -7,6 +7,7 @@ import {
   type Additive,
   type Product,
 } from "../../../lib/data";
+import { jsonLdDataset, isoDate } from "../../../utils/seo";
 import { siteConfig } from "../../../../site.config";
 
 export async function getStaticPaths() {
@@ -98,6 +99,25 @@ const definedTermJsonLd: Record<string, unknown> = {
 
 const productCount = products.length;
 const inUseLabel = productCount > 0 ? `Présent dans ${productCount} produit${productCount > 1 ? "s" : ""}.` : "";
+
+// Dataset first-party de cette entree additif. Chaque variable ci-dessous est
+// affichee sur la page : le badge de risque EFSA, le badge controversé, la
+// liste "Interdit ou restreint dans", et le nombre de produits le contenant.
+const encyclopediaDatasetVariables = [
+  "Additive risk level",
+  "Controversy flag",
+  "EU restriction status",
+  ...(productCount > 0 ? ["Catalog usage count"] : []),
+];
+const encyclopediaDatasetJsonLd = jsonLdDataset({
+  name: `Profil de risque NutriDécrypte pour ${additive.e_number} (${name})`,
+  description: `Classification indépendante du risque de l'additif alimentaire ${additive.e_number} (${name}) : ${riskLabel[additive.risk_level || "unknown"].toLowerCase()}${additive.controversy ? ", signalé controversé" : ""}${additive.banned_in && additive.banned_in.length ? `, restreint dans ${additive.banned_in.length} juridiction${additive.banned_in.length > 1 ? "s" : ""}` : ""}, d'après les avis EFSA et ANSES.`,
+  url: siteConfig.url + `/fr/encyclopedie/${additive.slug}/`,
+  dateModified: isoDate(additive.last_reviewed_at || new Date()),
+  variableMeasured: encyclopediaDatasetVariables,
+  keywords: ["additifs alimentaires", "E-numéros", "EFSA", "ANSES", "risque additif"],
+});
+
 const title = `${name} (${additive.e_number}) , additif alimentaire à ${riskLabel[additive.risk_level || "unknown"].toLowerCase()} | NutriDécrypte`;
 const summaryRaw = (additive.summary_fr || additive.summary_en || `Additif alimentaire ${additive.e_number} (${name}). Risque EFSA : ${riskLabel[additive.risk_level || "unknown"]}.`).trim();
 const summaryClean = summaryRaw.endsWith(".") ? summaryRaw : summaryRaw + ".";
@@ -109,7 +129,7 @@ const description = `${name} (${additive.e_number}) : ${summaryClean}${inUseLabe
   description={description}
   canonicalUrl={siteConfig.url + `/fr/encyclopedie/${additive.slug}/`}
   alternates={{ en: `/encyclopedia/${additive.slug}/`, fr: `/fr/encyclopedie/${additive.slug}/` }}
-  jsonLd={[definedTermJsonLd, breadcrumbJsonLd]}
+  jsonLd={[definedTermJsonLd, breadcrumbJsonLd, encyclopediaDatasetJsonLd]}
 >
   <article class="max-w-3xl mx-auto px-4 py-12">
     <Breadcrumbs items={breadcrumbs} />
