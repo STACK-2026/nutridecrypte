@@ -1,11 +1,21 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import TLDRBlock from "../../components/TLDRBlock.astro";
 import { getAllAdditives, getAllProducts } from "../../lib/data";
+import { jsonLdDataset, formatHumanDate, isoDate } from "../../utils/seo";
 import { siteConfig } from "../../../site.config";
 
 const additives = await getAllAdditives();
 const allProducts = await getAllProducts(1000);
+
+// Freshness: most recent additive review date (real DB field).
+const lastReviewedIso = additives.reduce((max, a) => {
+  const t = a.last_reviewed_at || "";
+  return t && t > max ? t : max;
+}, "");
+const updatedHuman = formatHumanDate(lastReviewedIso || new Date(), "en");
+const datasetModified = isoDate(lastReviewedIso || new Date());
 
 // Compute usage count per additive (how many products contain it)
 const usageMap = new Map<string, number>();
@@ -78,6 +88,22 @@ const breadcrumbJsonLd = {
   })),
 };
 
+// First-party Dataset: the additives risk registry. Every count is shown below.
+const datasetJsonLd = jsonLdDataset({
+  name: "NutriDécrypte Food Additives Risk Registry",
+  description: `${additives.length} food additives (E-numbers) classified by risk level using EFSA and ANSES sources: ${stats.high} high risk, ${stats.medium} medium risk, ${stats.low} low risk, ${stats.controversial} controversial, ${stats.banned} EU-restricted.`,
+  url: siteConfig.url + "/encyclopedia/",
+  dateModified: datasetModified,
+  variableMeasured: [
+    "E-number",
+    "Additive risk level",
+    "Controversy flag",
+    "EU restriction status",
+    "Catalog usage count",
+  ],
+  keywords: ["food additives", "E-numbers", "EFSA", "ANSES", "additive risk"],
+});
+
 const title = `Food additives encyclopedia , ${additives.length} E-numbers decoded | NutriDécrypte`;
 const description = `${additives.length} food additives explained, classified by EFSA and ANSES risk level. High-risk E-numbers, controversial additives, and which products contain them.`;
 ---
@@ -87,7 +113,7 @@ const description = `${additives.length} food additives explained, classified by
   description={description}
   canonicalUrl={siteConfig.url + "/encyclopedia/"}
   alternates={{ en: "/encyclopedia/", fr: "/fr/encyclopedie/" }}
-  jsonLd={breadcrumbJsonLd}
+  jsonLd={[breadcrumbJsonLd, datasetJsonLd]}
 >
   <section class="max-w-5xl mx-auto px-4 py-12">
     <Breadcrumbs items={breadcrumbs} />
@@ -98,6 +124,14 @@ const description = `${additives.length} food additives explained, classified by
       <p class="text-lg text-stone-700 max-w-3xl mb-6">
         {additives.length} E-numbers decoded, classified by EFSA + ANSES risk level. Learn what each additive is, whether it is controversial, and which products of our catalog contain it.
       </p>
+
+      <TLDRBlock label="In short">
+        Our additives registry covers <strong>{additives.length} E-numbers</strong>, each rated by risk:
+        <strong>{stats.high}</strong> high risk, <strong>{stats.medium}</strong> medium risk and
+        <strong>{stats.low}</strong> low risk, including <strong>{stats.controversial}</strong> controversial
+        and <strong>{stats.banned}</strong> restricted in the EU. Risk levels are sourced from EFSA and ANSES.
+        Registry last reviewed {updatedHuman}.
+      </TLDRBlock>
 
       <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 max-w-3xl">
         <div class="px-3 py-2 rounded-lg bg-red-50 border border-red-200 text-center">
@@ -185,8 +219,14 @@ const description = `${additives.length} food additives explained, classified by
       );
     })}
 
-    <footer class="mt-12 text-sm text-stone-600 text-center">
-      <a href="/fr/encyclopedie/" class="text-teal-700 underline">Version française</a>
+    <footer class="mt-12 text-sm text-stone-600 text-center space-y-1">
+      <p>
+        Registry: {additives.length} E-numbers, risk levels from
+        <a href="https://www.efsa.europa.eu/en/topics/topic/food-additives" rel="external nofollow noopener" class="text-teal-700 underline">EFSA</a>
+        and <a href="https://www.anses.fr" rel="external nofollow noopener" class="text-teal-700 underline">ANSES</a>,
+        last reviewed <time datetime={datasetModified}>{updatedHuman}</time>.
+      </p>
+      <p><a href="/fr/encyclopedie/" class="text-teal-700 underline">Version française</a></p>
     </footer>
   </section>
 </BaseLayout>

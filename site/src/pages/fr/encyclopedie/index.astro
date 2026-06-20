@@ -1,11 +1,21 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import TLDRBlock from "../../../components/TLDRBlock.astro";
 import { getAllAdditives, getAllProducts } from "../../../lib/data";
+import { jsonLdDataset, formatHumanDate, isoDate } from "../../../utils/seo";
 import { siteConfig } from "../../../../site.config";
 
 const additives = await getAllAdditives();
 const allProducts = await getAllProducts(1000);
+
+// Fraicheur : date de revision la plus recente d'un additif (champ DB reel).
+const lastReviewedIso = additives.reduce((max, a) => {
+  const t = a.last_reviewed_at || "";
+  return t && t > max ? t : max;
+}, "");
+const updatedHuman = formatHumanDate(lastReviewedIso || new Date(), "fr");
+const datasetModified = isoDate(lastReviewedIso || new Date());
 
 const usageMap = new Map<string, number>();
 for (const p of allProducts) {
@@ -74,6 +84,22 @@ const breadcrumbJsonLd = {
   })),
 };
 
+// Donnees first-party : le registre de risque des additifs. Chaque compte est affiche.
+const datasetJsonLd = jsonLdDataset({
+  name: "Registre de risque des additifs NutriDécrypte",
+  description: `${additives.length} additifs alimentaires (E-numéros) classés par niveau de risque à partir des sources EFSA et ANSES : ${stats.high} risque élevé, ${stats.medium} risque moyen, ${stats.low} risque faible, ${stats.controversial} controversés, ${stats.banned} restreints dans l'UE.`,
+  url: siteConfig.url + "/fr/encyclopedie/",
+  dateModified: datasetModified,
+  variableMeasured: [
+    "E-numéro",
+    "Niveau de risque de l'additif",
+    "Indicateur de controverse",
+    "Statut de restriction UE",
+    "Nombre d'occurrences dans le catalogue",
+  ],
+  keywords: ["additifs alimentaires", "E-numéros", "EFSA", "ANSES", "risque additif"],
+});
+
 const title = `Encyclopédie des additifs alimentaires , ${additives.length} E-numéros décodés | NutriDécrypte`;
 const description = `${additives.length} additifs alimentaires expliqués, classés par niveau de risque EFSA et ANSES. E-numéros à risque, additifs controversés, et les produits qui les contiennent.`;
 ---
@@ -83,7 +109,7 @@ const description = `${additives.length} additifs alimentaires expliqués, class
   description={description}
   canonicalUrl={siteConfig.url + "/fr/encyclopedie/"}
   alternates={{ en: "/encyclopedia/", fr: "/fr/encyclopedie/" }}
-  jsonLd={breadcrumbJsonLd}
+  jsonLd={[breadcrumbJsonLd, datasetJsonLd]}
 >
   <section class="max-w-5xl mx-auto px-4 py-12">
     <Breadcrumbs items={breadcrumbs} />
@@ -94,6 +120,14 @@ const description = `${additives.length} additifs alimentaires expliqués, class
       <p class="text-lg text-stone-700 max-w-3xl mb-6">
         {additives.length} E-numéros décodés, classés par niveau de risque EFSA + ANSES. Comprends ce qu'est chaque additif, s'il est controversé, et quels produits du catalogue en contiennent.
       </p>
+
+      <TLDRBlock label="En bref">
+        Notre registre des additifs couvre <strong>{additives.length} E-numéros</strong>, chacun noté par risque :
+        <strong>{stats.high}</strong> à risque élevé, <strong>{stats.medium}</strong> à risque moyen et
+        <strong>{stats.low}</strong> à risque faible, dont <strong>{stats.controversial}</strong> controversés
+        et <strong>{stats.banned}</strong> restreints dans l'UE. Les niveaux de risque proviennent de l'EFSA et de l'ANSES.
+        Registre révisé le {updatedHuman}.
+      </TLDRBlock>
 
       <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 max-w-3xl">
         <div class="px-3 py-2 rounded-lg bg-red-50 border border-red-200 text-center">
@@ -181,8 +215,14 @@ const description = `${additives.length} additifs alimentaires expliqués, class
       );
     })}
 
-    <footer class="mt-12 text-sm text-stone-600 text-center">
-      <a href="/encyclopedia/" class="text-teal-700 underline">English version</a>
+    <footer class="mt-12 text-sm text-stone-600 text-center space-y-1">
+      <p>
+        Registre : {additives.length} E-numéros, niveaux de risque issus de
+        <a href="https://www.efsa.europa.eu/fr/topics/topic/food-additives" rel="external nofollow noopener" class="text-teal-700 underline">EFSA</a>
+        et <a href="https://www.anses.fr" rel="external nofollow noopener" class="text-teal-700 underline">ANSES</a>,
+        révisé le <time datetime={datasetModified}>{updatedHuman}</time>.
+      </p>
+      <p><a href="/encyclopedia/" class="text-teal-700 underline">English version</a></p>
     </footer>
   </section>
 </BaseLayout>

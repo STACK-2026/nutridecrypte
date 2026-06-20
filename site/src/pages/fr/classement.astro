@@ -2,7 +2,9 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import GradeReveal from "../../components/GradeReveal.astro";
+import TLDRBlock from "../../components/TLDRBlock.astro";
 import { getAllProducts, deriveCategories } from "../../lib/data";
+import { jsonLdDataset, formatHumanDate, isoDate } from "../../utils/seo";
 import { siteConfig } from "../../../site.config";
 
 const products = await getAllProducts(1000);
@@ -13,6 +15,17 @@ const dist: Record<string, number> = { A: 0, B: 0, C: 0, D: 0, E: 0 };
 for (const p of products) {
   if (p.grade) dist[p.grade] = (dist[p.grade] || 0) + 1;
 }
+
+// Fraicheur : date de mise a jour la plus recente du catalogue (timestamp DB reel).
+const lastUpdatedIso = products.reduce((max, p) => {
+  const t = p.updated_at || p.last_scored_at || "";
+  return t && t > max ? t : max;
+}, "");
+const updatedHuman = formatHumanDate(lastUpdatedIso || new Date(), "fr");
+const datasetModified = isoDate(lastUpdatedIso || new Date());
+
+// Le TL;DR ne reprend QUE des comptes deja affiches dans les cartes ci-dessous.
+const pct = (n: number) => products.length ? Math.round((n / products.length) * 100) : 0;
 
 const breadcrumbs = [
   { name: "Accueil", url: siteConfig.url + "/fr/" },
@@ -30,6 +43,24 @@ const breadcrumbJsonLd = {
   })),
 };
 
+// Schema Dataset (donnees first-party). Chaque chiffre est affiche sur la page.
+const datasetJsonLd = jsonLdDataset({
+  name: "Notes produits NutriDécrypte",
+  description: `Notes indépendantes de A à E pour ${products.length} aliments et compléments, calculées avec la méthodologie publique NutriDécrypte à 5 axes (Nutri-Score, NOVA, additifs EFSA, allégations marketing, densité nutritionnelle).`,
+  url: siteConfig.url + "/fr/classement/",
+  dateModified: datasetModified,
+  variableMeasured: [
+    "Note NutriDécrypte",
+    "Grade NutriDécrypte (A-E)",
+    "Nutri-Score",
+    "Groupe NOVA",
+    "Risque additifs EFSA",
+    "Audit des allégations marketing",
+    "Densité nutritionnelle",
+  ],
+  keywords: ["nutrition", "additifs alimentaires", "aliments ultra-transformés", "Nutri-Score", "NOVA"],
+});
+
 const title = `Classement complet , ${products.length} produits notés A à E | NutriDécrypte`;
 const description = `Classement indépendant A à E de ${products.length} aliments et compléments. Filtre par note ou catégorie. Données Nutri-Score, NOVA, additifs EFSA, ANSES.`;
 ---
@@ -39,7 +70,7 @@ const description = `Classement indépendant A à E de ${products.length} alimen
   description={description}
   canonicalUrl={siteConfig.url + "/fr/classement/"}
   alternates={{ en: "/rankings/", fr: "/fr/classement/" }}
-  jsonLd={breadcrumbJsonLd}
+  jsonLd={[breadcrumbJsonLd, datasetJsonLd]}
 >
   <section class="max-w-6xl mx-auto px-4 py-12">
     <Breadcrumbs items={breadcrumbs} />
@@ -51,6 +82,17 @@ const description = `Classement indépendant A à E de ${products.length} alimen
         {products.length} produits notés de A à E. Utilise les filtres ci-dessous pour cibler une note ou une catégorie.
       </p>
     </header>
+
+    <TLDRBlock label="En bref">
+      NutriDécrypte note <strong>{products.length} aliments et compléments</strong> de A à E.
+      Parmi eux, <strong>{dist.A || 0}</strong> obtiennent un A ({pct(dist.A || 0)}%),
+      <strong>{dist.B || 0}</strong> un B ({pct(dist.B || 0)}%),
+      <strong>{dist.C || 0}</strong> un C ({pct(dist.C || 0)}%),
+      <strong>{dist.D || 0}</strong> un D ({pct(dist.D || 0)}%) et
+      <strong>{dist.E || 0}</strong> un E ({pct(dist.E || 0)}%).
+      Chaque note est calculée de façon déterministe à partir de cinq axes publics (Nutri-Score, NOVA, additifs EFSA, allégations marketing, densité nutritionnelle).
+      Mis à jour le {updatedHuman}.
+    </TLDRBlock>
 
     <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-10">
       {(["A", "B", "C", "D", "E"] as const).map((g) => (
@@ -137,8 +179,12 @@ const description = `Classement indépendant A à E de ${products.length} alimen
       Aucun produit ne correspond à ce filtre.
     </p>
 
-    <footer class="mt-8 text-sm text-stone-600 text-center">
-      <a href="/rankings/" class="text-teal-700 underline">English version</a>
+    <footer class="mt-8 text-sm text-stone-600 text-center space-y-1">
+      <p>
+        Données du catalogue mises à jour le <time datetime={datasetModified}>{updatedHuman}</time>.
+        Les notes suivent notre <a href="/fr/methodology/" class="text-teal-700 underline">méthodologie publique</a>.
+      </p>
+      <p><a href="/rankings/" class="text-teal-700 underline">English version</a></p>
     </footer>
   </section>
 </BaseLayout>

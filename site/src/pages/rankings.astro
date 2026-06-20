@@ -2,7 +2,9 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import GradeReveal from "../components/GradeReveal.astro";
+import TLDRBlock from "../components/TLDRBlock.astro";
 import { getAllProducts, deriveCategories } from "../lib/data";
+import { jsonLdDataset, formatHumanDate, isoDate } from "../utils/seo";
 import { siteConfig } from "../../site.config";
 
 const products = await getAllProducts(1000);
@@ -14,6 +16,17 @@ const dist: Record<string, number> = { A: 0, B: 0, C: 0, D: 0, E: 0 };
 for (const p of products) {
   if (p.grade) dist[p.grade] = (dist[p.grade] || 0) + 1;
 }
+
+// Freshness: most recent product update in the catalog (real DB timestamp).
+const lastUpdatedIso = products.reduce((max, p) => {
+  const t = p.updated_at || p.last_scored_at || "";
+  return t && t > max ? t : max;
+}, "");
+const updatedHuman = formatHumanDate(lastUpdatedIso || new Date(), "en");
+const datasetModified = isoDate(lastUpdatedIso || new Date());
+
+// TL;DR uses ONLY counts already shown in the stat cards below.
+const pct = (n: number) => products.length ? Math.round((n / products.length) * 100) : 0;
 
 const breadcrumbs = [
   { name: "Home", url: siteConfig.url + "/" },
@@ -31,6 +44,24 @@ const breadcrumbJsonLd = {
   })),
 };
 
+// First-party Dataset schema. Every figure below is rendered on this page.
+const datasetJsonLd = jsonLdDataset({
+  name: "NutriDécrypte Product Grades",
+  description: `Independent A-to-E grades for ${products.length} food and supplement products, scored with the public NutriDécrypte 5-axis methodology (Nutri-Score, NOVA, EFSA additives, marketing claims, nutritional density).`,
+  url: siteConfig.url + "/rankings/",
+  dateModified: datasetModified,
+  variableMeasured: [
+    "NutriDécrypte Score",
+    "NutriDécrypte Grade (A-E)",
+    "Nutri-Score",
+    "NOVA group",
+    "EFSA additive risk",
+    "Marketing claims audit",
+    "Nutritional density",
+  ],
+  keywords: ["nutrition", "food additives", "ultra-processed food", "Nutri-Score", "NOVA"],
+});
+
 const title = `Full rankings , ${products.length} products graded A to E | NutriDécrypte`;
 const description = `Independent A to E ranking of ${products.length} food and supplement products. Filter by grade or category. Data from Nutri-Score, NOVA, EFSA additives and ANSES.`;
 ---
@@ -40,7 +71,7 @@ const description = `Independent A to E ranking of ${products.length} food and s
   description={description}
   canonicalUrl={siteConfig.url + "/rankings/"}
   alternates={{ en: "/rankings/", fr: "/fr/classement/" }}
-  jsonLd={breadcrumbJsonLd}
+  jsonLd={[breadcrumbJsonLd, datasetJsonLd]}
 >
   <section class="max-w-6xl mx-auto px-4 py-12">
     <Breadcrumbs items={breadcrumbs} />
@@ -52,6 +83,17 @@ const description = `Independent A to E ranking of ${products.length} food and s
         {products.length} products graded A to E. Use the filters below to focus on a grade or a category.
       </p>
     </header>
+
+    <TLDRBlock label="In short">
+      NutriDécrypte grades <strong>{products.length} food and supplement products</strong> from A to E.
+      Of these, <strong>{dist.A || 0}</strong> score A ({pct(dist.A || 0)}%),
+      <strong>{dist.B || 0}</strong> score B ({pct(dist.B || 0)}%),
+      <strong>{dist.C || 0}</strong> score C ({pct(dist.C || 0)}%),
+      <strong>{dist.D || 0}</strong> score D ({pct(dist.D || 0)}%) and
+      <strong>{dist.E || 0}</strong> score E ({pct(dist.E || 0)}%).
+      Each grade is computed deterministically from five public axes (Nutri-Score, NOVA, EFSA additives, marketing claims, nutritional density).
+      Updated {updatedHuman}.
+    </TLDRBlock>
 
     <!-- Stats cards -->
     <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-10">
@@ -141,8 +183,12 @@ const description = `Independent A to E ranking of ${products.length} food and s
       No product matches your filter.
     </p>
 
-    <footer class="mt-8 text-sm text-stone-600 text-center">
-      <a href="/fr/classement/" class="text-teal-700 underline">Version française</a>
+    <footer class="mt-8 text-sm text-stone-600 text-center space-y-1">
+      <p>
+        Catalog data updated on <time datetime={datasetModified}>{updatedHuman}</time>.
+        Grades follow our <a href="/methodology/" class="text-teal-700 underline">public methodology</a>.
+      </p>
+      <p><a href="/fr/classement/" class="text-teal-700 underline">Version française</a></p>
     </footer>
   </section>
 </BaseLayout>

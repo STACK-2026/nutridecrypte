@@ -5,7 +5,7 @@ import GradeReveal from "../../components/GradeReveal.astro";
 import LabelScanLine from "../../components/LabelScanLine.astro";
 import Glossaire from "../../components/Glossaire.astro";
 import FaqSection from "../../components/FaqSection.astro";
-import { buildProductFaq, jsonLdFaq } from "../../utils/seo";
+import { buildProductFaq, jsonLdFaq, formatHumanDate, isoDate } from "../../utils/seo";
 import {
   getAllProducts,
   getProductsByCategory,
@@ -119,7 +119,12 @@ const productJsonLd: Record<string, unknown> = {
       }
     : {}),
   ...(product.barcode ? { gtin13: product.barcode } : {}),
+  dateModified: isoDate(product.updated_at || product.last_scored_at || new Date()),
 };
+
+// Visible freshness for the fiche (real DB timestamp).
+const productUpdatedHuman = formatHumanDate(product.updated_at || product.last_scored_at || new Date(), "fr");
+const productUpdatedIso = isoDate(product.updated_at || product.last_scored_at || new Date());
 
 if (product.grade && product.score_overall != null) {
   productJsonLd.aggregateRating = {
@@ -233,6 +238,9 @@ const faq = buildProductFaq(product, "en");
           </strong>{product.score_overall != null ? ` avec un score global de ${product.score_overall}/100` : ""}.
           {verdictFr}
           Cette évaluation combine Nutri-Score, classification NOVA, indice de risque additifs (EFSA), audit des allégations et densité nutritionnelle, dans un verdict déterministe issu des données Open Food Facts, EFSA et ANSES.
+        </p>
+        <p class="text-xs text-stone-500 mb-3">
+          Fiche mise à jour le <time datetime={productUpdatedIso}>{productUpdatedHuman}</time>.
         </p>
         <details class="text-sm text-stone-600">
           <summary class="cursor-pointer font-medium">English summary</summary>

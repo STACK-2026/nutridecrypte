@@ -145,6 +145,77 @@ export function jsonLdFaq(
   };
 }
 
+/**
+ * Format an ISO date (or Date) into a human readable "mis a jour le" string.
+ * FR: "20 juin 2026" ; EN: "June 20, 2026". Falls back to today on bad input.
+ */
+export function formatHumanDate(input: string | Date | null | undefined, locale: "fr" | "en" = "fr"): string {
+  let d: Date;
+  if (input instanceof Date) d = input;
+  else if (typeof input === "string" && input) d = new Date(input);
+  else d = new Date();
+  if (isNaN(d.getTime())) d = new Date();
+  return d.toLocaleDateString(locale === "fr" ? "fr-FR" : "en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+/** Return ISO-8601 date (YYYY-MM-DD) for schema dateModified. */
+export function isoDate(input: string | Date | null | undefined): string {
+  let d: Date;
+  if (input instanceof Date) d = input;
+  else if (typeof input === "string" && input) d = new Date(input);
+  else d = new Date();
+  if (isNaN(d.getTime())) d = new Date();
+  return d.toISOString().slice(0, 10);
+}
+
+/**
+ * JSON-LD Dataset for first-party data pages (rankings, encyclopedia, vs).
+ * STRICT RULE: every numeric value passed in must already be visible in the
+ * page HTML. This builder never invents figures, it only wraps what the page
+ * already renders so LLMs can attribute the data to NutriDecrypte.
+ */
+export function jsonLdDataset(opts: {
+  name: string;
+  description: string;
+  url: string;
+  dateModified: string; // ISO date
+  variableMeasured: string[];
+  keywords?: string[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    name: opts.name,
+    description: opts.description,
+    url: opts.url,
+    dateModified: opts.dateModified,
+    license: "https://opendatacommons.org/licenses/odbl/1-0/",
+    isAccessibleForFree: true,
+    variableMeasured: opts.variableMeasured,
+    measurementTechnique: "NutriDecrypte 5-axis deterministic scoring",
+    ...(opts.keywords ? { keywords: opts.keywords } : {}),
+    creator: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+    isBasedOn: [
+      "https://world.openfoodfacts.org",
+      "https://www.efsa.europa.eu",
+      "https://www.anses.fr",
+    ],
+  };
+}
+
 /** JSON-LD for BreadcrumbList */
 export function jsonLdBreadcrumbs(
   items: Array<{ name: string; url: string }>
@@ -164,7 +235,7 @@ export function jsonLdBreadcrumbs(
 /**
  * Build a dynamic, data-derived FAQ for a product page (FR/EN). Every answer
  * restates a real signal from the product record (grade, NOVA group, additives,
- * Nutri-Score) — no fabrication. Returns 3-5 {question, answer} pairs.
+ * Nutri-Score), no fabrication. Returns 3-5 {question, answer} pairs.
  */
 export function buildProductFaq(
   p: any,

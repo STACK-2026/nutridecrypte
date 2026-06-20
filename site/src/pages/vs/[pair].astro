@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import GradeReveal from "../../components/GradeReveal.astro";
 import { getAllProducts, pickVerdict, type Product } from "../../lib/data";
+import { jsonLdDataset, formatHumanDate, isoDate } from "../../utils/seo";
 import { siteConfig } from "../../../site.config";
 
 export async function getStaticPaths() {
@@ -77,6 +78,31 @@ const breadcrumbJsonLd = {
   })),
 };
 
+// Freshness from the two compared products (real DB timestamps).
+const pairUpdatedIso = [a, b].reduce((max, p) => {
+  const t = p.updated_at || p.last_scored_at || "";
+  return t && t > max ? t : max;
+}, "");
+const updatedHuman = formatHumanDate(pairUpdatedIso || new Date(), "en");
+const datasetModified = isoDate(pairUpdatedIso || new Date());
+
+// First-party Dataset: this head-to-head comparison. Every value is rendered below.
+const datasetJsonLd = jsonLdDataset({
+  name: `${a.name} vs ${b.name} , NutriDécrypte comparison`,
+  description: `Axis-by-axis NutriDécrypte comparison of ${a.name} (${a.score_overall ?? "?"}/100${a.grade ? `, grade ${a.grade}` : ""}) and ${b.name} (${b.score_overall ?? "?"}/100${b.grade ? `, grade ${b.grade}` : ""}) on Nutri-Score, NOVA, EFSA additives, marketing claims and nutritional density.`,
+  url: canonicalUrl,
+  dateModified: datasetModified,
+  variableMeasured: [
+    "NutriDécrypte Score",
+    "Nutri-Score sub-score",
+    "NOVA sub-score",
+    "EFSA additives sub-score",
+    "Marketing claims sub-score",
+    "Nutritional density sub-score",
+  ],
+  keywords: ["food comparison", "Nutri-Score", "NOVA", "additives"],
+});
+
 const items = [a, b];
 ---
 
@@ -84,7 +110,7 @@ const items = [a, b];
   title={title}
   description={description}
   canonicalUrl={canonicalUrl}
-  jsonLd={breadcrumbJsonLd}
+  jsonLd={[breadcrumbJsonLd, datasetJsonLd]}
   alternates={{ en: "/vs/" + a.slug + "-vs-" + b.slug + "/", fr: "/fr/vs/" + a.slug + "-vs-" + b.slug + "/" }}
 >
   <section class="max-w-5xl mx-auto px-4 py-12">
@@ -209,8 +235,12 @@ const items = [a, b];
       ))}
     </section>
 
-    <footer class="mt-12 text-sm text-stone-600 text-center">
-      <a href={"/fr/vs/" + a.slug + "-vs-" + b.slug + "/"} class="text-teal-700 underline">Version francaise</a>
+    <footer class="mt-12 text-sm text-stone-600 text-center space-y-1">
+      <p>
+        Sub-scores updated on <time datetime={datasetModified}>{updatedHuman}</time>,
+        computed with our <a href="/methodology/" class="text-teal-700 underline">public methodology</a>.
+      </p>
+      <p><a href={"/fr/vs/" + a.slug + "-vs-" + b.slug + "/"} class="text-teal-700 underline">Version française</a></p>
     </footer>
   </section>
 </BaseLayout>

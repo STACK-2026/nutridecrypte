@@ -1,8 +1,13 @@
 ---
 import { getLocale, type Locale } from "../../i18n/t";
 import { WEIGHTS, GRADE_THRESHOLDS } from "../../lib/scoring";
+import { formatHumanDate, isoDate } from "../../utils/seo";
 
 const locale: Locale = getLocale(Astro.url);
+
+// Methodology revision date = build date (the doc is regenerated each build).
+const reviewedIso = isoDate(new Date());
+const reviewedHuman = formatHumanDate(new Date(), locale);
 
 const axes = [
   {
@@ -89,6 +94,10 @@ const weightPct = {
         ? "Chaque produit reçoit une note unique de A à E, composée de cinq axes pondérés. Aucun jugement humain, aucune influence sponsor, aucune IA black-box. L'algorithme est déterministe et reproductible : même liste d'ingrédients, même note."
         : "Every product receives a single A to E grade composed from five weighted axes. No human judgement, no sponsor influence, no black-box AI. The algorithm is deterministic and reproducible: same ingredient list, same grade."}
     </p>
+    <p class="reviewed-line">
+      {locale === "fr" ? "Dernière révision : " : "Last reviewed: "}
+      <time datetime={reviewedIso}>{reviewedHuman}</time>
+    </p>
   </header>
 
   <aside class="tldr" data-speakable>
@@ -171,27 +180,27 @@ Score = {weightPct.nutriScore}% · Nutri-Score
     <h2>{locale === "fr" ? "Nos sources officielles" : "Our official sources"}</h2>
     <ul class="sources-list">
       <li>
-        <strong>Open Food Facts</strong>
+        <strong><a href="https://world.openfoodfacts.org" rel="external nofollow noopener">Open Food Facts</a></strong>
         <span>{locale === "fr" ? "Base collaborative de 3 millions de produits européens, licence ODbL." : "Collaborative database of 3 million European products, ODbL licence."}</span>
       </li>
       <li>
-        <strong>EFSA</strong>
+        <strong><a href="https://www.efsa.europa.eu/en/topics/topic/food-additives" rel="external nofollow noopener">EFSA</a></strong>
         <span>{locale === "fr" ? "European Food Safety Authority, base des additifs, avis scientifiques." : "European Food Safety Authority, additives database, scientific opinions."}</span>
       </li>
       <li>
-        <strong>ANSES</strong>
+        <strong><a href="https://www.anses.fr" rel="external nofollow noopener">ANSES</a></strong>
         <span>{locale === "fr" ? "Agence nationale de sécurité sanitaire FR, rapports nutrition, avis risques." : "French national food safety agency, nutrition reports, risk opinions."}</span>
       </li>
       <li>
-        <strong>NOVA</strong>
+        <strong><a href="https://world.openfoodfacts.org/nova" rel="external nofollow noopener">NOVA</a></strong>
         <span>{locale === "fr" ? "Classification des aliments par degré de transformation, Université de São Paulo." : "Food classification by degree of processing, University of São Paulo."}</span>
       </li>
       <li>
-        <strong>Nutri-Score</strong>
+        <strong><a href="https://www.santepubliquefrance.fr/determinants-de-sante/nutrition-et-activite-physique/articles/nutri-score" rel="external nofollow noopener">Nutri-Score</a></strong>
         <span>{locale === "fr" ? "Logo nutritionnel officiel FR, Santé publique France." : "Official FR nutrition logo, Santé publique France."}</span>
       </li>
       <li>
-        <strong>data.gouv.fr</strong>
+        <strong><a href="https://www.data.gouv.fr" rel="external nofollow noopener">data.gouv.fr</a></strong>
         <span>{locale === "fr" ? "Jeux de données nutrition et sécurité sanitaire, INCA 3, CIQUAL." : "Nutrition and food safety datasets, INCA 3, CIQUAL."}</span>
       </li>
     </ul>
@@ -259,6 +268,9 @@ Score = {weightPct.nutriScore}% · Nutri-Score
     font-size: clamp(2rem, 5vw, 3rem);
   }
   .lede { color: var(--color-ink-soft); font-size: 1.1rem; }
+  .reviewed-line { margin-top: 0.6rem; font-size: 0.85rem; color: var(--color-ink-soft); }
+  .reviewed-line time { font-weight: 600; }
+  .sources-list a { color: var(--color-primary, #0f766e); text-decoration: underline; }
 
   .tldr {
     max-width: 48rem;
