@@ -355,10 +355,10 @@
       "intent": "informational",
       "author_pen_name": "Sarah Keller",
       "angle": "Faire le tri entre la panique oméga-6 et les preuves réelles",
-      "done": false,
-      "published": false,
-      "published_at": null,
-      "reconciled": false
+      "done": true,
+      "published": true,
+      "published_at": "2026-06-22",
+      "reconciled": true
     },
     {
       "slug": "sirop-glucose-fructose-dangers-sante",
