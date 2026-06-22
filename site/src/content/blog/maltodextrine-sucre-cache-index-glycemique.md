@@ -1,5 +1,5 @@
 ---
-title: "Maltodextrine : le sucre caché à index glycémique élevé que personne ne lit"
+title: "Maltodextrine : sucre caché, IG élevé, où la débusquer ?"
 description: "Maltodextrine : un additif à index glycémique souvent supérieur au sucre de table. Où elle se cache, ce que dit la science et comment la repérer en 2026."
 date: 2026-06-11 08:00:00+02:00
 author: "Sarah Keller"

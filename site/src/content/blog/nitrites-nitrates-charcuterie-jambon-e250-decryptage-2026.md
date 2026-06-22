@@ -12,7 +12,7 @@ lastReviewed: 2026-05-29
 reviewedBy: NutriDecrypte Editorial
 tags:
 - nitrites nitrates charcuterie jambon danger
-title: "Nitrites et nitrates dans la charcuterie (E249-E252) : ce que dit vraiment la science en 2026"
+title: "Nitrites et nitrates charcuterie : risque santé 2026"
 ---
 
 **TL;DR**

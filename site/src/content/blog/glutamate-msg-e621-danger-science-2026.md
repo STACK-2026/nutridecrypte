@@ -1,5 +1,5 @@
 ---
-title: "Glutamate (E621) : danger ou pas ? Ce que dit vraiment la science"
+title: "Glutamate (E621) : mythe ou réalité ? Le vrai du faux 2024"
 description: "Glutamate monosodique E621 : le mythe du syndrome du restaurant chinois, ce que disent l'EFSA et la science, et la vraie question à se poser."
 date: 2026-06-01
 author: "Camille Roux"

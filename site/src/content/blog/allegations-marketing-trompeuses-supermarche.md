@@ -14,7 +14,7 @@ lastReviewed: 2026-05-11
 reviewedBy: NutriDecrypte Editorial
 tags:
 - allegations nutritionnelles trompeuses
-title: 'Allégations nutritionnelles trompeuses : 17 pièges à éviter en magasin'
+title: "Allégations nutritionnelles : décryptez 17 pièges"
 ---
 
 **TL;DR**

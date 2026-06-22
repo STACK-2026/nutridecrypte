@@ -1,5 +1,5 @@
 ---
-title: "Huile de palme : impact santé et environnement, comment l'éviter"
+title: "Huile de palme : risques santé, environnement, la limiter"
 description: "Huile de palme : risques santé (acides gras saturés, esters 3-MCPD), enjeu environnemental et comment la repérer sur l'étiquette pour la limiter."
 date: 2026-06-01
 author: "Camille Roux"

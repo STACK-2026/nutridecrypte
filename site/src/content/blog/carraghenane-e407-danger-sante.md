@@ -1,5 +1,5 @@
 ---
-title: "Carraghénane (E407) : danger réel ou peur infondée ? Ce que dit la science"
+title: "Carraghénane E407 : danger réel ? Ce que dit la science 2026"
 description: "Carraghénane E407 : épaississant ultra-courant accusé d'inflammation intestinale. Ce que disent vraiment l'EFSA, la JECFA et les études en 2026."
 date: 2026-06-09 08:10:00+02:00
 author: "Camille Roux"

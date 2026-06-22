@@ -13,7 +13,7 @@ lastReviewed: 2026-05-21
 reviewedBy: NutriDecrypte Editorial
 tags:
 - e numbers banned EU allowed US
-title: 'E-numbers banned in the EU but allowed in the US: the full 2026 list'
+title: "Quels additifs E interdits UE, autorisés US ? (2026)"
 ---
 
 **TL;DR**

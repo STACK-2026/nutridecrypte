@@ -15,7 +15,7 @@ lastReviewed: 2026-05-27
 reviewedBy: NutriDecrypte Editorial
 tags:
 - ultra processed food
-title: 'Ultra-Processed Food: NOVA Classification Explained & Why It Matters'
+title: "Aliments Ultra-Transformés : Classification NOVA, Risques"
 ---
 
 ---

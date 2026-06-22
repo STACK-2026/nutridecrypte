@@ -1,5 +1,5 @@
 ---
-title: "Benzoate de sodium (E211) : où il se cache et quels risques réels"
+title: "Benzoate de sodium E211 : dangers, où il se cache (2026)"
 description: "Benzoate de sodium E211 : conservateur des sodas et sauces acides. Où il se cache, ce que dit l'EFSA, le risque benzène et le vrai niveau de danger en 2026."
 date: 2026-06-10 08:00:00+02:00
 author: "Thomas Moreau"

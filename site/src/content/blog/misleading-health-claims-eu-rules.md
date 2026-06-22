@@ -14,8 +14,7 @@ lastReviewed: 2026-05-21
 reviewedBy: NutriDecrypte Editorial
 tags:
 - misleading health claims food
-title: 'Misleading health claims on food: what EU Regulation 1924 actually allows
-  (and what it does not)'
+title: "Allégations santé : vrai ou faux selon le Règlement UE 1924"
 ---
 
 **TL;DR**

@@ -13,7 +13,7 @@ lastReviewed: 2026-05-21
 reviewedBy: NutriDecrypte Editorial
 tags:
 - label bio ab europeen difference
-title: 'Label AB, Bio européen, Demeter, Nature et Progrès : les 7 labels bio décryptés'
+title: "Labels bio : décryptez les vraies garanties, choisissez bien"
 ---
 
 **TL;DR**

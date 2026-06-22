@@ -1,5 +1,5 @@
 ---
-title: "BHA (E320) et BHT (E321) : faut-il craindre ces antioxydants de synthèse ?"
+title: "BHA E320 BHT E321 : Faut-il craindre ces additifs ? 2026"
 description: "BHA E320 et BHT E321 : antioxydants de synthèse des aliments gras. Statut réglementaire, classement cancérogène, doses et vrai risque décryptés en 2026."
 date: 2026-06-16 08:00:00+02:00
 author: "Sarah Keller"

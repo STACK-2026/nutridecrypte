@@ -12,7 +12,7 @@ lastReviewed: 2026-05-28
 reviewedBy: NutriDecrypte Editorial
 tags:
 - edulcorants artificiels aspartame sucralose
-title: "Édulcorants artificiels en 2026 : aspartame, sucralose, acésulfame K, stévia décryptés"
+title: "Édulcorants artificiels : OMS, risques santé 2026"
 ---
 
 **TL;DR**

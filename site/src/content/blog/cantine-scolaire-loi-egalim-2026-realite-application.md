@@ -18,8 +18,7 @@ tags:
 - restauration collective
 - bio
 - ANSES
-title: 'Cantine scolaire et loi EGalim en 2026 : ce que la loi impose vraiment (et
-  ce qu''elle ne dit pas)'
+title: "Loi EGalim cantine 2026 : ce qu'elle impose"
 ---
 
 Sept millions d'enfants déjeunent chaque jour dans une cantine scolaire en France, de la maternelle au lycée. Depuis le 1er janvier 2022, la loi EGalim impose à toutes ces cantines, publiques comme privées, des règles précises sur l'origine et la qualité des produits servis : au moins 50 % de produits durables et de qualité, dont 20 % de bio, deux menus végétariens par semaine, et la fin progressive du plastique. Quatre ans plus tard, en 2026, l'application sur le terrain reste très inégale. Le rapport de la Cour des comptes de janvier 2024 a chiffré : 12 % seulement des cantines auditées atteignaient l'objectif des 50 % durable, 27 % celui des 20 % bio. Pour les parents qui veulent comprendre ce que mange leur enfant à midi, le cadre légal est précis mais la réalité varie d'une commune à l'autre.

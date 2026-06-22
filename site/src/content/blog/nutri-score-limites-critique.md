@@ -19,8 +19,7 @@ tags:
 - ultra-transformé
 - NOVA
 - ANSES
-title: 'Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels
-  exploitent'
+title: "Nutri-Score : pourquoi il ne suffit plus, 5 angles morts"
 ---
 
 Depuis sa mise en place officielle en 2017 et sa validation européenne en 2020, le Nutri-Score a changé la donne au supermarché français. Un simple logo, cinq couleurs, une lettre de A à E : l'outil est lisible, comparable, et s'appuie sur une modélisation scientifique solide de Santé publique France. Près de 70 % des industriels français l'affichent volontairement sur leur emballage en 2026, selon les relevés de [Santé publique France](https://www.santepubliquefrance.fr). Les études d'impact, notamment celles publiées dans le [BMJ Open](https://bmjopen.bmj.com/content/12/10/e061979) et dans l'European Journal of Clinical Nutrition, montrent que les choix des consommateurs se sont effectivement orientés vers des produits mieux notés depuis son déploiement.

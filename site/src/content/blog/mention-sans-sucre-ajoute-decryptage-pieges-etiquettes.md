@@ -19,8 +19,7 @@ tags:
 - édulcorants
 - EFSA
 - ANSES
-title: 'Mention ''sans sucre ajouté'' : ce qui se cache vraiment derrière l''étiquette
-  en 2026'
+title: "Mention sans sucre ajouté : pièges et vérités 2026"
 ---
 
 La mention « sans sucre ajouté » est devenue l'un des arguments marketing les plus efficaces du rayon. On la trouve sur des compotes, des yaourts, des biscuits pour bébés, des céréales du petit-déjeuner, des barres protéinées, des sodas et même certains alcools. En 2024, plus de 40 % des nouveaux produits lancés en grande distribution en France portaient une allégation liée au sucre, selon les données de l'observatoire Mintel cité par l'ANSES. Le problème : cette mention raconte une moitié de l'histoire seulement. Un jus de fruits « sans sucre ajouté » peut contenir 11 g de sucres naturels par 100 ml, soit autant qu'un cola classique. Une compote « sans sucre ajouté » à base de concentré de pomme peut avoir un index glycémique supérieur à celui d'un yaourt sucré.

@@ -14,8 +14,7 @@ lastReviewed: 2026-05-21
 reviewedBy: NutriDecrypte Editorial
 tags:
 - sucres caches etiquette noms
-title: 'Sucres cachés : les 67 noms différents que l''industrie utilise pour masquer
-  le sucre'
+title: "Sucres cachés : 67 noms que l'industrie utilise pour masquer"
 ---
 
 **TL;DR**

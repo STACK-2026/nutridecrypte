@@ -1,5 +1,5 @@
 ---
-title: "Sulfites (E220) : où ils se cachent (vin, fruits secs) et leurs effets"
+title: "Sulfites E220 : où ils se cachent, dangers réels 2026"
 description: "Sulfites E220 : conservateurs du vin, des fruits secs et des crevettes. Où ils se cachent, ce que dit l'EFSA, le risque asthme et le vrai danger en 2026."
 date: 2026-06-15 08:00:00+02:00
 author: "Thomas Moreau"

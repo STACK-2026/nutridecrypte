@@ -19,7 +19,7 @@ tags:
 - EFSA
 - ANSES
 - ultra-transformé
-title: 'Additifs alimentaires à éviter en 2026 : la liste noire des E-numéros'
+title: "Additifs alimentaires à éviter : liste noire 2026"
 ---
 
 Sur les 400 et quelques additifs autorisés dans l'Union européenne, une quinzaine concentrent à eux seuls la majorité des alertes scientifiques récentes. Le dioxyde de titane (E171) a été interdit dans l'alimentaire européen en 2022. L'aspartame (E951) a été classé « possiblement cancérogène pour l'humain » par le CIRC de l'OMS en juillet 2023. Les nitrites (E249, E250) sont dans le viseur de l'ANSES depuis son avis de juillet 2022 et la loi française leur impose une réduction progressive des doses jusqu'en 2027. Les édulcorants intenses, les colorants azoïques, les émulsifiants à large spectre : chaque mois apporte une nouvelle étude qui re-situe un E-numéro dans la zone rouge.

@@ -18,8 +18,7 @@ tags:
 - santé
 - INSERM
 - NutriNet
-title: 'Ultra-transformés : la classification NOVA expliquée (et pourquoi c''est plus
-  important que le Nutri-Score)'
+title: "Ultra-transformés : la classification NOVA expliquée"
 ---
 
 En France, 33 % des calories consommées par un adulte proviennent d'aliments ultra-transformés, selon les dernières données de la cohorte NutriNet-Santé. Chez les enfants et les adolescents, ce chiffre monte à 46 %. Ces aliments NOVA 4 se définissent non pas par leurs macronutriments mais par leur mode de production : ingrédients fractionnés, additifs cosmétiques, procédés industriels absents d'une cuisine domestique. Et pour la première fois depuis les travaux fondateurs d'Ancel Keys sur les graisses dans les années 1970, la communauté nutritionnelle internationale est en train de se mettre d'accord sur un point : le degré de transformation d'un aliment compte autant que sa composition en macronutriments.
