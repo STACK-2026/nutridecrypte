@@ -127,7 +127,7 @@ Trois leviers concrets permettent à un parent d'agir sur la qualité de la cant
 
 **Le conseil municipal et la délibération budgétaire**. C'est le conseil qui vote chaque année le budget cantine et qui arbitre entre prix du ticket et qualité des achats. Une intervention en séance, une question écrite ou une pétition signée par des parents pèsent réellement dans les communes de moins de 10 000 habitants. La loi du 6 février 1992 a renforcé les droits d'information du citoyen sur les décisions de gestion.
 
-**L'association de parents et la presse locale**. Plusieurs collectifs (Cantines en herbe, Un Plus Bio, Vert l'avenir) accompagnent les parents qui veulent monter un dossier comparatif sur leur cantine. Les enquêtes locales relayées par la presse régionale ont déclenché plus de transitions vers le bio que les sanctions administratives. Notre [article sur les ultra-transformés](/blog/ultra-transforme-nova-classification/) et notre [analyse des allégations marketing](/blog/allegations-marketing-trompeuses-supermarche/) donnent les clés de lecture pour décoder ce qui se cache derrière les communications des cantines.
+**L'association de parents et la presse locale**. Plusieurs collectifs (Cantines en herbe, Un Plus Bio, Vert l'avenir) accompagnent les parents qui veulent monter un dossier comparatif sur leur cantine. Les enquêtes locales relayées par la presse régionale ont déclenché plus de transitions vers le bio que les sanctions administratives. Notre [article sur les ultra-transformés](/fr/blog/ultra-transforme-nova-classification/) et notre [analyse des allégations marketing](/fr/blog/allegations-marketing-trompeuses-supermarche/) donnent les clés de lecture pour décoder ce qui se cache derrière les communications des cantines.
 
 Le pouvoir des parents en France sur la cantine est sous-utilisé. Là où il est exercé collectivement, les changements vont vite : la commune de Mouans-Sartoux (Alpes-Maritimes) est passée à 100 % bio en cinq ans grâce à une régie agricole municipale, sans hausse du prix du ticket cantine, devenant le cas d'école officiellement documenté par le ministère.
 
@@ -180,7 +180,7 @@ Adressez d'abord une demande écrite au directeur d'école et copie au maire. En
 
 ## Articles connexes
 
-- [Additifs alimentaires à éviter en 2026 : la liste noire des E-numéros](/additifs-alimentaires-a-eviter-2026/)
-- [Mention 'sans sucre ajouté' : ce qui se cache vraiment derrière l'étiquette en 2026](/mention-sans-sucre-ajoute-decryptage-pieges-etiquettes/)
-- [Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels exploitent](/nutri-score-limites-critique/)
-- [Label AB, Bio européen, Demeter, Nature et Progrès : les 7 labels bio décryptés](/bio-label-ab-europeen-vraiment-different/)
+- [Additifs alimentaires à éviter en 2026 : la liste noire des E-numéros](/fr/blog/additifs-alimentaires-a-eviter-2026/)
+- [Mention 'sans sucre ajouté' : ce qui se cache vraiment derrière l'étiquette en 2026](/fr/blog/mention-sans-sucre-ajoute-decryptage-pieges-etiquettes/)
+- [Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels exploitent](/fr/blog/nutri-score-limites-critique/)
+- [Label AB, Bio européen, Demeter, Nature et Progrès : les 7 labels bio décryptés](/fr/blog/bio-label-ab-europeen-vraiment-different/)

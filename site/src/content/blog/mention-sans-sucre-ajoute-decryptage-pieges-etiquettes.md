@@ -204,7 +204,7 @@ Ceux qui combinent trois caractéristiques : une matrice alimentaire peu transfo
 
 ## Articles connexes
 
-- [Additifs alimentaires à éviter en 2026 : la liste noire des E-numéros](/additifs-alimentaires-a-eviter-2026/)
-- [Cantine scolaire et loi EGalim en 2026 : ce que la loi impose vraiment (et ce qu'elle ne dit pas)](/cantine-scolaire-loi-egalim-2026-realite-application/)
-- [Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels exploitent](/nutri-score-limites-critique/)
-- [Sucres cachés : les 67 noms différents que l'industrie utilise pour masquer le sucre](/sucres-caches-etiquettes-noms-differents/)
+- [Additifs alimentaires à éviter en 2026 : la liste noire des E-numéros](/fr/blog/additifs-alimentaires-a-eviter-2026/)
+- [Cantine scolaire et loi EGalim en 2026 : ce que la loi impose vraiment (et ce qu'elle ne dit pas)](/fr/blog/cantine-scolaire-loi-egalim-2026-realite-application/)
+- [Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels exploitent](/fr/blog/nutri-score-limites-critique/)
+- [Sucres cachés : les 67 noms différents que l'industrie utilise pour masquer le sucre](/fr/blog/sucres-caches-etiquettes-noms-differents/)

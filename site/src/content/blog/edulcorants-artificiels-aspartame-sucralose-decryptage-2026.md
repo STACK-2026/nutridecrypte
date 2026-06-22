@@ -354,8 +354,8 @@ Consulte la base en ligne sur **nutridecrypte.com** et notre [méthodologie comp
 
 ## Articles connexes
 
-- [Sucres cachés : les 67 noms différents que l'industrie utilise pour masquer le sucre](/sucres-caches-etiquettes-noms-differents/)
-- [Mention "sans sucre ajouté" : décryptage des pièges sur les étiquettes](/mention-sans-sucre-ajoute-decryptage-pieges-etiquettes/)
-- [Additifs alimentaires à éviter en 2026 : la liste des 12 codes E les plus problématiques](/additifs-alimentaires-a-eviter-2026/)
-- [Dioxyde de titane (E171) en 2026 : où en est-on vraiment ?](/dioxyde-titane-e171-etat-2026/)
-- [Allégations marketing trompeuses au supermarché : 15 pièges à reconnaître](/allegations-marketing-trompeuses-supermarche/)
+- [Sucres cachés : les 67 noms différents que l'industrie utilise pour masquer le sucre](/fr/blog/sucres-caches-etiquettes-noms-differents/)
+- [Mention "sans sucre ajouté" : décryptage des pièges sur les étiquettes](/fr/blog/mention-sans-sucre-ajoute-decryptage-pieges-etiquettes/)
+- [Additifs alimentaires à éviter en 2026 : la liste des 12 codes E les plus problématiques](/fr/blog/additifs-alimentaires-a-eviter-2026/)
+- [Dioxyde de titane (E171) en 2026 : où en est-on vraiment ?](/fr/blog/dioxyde-titane-e171-etat-2026/)
+- [Allégations marketing trompeuses au supermarché : 15 pièges à reconnaître](/fr/blog/allegations-marketing-trompeuses-supermarche/)

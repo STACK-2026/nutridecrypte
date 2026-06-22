@@ -572,7 +572,7 @@ NutriDecrypte est là pour t’aider à **reprendre le contrôle de ta santé** 
 
 ## Articles connexes
 
-- [Meilleur magnésium 2026 : bisglycinate vs citrate vs oxyde (classement honnête)](/magnesium-complement-meilleur-2026/)
-- [Oméga-3 : EPA vs DHA vs ALA, quel complément choisir en 2026 ?](/omega-3-complement-epa-dha-differences/)
-- [Collagène : est-ce que les compléments marchent vraiment ? Ce que dit la science en 2026](/collagene-complement-efficace-science/)
-- [Label AB, Bio européen, Demeter, Nature et Progrès : les 7 labels bio décryptés](/bio-label-ab-europeen-vraiment-different/)
+- [Meilleur magnésium 2026 : bisglycinate vs citrate vs oxyde (classement honnête)](/fr/blog/magnesium-complement-meilleur-2026/)
+- [Oméga-3 : EPA vs DHA vs ALA, quel complément choisir en 2026 ?](/fr/blog/omega-3-complement-epa-dha-differences/)
+- [Collagène : est-ce que les compléments marchent vraiment ? Ce que dit la science en 2026](/fr/blog/collagene-complement-efficace-science/)
+- [Label AB, Bio européen, Demeter, Nature et Progrès : les 7 labels bio décryptés](/fr/blog/bio-label-ab-europeen-vraiment-different/)

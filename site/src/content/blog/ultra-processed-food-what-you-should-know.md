@@ -149,7 +149,7 @@ UPFs aren't just bad for your body - they're **bad for the planet** and **ethica
 - **Water usage**: UPFs require **5x more water** to produce than whole foods (Water Footprint Network 2022)
 - **Animal welfare**: UPFs often contain **factory-farmed meat**, contributing to **poor animal welfare standards** (Compassion in World Farming 2023)
 
-**NutriDecrypte's sustainability scores**: Our [E-numbers banned in the EU but allowed in the US guide](/e-numbers-banned-eu-safe-us/) shows how regulatory gaps shape what ends up in your trolley, and our health and environmental scoring flags UPFs with high carbon footprints.
+**NutriDecrypte's sustainability scores**: Our [E-numbers banned in the EU but allowed in the US guide](/blog/e-numbers-banned-eu-safe-us/) shows how regulatory gaps shape what ends up in your trolley, and our health and environmental scoring flags UPFs with high carbon footprints.
 
 ---
 
@@ -332,7 +332,7 @@ You don't need to cook everything from scratch. **Semi-homemade meals** combine 
    - **Fruit**: Banana or berries (Group 1)
    - **Extras**: Chia seeds or flaxseeds (Group 1)
 
-**NutriDecrypte hack**: Pair these meals with our deep dive on [misleading health claims under EU Regulation 1924](/misleading-health-claims-eu-rules/) so you stop being tricked by "high in fibre" or "source of protein" labels on otherwise UPF products.
+**NutriDecrypte hack**: Pair these meals with our deep dive on [misleading health claims under EU Regulation 1924](/blog/misleading-health-claims-eu-rules/) so you stop being tricked by "high in fibre" or "source of protein" labels on otherwise UPF products.
 
 ### Step 5: Plan for cravings with whole-food alternatives
 UPFs are **designed to be craveable**, but you can **beat the system** with whole-food alternatives that satisfy the same cravings:
@@ -602,7 +602,7 @@ UPFs aren't just bad for your health - they're **bad for the planet**. Here's ho
    - **Soda production** uses **200 liters of water per liter of soda** (including growing sugar cane)
    - **Processed meats** require **10x more water** than plant-based proteins
 
-**NutriDecrypte's sustainability scores**: Our [decoder for European food labels](/how-to-read-food-label-europe/) helps you spot UPFs at a glance, while our scoring also flags products with **high carbon footprints** and **plastic packaging**.
+**NutriDecrypte's sustainability scores**: Our [decoder for European food labels](/blog/how-to-read-food-label-europe/) helps you spot UPFs at a glance, while our scoring also flags products with **high carbon footprints** and **plastic packaging**.
 
 ### How can I advocate for better ultra-processed food policies?
 You don't need to be a policymaker to **make a difference**. Here's how you can **advocate for better UPF policies**:
@@ -658,7 +658,7 @@ You don't need to be a policymaker to **make a difference**. Here's how you can 
 
 ## Related articles
 
-- [How to read a European food label: the definitive 2026 decoder](/how-to-read-food-label-europe/)
-- [Misleading health claims on food: what EU Regulation 1924 actually allows (and what it does not)](/misleading-health-claims-eu-rules/)
-- [E-numbers banned in the EU but allowed in the US: the full 2026 list](/e-numbers-banned-eu-safe-us/)
+- [How to read a European food label: the definitive 2026 decoder](/blog/how-to-read-food-label-europe/)
+- [Misleading health claims on food: what EU Regulation 1924 actually allows (and what it does not)](/blog/misleading-health-claims-eu-rules/)
+- [E-numbers banned in the EU but allowed in the US: the full 2026 list](/blog/e-numbers-banned-eu-safe-us/)
 

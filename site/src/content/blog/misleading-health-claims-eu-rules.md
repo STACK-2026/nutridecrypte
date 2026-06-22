@@ -260,6 +260,6 @@ NutriDecrypte cross-references EU authorised claims, NOVA classification, and mo
 
 ## Related articles
 
-- [How to read a European food label: the definitive 2026 decoder](/how-to-read-food-label-europe/)
-- [Ultra-Processed Food: NOVA Classification Explained & Why It Matters](/ultra-processed-food-what-you-should-know/)
-- [E-numbers banned in the EU but allowed in the US: the full 2026 list](/e-numbers-banned-eu-safe-us/)
+- [How to read a European food label: the definitive 2026 decoder](/blog/how-to-read-food-label-europe/)
+- [Ultra-Processed Food: NOVA Classification Explained & Why It Matters](/blog/ultra-processed-food-what-you-should-know/)
+- [E-numbers banned in the EU but allowed in the US: the full 2026 list](/blog/e-numbers-banned-eu-safe-us/)

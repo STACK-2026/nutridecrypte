@@ -294,4 +294,4 @@ Pas de placement de produit, pas de marketing, pas d'algorithme opaque. L'app es
 
 ## Articles connexes
 
-- [Mention 'sans sucre ajouté' : ce qui se cache vraiment derrière l'étiquette en 2026](/mention-sans-sucre-ajoute-decryptage-pieges-etiquettes/)
+- [Mention 'sans sucre ajouté' : ce qui se cache vraiment derrière l'étiquette en 2026](/fr/blog/mention-sans-sucre-ajoute-decryptage-pieges-etiquettes/)

@@ -188,5 +188,5 @@ Une inquiétude clinique réelle avec la montée des concepts nutritionnels (Nut
 
 ## Articles connexes
 
-- [Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels exploitent](/nutri-score-limites-critique/)
-- [Additifs alimentaires à éviter en 2026 : la liste noire des E-numéros](/additifs-alimentaires-a-eviter-2026/)
+- [Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels exploitent](/fr/blog/nutri-score-limites-critique/)
+- [Additifs alimentaires à éviter en 2026 : la liste noire des E-numéros](/fr/blog/additifs-alimentaires-a-eviter-2026/)

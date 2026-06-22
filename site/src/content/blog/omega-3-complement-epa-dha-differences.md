@@ -283,7 +283,7 @@ L'oméga-3 reste **l'un des compléments les mieux documentés scientifiquement*
 
 ## Articles connexes
 
-- [Meilleur magnésium 2026 : bisglycinate vs citrate vs oxyde (classement honnête)](/magnesium-complement-meilleur-2026/)
-- [Vitamine D : D3 vs D2, IU vs microgrammes, dosage ANSES 2026, les 8 pieges a eviter](/vitamine-d-complement-choisir/)
-- [Collagène : est-ce que les compléments marchent vraiment ? Ce que dit la science en 2026](/collagene-complement-efficace-science/)
-- [Label AB, Bio européen, Demeter, Nature et Progrès : les 7 labels bio décryptés](/bio-label-ab-europeen-vraiment-different/)
+- [Meilleur magnésium 2026 : bisglycinate vs citrate vs oxyde (classement honnête)](/fr/blog/magnesium-complement-meilleur-2026/)
+- [Vitamine D : D3 vs D2, IU vs microgrammes, dosage ANSES 2026, les 8 pieges a eviter](/fr/blog/vitamine-d-complement-choisir/)
+- [Collagène : est-ce que les compléments marchent vraiment ? Ce que dit la science en 2026](/fr/blog/collagene-complement-efficace-science/)
+- [Label AB, Bio européen, Demeter, Nature et Progrès : les 7 labels bio décryptés](/fr/blog/bio-label-ab-europeen-vraiment-different/)

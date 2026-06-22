@@ -288,7 +288,7 @@ Le bio européen interdit l'utilisation d'OGM, mais **un seuil de contamination 
 
 ## Articles connexes
 
-- [Meilleur magnésium 2026 : bisglycinate vs citrate vs oxyde (classement honnête)](/magnesium-complement-meilleur-2026/)
-- [Dioxyde de titane (E171) en 2026 : où en est-on vraiment ?](/dioxyde-titane-e171-etat-2026/)
-- [Oméga-3 : EPA vs DHA vs ALA, quel complément choisir en 2026 ?](/omega-3-complement-epa-dha-differences/)
-- [Cereales petit-dejeuner : le top 10 du pire, le top 10 du meilleur (notes NutriDecrypte)](/petit-dejeuner-industriel-pire-meilleur/)
+- [Meilleur magnésium 2026 : bisglycinate vs citrate vs oxyde (classement honnête)](/fr/blog/magnesium-complement-meilleur-2026/)
+- [Dioxyde de titane (E171) en 2026 : où en est-on vraiment ?](/fr/blog/dioxyde-titane-e171-etat-2026/)
+- [Oméga-3 : EPA vs DHA vs ALA, quel complément choisir en 2026 ?](/fr/blog/omega-3-complement-epa-dha-differences/)
+- [Cereales petit-dejeuner : le top 10 du pire, le top 10 du meilleur (notes NutriDecrypte)](/fr/blog/petit-dejeuner-industriel-pire-meilleur/)

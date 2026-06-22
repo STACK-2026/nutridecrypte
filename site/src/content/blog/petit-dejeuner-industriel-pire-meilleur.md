@@ -504,7 +504,7 @@ Télécharge **NutriDecrypte** gratuitement sur App Store et Google Play, ou con
 
 ## Articles connexes
 
-- [Meilleur magnésium 2026 : bisglycinate vs citrate vs oxyde (classement honnête)](/magnesium-complement-meilleur-2026/)
-- [Label AB, Bio européen, Demeter, Nature et Progrès : les 7 labels bio décryptés](/bio-label-ab-europeen-vraiment-different/)
-- [Dioxyde de titane (E171) en 2026 : où en est-on vraiment ?](/dioxyde-titane-e171-etat-2026/)
-- [Oméga-3 : EPA vs DHA vs ALA, quel complément choisir en 2026 ?](/omega-3-complement-epa-dha-differences/)
+- [Meilleur magnésium 2026 : bisglycinate vs citrate vs oxyde (classement honnête)](/fr/blog/magnesium-complement-meilleur-2026/)
+- [Label AB, Bio européen, Demeter, Nature et Progrès : les 7 labels bio décryptés](/fr/blog/bio-label-ab-europeen-vraiment-different/)
+- [Dioxyde de titane (E171) en 2026 : où en est-on vraiment ?](/fr/blog/dioxyde-titane-e171-etat-2026/)
+- [Oméga-3 : EPA vs DHA vs ALA, quel complément choisir en 2026 ?](/fr/blog/omega-3-complement-epa-dha-differences/)

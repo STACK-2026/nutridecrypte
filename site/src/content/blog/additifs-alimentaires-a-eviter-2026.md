@@ -205,7 +205,7 @@ Les enfants sont plus exposés proportionnellement parce qu'ils pèsent moins (l
 
 ## Articles connexes
 
-- [Mention 'sans sucre ajouté' : ce qui se cache vraiment derrière l'étiquette en 2026](/mention-sans-sucre-ajoute-decryptage-pieges-etiquettes/)
-- [Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels exploitent](/nutri-score-limites-critique/)
-- [Cantine scolaire et loi EGalim en 2026 : ce que la loi impose vraiment (et ce qu'elle ne dit pas)](/cantine-scolaire-loi-egalim-2026-realite-application/)
-- [Ultra-transformés : la classification NOVA expliquée (et pourquoi c'est plus important que le Nutri-Score)](/ultra-transforme-nova-classification/)
+- [Mention 'sans sucre ajouté' : ce qui se cache vraiment derrière l'étiquette en 2026](/fr/blog/mention-sans-sucre-ajoute-decryptage-pieges-etiquettes/)
+- [Pourquoi le Nutri-Score ne suffit plus : les 5 angles morts que les industriels exploitent](/fr/blog/nutri-score-limites-critique/)
+- [Cantine scolaire et loi EGalim en 2026 : ce que la loi impose vraiment (et ce qu'elle ne dit pas)](/fr/blog/cantine-scolaire-loi-egalim-2026-realite-application/)
+- [Ultra-transformés : la classification NOVA expliquée (et pourquoi c'est plus important que le Nutri-Score)](/fr/blog/ultra-transforme-nova-classification/)

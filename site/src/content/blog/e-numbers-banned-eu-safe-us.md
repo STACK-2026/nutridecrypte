@@ -270,4 +270,4 @@ Curious whether your favorite imported snack contains an additive Europe outlawe
 
 ## Related articles
 
-- [Misleading health claims on food: what EU Regulation 1924 actually allows (and what it does not)](/misleading-health-claims-eu-rules/)
+- [Misleading health claims on food: what EU Regulation 1924 actually allows (and what it does not)](/blog/misleading-health-claims-eu-rules/)

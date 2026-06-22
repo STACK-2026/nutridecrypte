@@ -709,7 +709,7 @@ Voici une liste détaillée des meilleures sources naturelles de magnésium, ave
 
 ## Articles connexes
 
-- [Oméga-3 : EPA vs DHA vs ALA, quel complément choisir en 2026 ?](/omega-3-complement-epa-dha-differences/)
-- [Cereales petit-dejeuner : le top 10 du pire, le top 10 du meilleur (notes NutriDecrypte)](/petit-dejeuner-industriel-pire-meilleur/)
-- [Vitamine D : D3 vs D2, IU vs microgrammes, dosage ANSES 2026, les 8 pieges a eviter](/vitamine-d-complement-choisir/)
-- [Collagène : est-ce que les compléments marchent vraiment ? Ce que dit la science en 2026](/collagene-complement-efficace-science/)
+- [Oméga-3 : EPA vs DHA vs ALA, quel complément choisir en 2026 ?](/fr/blog/omega-3-complement-epa-dha-differences/)
+- [Cereales petit-dejeuner : le top 10 du pire, le top 10 du meilleur (notes NutriDecrypte)](/fr/blog/petit-dejeuner-industriel-pire-meilleur/)
+- [Vitamine D : D3 vs D2, IU vs microgrammes, dosage ANSES 2026, les 8 pieges a eviter](/fr/blog/vitamine-d-complement-choisir/)
+- [Collagène : est-ce que les compléments marchent vraiment ? Ce que dit la science en 2026](/fr/blog/collagene-complement-efficace-science/)

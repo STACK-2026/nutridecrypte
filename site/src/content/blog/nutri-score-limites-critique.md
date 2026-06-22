@@ -166,7 +166,7 @@ En clinique, la méfiance contre le Nutri-Score vient souvent d'une expérience 
 
 ## Articles connexes
 
-- [Ultra-transformés : la classification NOVA expliquée (et pourquoi c'est plus important que le Nutri-Score)](/ultra-transforme-nova-classification/)
-- [Additifs alimentaires à éviter en 2026 : la liste noire des E-numéros](/additifs-alimentaires-a-eviter-2026/)
-- [Cantine scolaire et loi EGalim en 2026 : ce que la loi impose vraiment (et ce qu'elle ne dit pas)](/cantine-scolaire-loi-egalim-2026-realite-application/)
-- [Mention 'sans sucre ajouté' : ce qui se cache vraiment derrière l'étiquette en 2026](/mention-sans-sucre-ajoute-decryptage-pieges-etiquettes/)
+- [Ultra-transformés : la classification NOVA expliquée (et pourquoi c'est plus important que le Nutri-Score)](/fr/blog/ultra-transforme-nova-classification/)
+- [Additifs alimentaires à éviter en 2026 : la liste noire des E-numéros](/fr/blog/additifs-alimentaires-a-eviter-2026/)
+- [Cantine scolaire et loi EGalim en 2026 : ce que la loi impose vraiment (et ce qu'elle ne dit pas)](/fr/blog/cantine-scolaire-loi-egalim-2026-realite-application/)
+- [Mention 'sans sucre ajouté' : ce qui se cache vraiment derrière l'étiquette en 2026](/fr/blog/mention-sans-sucre-ajoute-decryptage-pieges-etiquettes/)

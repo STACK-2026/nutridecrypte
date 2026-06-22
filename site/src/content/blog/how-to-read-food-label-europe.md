@@ -392,5 +392,5 @@ Download **NutriDecrypte** for free on App Store and Google Play, or browse the 
 
 ## Related articles
 
-- [Ultra-Processed Food: NOVA Classification Explained & Why It Matters](/ultra-processed-food-what-you-should-know/)
-- [Misleading health claims on food: what EU Regulation 1924 actually allows (and what it does not)](/misleading-health-claims-eu-rules/)
+- [Ultra-Processed Food: NOVA Classification Explained & Why It Matters](/blog/ultra-processed-food-what-you-should-know/)
+- [Misleading health claims on food: what EU Regulation 1924 actually allows (and what it does not)](/blog/misleading-health-claims-eu-rules/)
