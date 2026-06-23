@@ -460,7 +460,7 @@ Si tu tombes sur un produit dont l'allégation te semble trompeuse, tu peux le s
    - Rôle : L'UFC-Que Choisir mène des enquêtes sur les allégations trompeuses et publie des guides pour les consommateurs.
 
 3. **NutriDecrypte** :
-   - Site : [nutridecrypte.com/contact](https://nutridecrypte.com/contact)
+   - Site : nutridecrypte.com/contact
    - Rôle : NutriDecrypte analyse les étiquettes et peut alerter les autorités si une allégation est jugée trompeuse.
 
 **Exemple de signalement** :
