@@ -369,9 +369,9 @@
       "intent": "informational",
       "author_pen_name": "Camille Roux",
       "angle": "Expliquer l'omniprésence industrielle et les effets métaboliques",
-      "done": false,
-      "published": false,
-      "published_at": null,
+      "done": true,
+      "published": true,
+      "published_at": "2026-06-23",
       "reconciled": false
     },
     {
