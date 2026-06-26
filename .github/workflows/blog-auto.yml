@@ -52,3 +52,10 @@ jobs:
           BING_URL_SUBMISSION_KEY: ${{ secrets.BING_URL_SUBMISSION_KEY }}
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
         run: python publish.py
+
+      - name: Alert on failure
+        if: failure()
+        working-directory: blog-auto
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: python3 alert_cron_failure.py "${{ github.workflow }}" "${{ github.run_id }}"

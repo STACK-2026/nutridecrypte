@@ -99,6 +99,7 @@ jobs:
           PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
           PUBLIC_AMAZON_TAG: ${{ secrets.PUBLIC_AMAZON_TAG }}
           DB_URL_SECRET: ${{ secrets.VPS_PG_NUTRIDECRYPTE_URL }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PG_PORT: '5432'
         run: |
           if [ -z "$DB_URL_SECRET" ]; then echo "::error::VPS_PG_NUTRIDECRYPTE_URL missing -- refusing degraded build"; exit 1; fi
