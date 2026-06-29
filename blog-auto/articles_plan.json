@@ -397,10 +397,10 @@
       "intent": "informational",
       "author_pen_name": "Sarah Keller",
       "angle": "Identifier les aliments à risque et comment limiter l'exposition",
-      "done": false,
-      "published": false,
-      "published_at": null,
-      "reconciled": false
+      "done": true,
+      "published": true,
+      "published_at": "2026-06-29T08:00:00+02:00",
+      "reconciled": "published by sub-agent 2026-06-29"
     },
     {
       "slug": "viandes-transformees-cancer-oms-guide",
