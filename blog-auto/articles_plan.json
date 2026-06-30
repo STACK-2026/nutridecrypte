@@ -411,10 +411,10 @@
       "intent": "informational",
       "author_pen_name": "Camille Roux",
       "angle": "Recontextualiser la classification CIRC sans catastrophisme",
-      "done": false,
-      "published": false,
-      "published_at": null,
-      "reconciled": false
+      "done": true,
+      "published": true,
+      "published_at": "2026-06-30",
+      "reconciled": true
     },
     {
       "slug": "carrageenan-e407-safe-or-not",
