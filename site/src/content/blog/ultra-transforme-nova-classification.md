@@ -74,7 +74,7 @@ C'est le groupe qui concentre toute la controverse. Ces aliments sont fabriqués
 Les cinq marqueurs NOVA 4 à repérer sur une étiquette :
 
 1. **Ingrédients fractionnés** : isolat de protéines de soja, amidon modifié, maltodextrine, fibres végétales (inuline, polydextrose), huiles fractionnées ou hydrogénées.
-2. **Additifs cosmétiques** : colorants ([E102](/fr/encyclopedie/e102-tartrazine/), [E171](/fr/encyclopedie/e171-titanium-dioxide/) avant 2022, [E150d](/fr/encyclopedie/e150d-sulphite-ammonia-caramel/)), arômes de synthèse, exhausteurs de goût ([E621](/fr/encyclopedie/e621-msg/)), édulcorants ([E951](/fr/encyclopedie/e951-aspartame/), [E955](/fr/encyclopedie/e955-sucralose/)), émulsifiants cosmétiques ([E471](/fr/encyclopedie/e471-mono-diglycerides/), [E466](/fr/encyclopedie/e466-cmc/)), gélifiants modifiés ([E407](/fr/encyclopedie/e407-carrageenan/)).
+2. **Additifs cosmétiques** : colorants (E102, E171 avant 2022, E150d), arômes de synthèse, exhausteurs de goût (E621), édulcorants (E951, E955), émulsifiants cosmétiques (E471, E466), gélifiants modifiés (E407).
 3. **Procédés industriels absents d'une cuisine** : extrusion (flocons de céréales petit-déj), pre-frying sur ligne de production, reconstitution de viande par restructuration, hydrogénation.
 4. **Liste d'ingrédients longue** : plus de dix ingrédients est quasi-systématiquement un signal NOVA 4, même si la règle n'est pas absolue.
 5. **Packaging qui vante fortement le produit** : le recto multiplie les allégations (naturel, source de, sans, riche en), alors que la liste d'ingrédients raconte une autre histoire.

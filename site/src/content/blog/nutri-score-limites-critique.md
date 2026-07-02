@@ -44,7 +44,7 @@ En clinique, je vois des patients qui suivent scrupuleusement les recommandation
 
 ## Angle mort n°2 : les édulcorants intenses passent presque sans pénalité
 
-Le Nutri-Score pénalise les sucres libres, ce qui est cohérent. Mais il ne sanctionne pas fortement leur remplacement par des édulcorants intenses de synthèse. Un soda reformulé « zéro sucre » avec aspartame ([E951](/fr/encyclopedie/e951-aspartame/)) ou sucralose ([E955](/fr/encyclopedie/e955-sucralose/)) améliore mécaniquement son Nutri-Score parce qu'il perd ses calories sucrées, sans que la grille capture le signal sanitaire des édulcorants eux-mêmes.
+Le Nutri-Score pénalise les sucres libres, ce qui est cohérent. Mais il ne sanctionne pas fortement leur remplacement par des édulcorants intenses de synthèse. Un soda reformulé « zéro sucre » avec aspartame (E951) ou sucralose (E955) améliore mécaniquement son Nutri-Score parce qu'il perd ses calories sucrées, sans que la grille capture le signal sanitaire des édulcorants eux-mêmes.
 
 Or depuis 2022, le contexte scientifique a changé. L'[OMS a publié en mai 2023 une recommandation](https://www.who.int/news/item/15-05-2023-who-advises-not-to-use-non-sugar-sweeteners-for-weight-control-in-newly-released-guideline) contre l'usage d'édulcorants non sucrés pour la gestion du poids, citant l'absence de bénéfice à long terme et un signal d'augmentation du risque de maladies cardiovasculaires et de diabète de type 2. En juillet 2023, le [CIRC de l'OMS a classé l'aspartame en groupe 2B](https://www.who.int/fr/news/item/14-07-2023-aspartame-hazard-and-risk-assessment-results-released) (« possiblement cancérogène pour l'humain »). L'étude NutriNet-Santé publiée dans le [BMJ en 2022](https://pubmed.ncbi.nlm.nih.gov/36101788/) a trouvé une association positive entre consommation d'édulcorants et risque cardiovasculaire chez plus de 103 000 participants français.
 
@@ -67,7 +67,7 @@ Depuis la généralisation du Nutri-Score, les industriels ont massivement refor
 Mais la reformulation prend souvent une forme cosmétique qui maximise la note sans améliorer la matrice alimentaire. Trois techniques standards :
 
 1. **Ajout d'ingrédients « fonctionnels »** , fibres (inuline, polydextrose), protéines (isolats de lait, soja, pois) ou fruits/légumes en poudre pour cocher les cases « positives » du score, sans changer la nature ultra-transformée du produit.
-2. **Réduction du sel ou des sucres compensée par des additifs** , exhausteurs de goût ([E621 glutamate](/fr/encyclopedie/e621-msg/)), édulcorants, arômes, émulsifiants.
+2. **Réduction du sel ou des sucres compensée par des additifs** , exhausteurs de goût (E621 glutamate), édulcorants, arômes, émulsifiants.
 3. **Fractionnement** , remplacer un ingrédient brut (lait entier, huile d'olive vierge) par des ingrédients fractionnés (lait écrémé + matière grasse végétale + additifs de texture) qui ont un meilleur profil macronutriment sur le papier.
 
 Le résultat : beaucoup de produits ultra-transformés reformulés gagnent une lettre au Nutri-Score sans améliorer leur profil de santé globale. Pour un consommateur, passer d'un yaourt aux fruits C à un yaourt « 0 % matière grasse, source de fibres » B peut donner l'illusion d'un progrès alors que la nouvelle recette compte deux additifs de plus et un édulcorant intense.

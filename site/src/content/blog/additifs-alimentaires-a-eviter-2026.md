@@ -52,21 +52,21 @@ Voici la liste noire opérationnelle, classée par famille. Pour chaque E-numér
 
 Ce sont les six colorants synthétiques identifiés par l'étude Southampton 2007 comme augmentant l'hyperactivité et l'inattention chez les enfants. Le règlement européen 1333/2008 impose depuis juillet 2010 la mention « peut avoir des effets indésirables sur l'activité et l'attention chez les enfants » sur tout produit qui en contient. C'est le seul avertissement sanitaire obligatoire sur un additif en UE.
 
-1. **[E102 Tartrazine](/fr/encyclopedie/e102-tartrazine/)** , jaune synthétique. Dans les sodas type Oasis Tropical, bonbons acidulés, sirops artificiels.
-2. **[E104 Jaune de quinoléine](/fr/encyclopedie/e104-quinoline-yellow/)** , jaune synthétique, interdit dans l'alimentaire aux États-Unis depuis 1979.
-3. **[E110 Jaune orange S](/fr/encyclopedie/e110-sunset-yellow/)** , orange synthétique. DJA réduite par EFSA en 2014 suite à une nouvelle revue.
-4. **[E122 Azorubine](/fr/encyclopedie/e122-azorubine/)** , rouge-rose. Interdit aux États-Unis, au Japon et en Norvège.
-5. **[E124 Ponceau 4R](/fr/encyclopedie/e124-ponceau-4r/)** , rouge. Interdit aux États-Unis et en Norvège.
-6. **[E129 Rouge allura](/fr/encyclopedie/e129-allura-red/)** , rouge courant dans bonbons, cereals petit-déj, glaçages.
+1. **E102 Tartrazine** , jaune synthétique. Dans les sodas type Oasis Tropical, bonbons acidulés, sirops artificiels.
+2. **E104 Jaune de quinoléine** , jaune synthétique, interdit dans l'alimentaire aux États-Unis depuis 1979.
+3. **E110 Jaune orange S** , orange synthétique. DJA réduite par EFSA en 2014 suite à une nouvelle revue.
+4. **E122 Azorubine** , rouge-rose. Interdit aux États-Unis, au Japon et en Norvège.
+5. **E124 Ponceau 4R** , rouge. Interdit aux États-Unis et en Norvège.
+6. **E129 Rouge allura** , rouge courant dans bonbons, cereals petit-déj, glaçages.
 
 Ces six colorants existent pour une seule raison : rendre un produit peu attirant plus vendable. Aucune fonction nutritionnelle, aucun bénéfice technique. On peut tous les remplacer par des colorants naturels (E100 curcumine, E160 carotène, concentré de fruits). Les marques qui continuent à les utiliser font le choix du coût, pas de la qualité.
 
 ### Famille 2 · Nitrites et nitrates de charcuterie
 
-7. **[E249 Nitrite de potassium](/fr/encyclopedie/e249-potassium-nitrite/)**
-8. **[E250 Nitrite de sodium](/fr/encyclopedie/e250-sodium-nitrite/)**
-9. **[E251 Nitrate de sodium](/fr/encyclopedie/e251-sodium-nitrate/)**
-10. **[E252 Nitrate de potassium](/fr/encyclopedie/e252-potassium-nitrate/)**
+7. **E249 Nitrite de potassium**
+8. **E250 Nitrite de sodium**
+9. **E251 Nitrate de sodium**
+10. **E252 Nitrate de potassium**
 
 Ces quatre conservateurs sont utilisés dans la charcuterie (jambon blanc, lardons, saucisson, pancetta). Leur fonction : empêcher la bactérie du botulisme et donner la couleur rose caractéristique. Le problème : dans l'estomac, les nitrites se combinent aux amines des protéines animales pour former des nitrosamines, classées cancérogènes groupe 2A par le [Centre international de recherche sur le cancer](https://www.iarc.who.int/fr/) depuis 2015. La même année, le CIRC a classé la viande transformée dans son ensemble comme **cancérogène certain** (groupe 1), à cause notamment de la présence quasi-systématique de nitrites.
 
@@ -76,22 +76,22 @@ Cela reste insuffisant pour beaucoup d'experts. Les marques de charcuterie sans 
 
 ### Famille 3 · Édulcorants intenses réévalués
 
-11. **[E951 Aspartame](/fr/encyclopedie/e951-aspartame/)** , 200 fois plus sucrant que le sucre. En juillet 2023, le CIRC l'a classé « possiblement cancérogène pour l'humain » (groupe 2B) tandis que le comité mixte FAO/OMS maintenait la DJA à 40 mg/kg. Cette double annonce a semé la confusion mais le signal est clair : la consommation chronique de canettes light à l'aspartame mérite une revue.
-12. **[E952 Cyclamate](/fr/encyclopedie/e952-cyclamate/)** , interdit dans l'alimentaire aux États-Unis depuis 1970 (étude sur cancer de la vessie chez le rat). Toujours autorisé en UE à DJA réduite. Dans des édulcorants de table, certaines boissons light.
-13. **[E955 Sucralose](/fr/encyclopedie/e955-sucralose/)** , 600 fois plus sucrant que le sucre. Présenté comme stable à la cuisson jusqu'à des études de 2023 qui ont montré qu'il se dégrade à haute température en composés chloropropanols suspects. Perturbation du microbiote documentée dans plusieurs méta-analyses.
+11. **E951 Aspartame** , 200 fois plus sucrant que le sucre. En juillet 2023, le CIRC l'a classé « possiblement cancérogène pour l'humain » (groupe 2B) tandis que le comité mixte FAO/OMS maintenait la DJA à 40 mg/kg. Cette double annonce a semé la confusion mais le signal est clair : la consommation chronique de canettes light à l'aspartame mérite une revue.
+12. **E952 Cyclamate** , interdit dans l'alimentaire aux États-Unis depuis 1970 (étude sur cancer de la vessie chez le rat). Toujours autorisé en UE à DJA réduite. Dans des édulcorants de table, certaines boissons light.
+13. **E955 Sucralose** , 600 fois plus sucrant que le sucre. Présenté comme stable à la cuisson jusqu'à des études de 2023 qui ont montré qu'il se dégrade à haute température en composés chloropropanols suspects. Perturbation du microbiote documentée dans plusieurs méta-analyses.
 
 Le reste de la famille (acésulfame K E950, néotame E961, saccharine E954) est moins problématique mais reste discutable sur le long terme. L'étude [NutriNet-Santé sur les édulcorants et le risque cardiovasculaire](https://pubmed.ncbi.nlm.nih.gov/36101788/) publiée dans le BMJ en 2022 a trouvé une association chez les gros consommateurs.
 
 ### Famille 4 · Conservateurs antioxydants synthétiques
 
-14. **[E320 BHA butylhydroxyanisole](/fr/encyclopedie/e320-bha/)** , interdit dans l'alimentaire au Japon. Inscrit au registre Prop 65 de Californie comme cancérogène possible. Utilisé dans certains chewing-gums, cereals petit-déj et viandes déshydratées.
-15. **[E321 BHT butylhydroxytoluène](/fr/encyclopedie/e321-bht/)** , antioxydant synthétique. Toxicité reproductive documentée à haute dose chez l'animal. Dans cereals industriels, chewing-gums, certaines huiles.
+14. **E320 BHA butylhydroxyanisole** , interdit dans l'alimentaire au Japon. Inscrit au registre Prop 65 de Californie comme cancérogène possible. Utilisé dans certains chewing-gums, cereals petit-déj et viandes déshydratées.
+15. **E321 BHT butylhydroxytoluène** , antioxydant synthétique. Toxicité reproductive documentée à haute dose chez l'animal. Dans cereals industriels, chewing-gums, certaines huiles.
 
 Ces deux antioxydants sont parfaitement substituables par des antioxydants naturels type tocophérols (E306, vitamine E) ou acide ascorbique (E300, vitamine C). Si une marque continue à utiliser du BHA ou du BHT en 2026, c'est un choix de coût pur.
 
 ### Bonus · Le cas dioxyde de titane E171
 
-Le **dioxyde de titane E171** ne figure plus dans cette liste parce qu'il est **déjà interdit dans l'alimentation européenne depuis le 8 août 2022**, suite à un avis EFSA qui a conclu qu'il ne pouvait plus être considéré comme sûr à cause de son potentiel génotoxique. On le retrouve encore dans certains chewing-gums importés, dans des compléments alimentaires enrobés de blanc, et surtout dans les médicaments où il reste autorisé (aucune décision européenne n'a encore été prise sur son usage pharmaceutique). La fiche complète est dans notre [base additifs E171](/fr/encyclopedie/e171-titanium-dioxide/).
+Le **dioxyde de titane E171** ne figure plus dans cette liste parce qu'il est **déjà interdit dans l'alimentation européenne depuis le 8 août 2022**, suite à un avis EFSA qui a conclu qu'il ne pouvait plus être considéré comme sûr à cause de son potentiel génotoxique. On le retrouve encore dans certains chewing-gums importés, dans des compléments alimentaires enrobés de blanc, et surtout dans les médicaments où il reste autorisé (aucune décision européenne n'a encore été prise sur son usage pharmaceutique). La fiche complète est dans notre base additifs E171.
 
 ## Émulsifiants à surveiller : la guerre silencieuse contre le microbiote
 
@@ -99,9 +99,9 @@ En plus de ces 15 additifs « à bannir », une deuxième famille mérite une vi
 
 Les trois à surveiller en particulier :
 
-- **[E407 Carraghénanes](/fr/encyclopedie/e407-carrageenan/)** , extrait d'algues rouges. La forme dégradée (poligéenane) est classée cancérogène. Les États-Unis ont interdit l'E407 dans les laits infantiles.
-- **[E466 Carboxyméthylcellulose sodique (CMC)](/fr/encyclopedie/e466-cmc/)** , études murines sur perturbation du microbiote. L'équipe INSERM de la cohorte [NutriNet-Santé](https://etude-nutrinet-sante.fr) a publié en septembre 2023 une association entre consommation d'émulsifiants courants et [risque de cancer](https://pubmed.ncbi.nlm.nih.gov/37696792/) dans PLoS Medicine.
-- **[E471 Mono-diglycérides d'acides gras](/fr/encyclopedie/e471-mono-diglycerides/)** , peut contenir des acides gras trans, origine animale possible non étiquetée. ANSES étudie les effets cardiovasculaires.
+- **E407 Carraghénanes** , extrait d'algues rouges. La forme dégradée (poligéenane) est classée cancérogène. Les États-Unis ont interdit l'E407 dans les laits infantiles.
+- **E466 Carboxyméthylcellulose sodique (CMC)** , études murines sur perturbation du microbiote. L'équipe INSERM de la cohorte [NutriNet-Santé](https://etude-nutrinet-sante.fr) a publié en septembre 2023 une association entre consommation d'émulsifiants courants et [risque de cancer](https://pubmed.ncbi.nlm.nih.gov/37696792/) dans PLoS Medicine.
+- **E471 Mono-diglycérides d'acides gras** , peut contenir des acides gras trans, origine animale possible non étiquetée. ANSES étudie les effets cardiovasculaires.
 
 Le consensus n'est pas encore arrêté. Mais face à un ingrédient qu'on trouve dans 40 % des produits du rayon boulangerie industrielle, un principe de précaution tient la route : privilégier les pains au levain court, les glaces artisanales et les produits avec moins de dix ingrédients.
 
