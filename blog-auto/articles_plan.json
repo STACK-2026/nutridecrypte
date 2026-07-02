@@ -425,9 +425,9 @@
       "intent": "informational",
       "author_pen_name": "Thomas Moreau",
       "angle": "Settle the inflammation debate with the actual evidence",
-      "done": false,
-      "published": false,
-      "published_at": null,
+      "done": true,
+      "published": true,
+      "published_at": "2026-07-02",
       "reconciled": false
     },
     {
