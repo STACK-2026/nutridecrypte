@@ -9,7 +9,7 @@ Utilise comme dernier step (if: failure()) dans les workflows :
         RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
       run: python3 blog-auto/alert_cron_failure.py "${{ github.workflow }}" "${{ github.run_id }}"
 
-FROM = onboarding@resend.dev (sender universel Resend, pas besoin de domaine verifie
+FROM = alertes@send.nutridecrypte.com (domaine verifie Resend; onboarding@resend.dev ne livre plus qu'au owner
 sur le plan 1-domaine). Ne casse JAMAIS le workflow (return 0 sur toute erreur).
 """
 from __future__ import annotations
@@ -20,7 +20,7 @@ import urllib.request
 import urllib.error
 
 RESEND_URL = "https://api.resend.com/emails"
-FROM_EMAIL = "onboarding@resend.dev"
+FROM_EMAIL = "alertes@send.nutridecrypte.com"
 TO_EMAIL = "augustin.foucheres@gmail.com"
 REPO = "STACK-2026/nutridecrypte"
 
