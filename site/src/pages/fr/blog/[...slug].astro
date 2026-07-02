@@ -5,15 +5,29 @@ import AmazonPicks from "../../../components/AmazonPicks.astro";
 
 export async function getStaticPaths() {
   const now = new Date();
-  const posts = await getCollection("blog", ({ data }) => !data.draft && data.date <= now && data.lang === "fr");
-  return posts.map((post) => ({
+  const allPosts = await getCollection("blog");
+  const frPosts = allPosts.filter(
+    (p) => !p.data.draft && p.data.date <= now && p.data.lang === "fr"
+  );
+  // Build the set of EN article IDs that are published and share the same slug.
+  // If a FR article has a matching EN slug, the lang switcher can point to it
+  // directly; otherwise it falls back to the EN blog index.
+  const enPublishedIds = new Set(
+    allPosts
+      .filter((p) => p.data.lang !== "fr" && !p.data.draft && p.data.date <= now)
+      .map((p) => p.id)
+  );
+  return frPosts.map((post) => ({
     params: { slug: post.id },
-    props: { post },
+    props: { post, hasEnCounterpart: enPublishedIds.has(post.id) },
   }));
 }
 
-const { post } = Astro.props;
+const { post, hasEnCounterpart } = Astro.props;
 const { Content } = await render(post);
+// Point the EN hreflang/lang-switcher to the real EN article when it shares
+// the same slug, otherwise fall back to the EN blog index to avoid 404s.
+const alternates = { en: hasEnCounterpart ? `/blog/${post.id}/` : `/blog/` };
 ---
 
 <BlogLayout
@@ -32,6 +46,7 @@ const { Content } = await render(post);
   tldr={post.data.tldr}
   faq={post.data.faq}
   body={post.body}
+  alternates={alternates}
 >
   <Content />
   <AmazonPicks slug={`fr-blog-${post.id}`} count={4} />

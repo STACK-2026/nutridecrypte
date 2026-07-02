@@ -2,8 +2,17 @@
 import { siteConfig } from "../../site.config";
 import { tr, t, getLocale, localeUrl, navUrl } from "../i18n/t";
 
+interface Props {
+  // When provided, overrides the naive path-swap for the lang switch link
+  // (used by blog article pages where the counterpart may not exist).
+  langSwitchHref?: string;
+}
+
+const { langSwitchHref } = Astro.props;
 const locale = getLocale(Astro.url);
 const otherLocale = locale === "en" ? "fr" : "en";
+const naiveSwitchHref = localeUrl(Astro.url.pathname.replace(/^\/fr/, ""), otherLocale);
+const switchHref = langSwitchHref ?? naiveSwitchHref;
 ---
 
 <header id="site-header" class="site-header">
@@ -32,7 +41,7 @@ const otherLocale = locale === "en" ? "fr" : "en";
     </nav>
 
     <div class="nav-right">
-      <a class="locale-switch" href={localeUrl(Astro.url.pathname.replace(/^\/fr/, ""), otherLocale)} aria-label={`Switch to ${otherLocale.toUpperCase()}`}>
+      <a class="locale-switch" href={switchHref} aria-label={`Switch to ${otherLocale.toUpperCase()}`}>
         <span class={locale === "en" ? "active" : ""}>EN</span>
         <span class="divider" aria-hidden="true">/</span>
         <span class={locale === "fr" ? "active" : ""}>FR</span>
@@ -104,7 +113,7 @@ const otherLocale = locale === "en" ? "fr" : "en";
       {t(tr.nav.score, locale)}
       <svg class="cta-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7"/></svg>
     </a>
-    <a class="drawer-locale" href={localeUrl(Astro.url.pathname.replace(/^\/fr/, ""), otherLocale)}>
+    <a class="drawer-locale" href={switchHref}>
       {otherLocale === "fr" ? "Passer en Français" : "Switch to English"}
     </a>
   </div>

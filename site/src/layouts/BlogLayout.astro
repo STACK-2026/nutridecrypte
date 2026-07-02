@@ -22,6 +22,10 @@ interface Props {
   tldr?: string;
   faq?: { q: string; a: string }[];
   body?: string;
+  // Explicit hreflang alternates — pass when the counterpart locale article
+  // does not share the same slug (or does not exist at all). Without this,
+  // BaseLayout falls back to the naive /fr prefix swap which produces 404s.
+  alternates?: { en?: string; fr?: string };
 }
 
 // Parse a FAQ written as a markdown section in the article body (## FAQ ...)
@@ -108,6 +112,7 @@ const {
   tldr,
   faq = [],
   body,
+  alternates,
 } = Astro.props;
 
 const dateStr = date.toISOString().split("T")[0];
@@ -177,6 +182,7 @@ jsonLd.push({
   ogType="article"
   publishedTime={dateStr}
   jsonLd={jsonLd}
+  alternates={alternates}
 >
   <article class="max-w-3xl mx-auto px-4 py-12">
     <Breadcrumbs items={breadcrumbs} />

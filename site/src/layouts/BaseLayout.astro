@@ -66,6 +66,11 @@ const enHref = alternates?.en
 const frHref = alternates?.fr
   ? (alternates.fr.startsWith("http") ? alternates.fr : siteConfig.url + alternates.fr)
   : siteConfig.url + "/fr" + (cleanPath === "/" ? "/" : cleanPath);
+
+// The lang switcher in Header points to the other-locale URL.
+// Pass it explicitly so Header never has to re-derive it from the raw path
+// (which would break for blog articles that only exist in one language).
+const langSwitchHref = locale === "fr" ? enHref : frHref;
 ---
 
 <!doctype html>
@@ -125,7 +130,7 @@ const frHref = alternates?.fr
   </head>
   <body class="min-h-screen flex flex-col">
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <Header />
+    <Header langSwitchHref={langSwitchHref} />
     <main id="main-content" class="flex-1">
       <slot />
     </main>
