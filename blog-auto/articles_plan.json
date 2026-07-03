@@ -439,10 +439,10 @@
       "intent": "informational",
       "author_pen_name": "Sarah Keller",
       "angle": "Cut through the omega-6 panic with real data",
-      "done": false,
-      "published": false,
-      "published_at": null,
-      "reconciled": false
+      "done": true,
+      "published": true,
+      "published_at": "2026-07-03",
+      "reconciled": true
     }
   ]
 }
